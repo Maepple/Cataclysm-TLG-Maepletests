@@ -2509,5 +2509,10 @@
     "id": "MITTS",
     "type": "json_flag",
     "//": "This item can be worn even with huge claws, webbed hands, or other sorts of coverings."
+  },
+  {
+    "id": "ITEM_WATERPROOFING",
+    "type": "json_flag",
+    "info": "Something is preventing your worn and carried items from being effected by water."
   }
 ]
