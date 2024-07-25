@@ -6153,7 +6153,8 @@ int Character::throw_range( const item &it ) const
         tmp.charges = 1;
     }
 
-    int str = get_arm_str();
+    int ench_bonus = enchantment_cache->get_value_add( enchant_vals::mod::THROW_STR );
+    int str = get_arm_str() + ench_bonus;
 
     /** @ARM_STR determines maximum weight that can be thrown */
     if( ( tmp.weight() / 113_gram ) > str * 15 )  {
@@ -6179,7 +6180,6 @@ int Character::throw_range( const item &it ) const
 
     /** @EFFECT_STR caps throwing range */
     /** @EFFECT_THROW caps throwing range */
-
     int cap = round( str + get_skill_level( skill_throw ) );
     if( has_active_bionic( bio_railgun ) && tmp.made_of_any( ferric ) ) {
         cap *= 1.5;
