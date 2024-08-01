@@ -12577,24 +12577,24 @@ void game::update_overmap_seen()
             continue;
         }
         if( can_see ) {
-        const auto set_seen = []( const tripoint_abs_omt & p, om_vision_level level ) {
-            tripoint_abs_omt seen( p );
-            do {
-                overmap_buffer.set_seen( seen, level );
-                --seen.z();
-            } while( seen.z() >= 0 );
-        };
-        int tiles_from = rl_dist( p, ompos );
-        if( tiles_from < std::floor( base_sight / 2 ) ) {
-            set_seen( p, om_vision_level::full );
-        } else if( tiles_from < base_sight ) {
-            set_seen( p, om_vision_level::details );
-        } else if( tiles_from < base_sight * 2 ) {
-            set_seen( p, om_vision_level::outlines );
-        } else {
-            set_seen( p, om_vision_level::vague );
+            const auto set_seen = []( const tripoint_abs_omt & p, om_vision_level level ) {
+                tripoint_abs_omt seen( p );
+                do {
+                    overmap_buffer.set_seen( seen, level );
+                    --seen.z();
+                } while( seen.z() >= 0 );
+            };
+            int tiles_from = rl_dist( p, ompos );
+            if( tiles_from < std::floor( base_sight / 2 ) ) {
+                set_seen( p, om_vision_level::full );
+            } else if( tiles_from < base_sight ) {
+                set_seen( p, om_vision_level::details );
+            } else if( tiles_from < base_sight * 2 ) {
+                set_seen( p, om_vision_level::outlines );
+            } else {
+                set_seen( p, om_vision_level::vague );
+            }
         }
-    }
     }
 }
 
