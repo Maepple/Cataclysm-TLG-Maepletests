@@ -12573,6 +12573,9 @@ void game::update_overmap_seen()
                 break;
             }
         }
+        if( sight_points < 0 ) {
+            continue;
+        }
         const auto set_seen = []( const tripoint_abs_omt & p, om_vision_level level ) {
             tripoint_abs_omt seen( p );
             do {
