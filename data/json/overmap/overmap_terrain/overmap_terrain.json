@@ -6,6 +6,7 @@
     "sym": "%",
     "color": "white",
     "vision_levels": "always_full",
+    "see_cost": "none",
     "flags": [ "NO_ROTATE" ]
   },
   {
@@ -15,6 +16,7 @@
     "sym": "#",
     "color": "dark_gray",
     "vision_levels": "always_full",
+    "see_cost": "opaque",
     "flags": [ "NO_ROTATE", "SHOULD_NOT_SPAWN" ]
   },
   {
@@ -25,6 +27,7 @@
     "sym": "%",
     "color": "dark_gray",
     "vision_levels": "always_full",
+    "see_cost": "none",
     "flags": [ "NO_ROTATE", "SHOULD_NOT_SPAWN" ]
   },
   {
@@ -32,10 +35,10 @@
     "abstract": "generic_city_building_no_sidewalk",
     "name": "city building",
     "sym": "^",
-    "see_cost": 5,
     "vision_levels": "city_building",
     "extras": "build",
     "mondensity": 2,
+    "see_cost": "high",
     "flags": [ "RISK_HIGH", "GENERIC_LOOT" ]
   },
   {
@@ -51,7 +54,7 @@
     "sym": "#",
     "color": "brown",
     "vision_levels": "always_full",
-    "see_cost": 5,
+    "see_cost": "opaque",
     "travel_cost_type": "impassable",
     "flags": [ "NO_ROTATE" ]
   },
@@ -64,7 +67,7 @@
     "sym": "%",
     "color": "dark_gray",
     "vision_levels": "always_full",
-    "see_cost": 5,
+    "see_cost": "opaque",
     "travel_cost_type": "impassable",
     "flags": [ "NO_ROTATE" ]
   },
@@ -92,58 +95,50 @@
     "sym": "#",
     "color": "white",
     "vision_levels": "isolated_building",
-    "see_cost": 5,
+    "see_cost": "high",
     "extras": "build",
     "mondensity": 1,
     "flags": [ "SOURCE_VEHICLES", "SOURCE_FABRICATION" ]
   },
   {
     "type": "overmap_terrain",
-    "id": "lighthouse_ground",
+    "abstract": "lighthouse_abstract",
     "name": "lighthouse",
     "sym": "0",
     "color": "yellow",
     "vision_levels": "isolated_tower",
-    "see_cost": 5,
+    "see_cost": "high"
+  },
+  {
+    "type": "overmap_terrain",
+    "id": "lighthouse_ground",
+    "copy-from": "lighthouse_abstract",
     "flags": [ "RISK_LOW", "SOURCE_SAFETY" ]
   },
   {
     "type": "overmap_terrain",
     "id": [ "lighthouse_z1", "lighthouse_z2", "lighthouse_z4", "lighthouse_z5", "lighthouse_roof" ],
-    "name": "lighthouse",
-    "sym": "0",
-    "color": "yellow",
-    "vision_levels": "isolated_tower",
-    "see_cost": 5
+    "copy-from": "lighthouse_abstract"
   },
   {
     "type": "overmap_terrain",
     "id": "lighthouse_z3",
-    "name": "lighthouse",
     "sym": "&",
-    "color": "yellow",
-    "see_cost": 5,
-    "vision_levels": "isolated_tower",
+    "copy-from": "lighthouse_abstract",
     "flags": [ "RISK_LOW", "SOURCE_SAFETY" ]
   },
   {
     "type": "overmap_terrain",
     "id": "lighthouse_small_ground",
     "name": "small lighthouse",
-    "sym": "0",
-    "color": "yellow",
-    "see_cost": 5,
-    "vision_levels": "isolated_tower",
+    "copy-from": "lighthouse_abstract",
     "flags": [ "RISK_LOW", "SOURCE_SAFETY" ]
   },
   {
     "type": "overmap_terrain",
     "id": [ "lighthouse_small_z1", "lighthouse_small_z2", "lighthouse_small_z3", "lighthouse_small_z4", "lighthouse_small_roof" ],
     "name": "small lighthouse",
-    "sym": "0",
-    "color": "yellow",
-    "vision_levels": "isolated_tower",
-    "see_cost": 5
+    "copy-from": "lighthouse_abstract"
   },
   {
     "type": "overmap_terrain",
@@ -152,7 +147,7 @@
     "vision_levels": "island",
     "sym": ".",
     "color": "yellow",
-    "see_cost": 1
+    "see_cost": "none"
   },
   {
     "type": "overmap_terrain",
@@ -162,7 +157,7 @@
     "vision_levels": "island",
     "color": "green",
     "looks_like": "forest",
-    "see_cost": 1
+    "see_cost": "spaced_high"
   },
   {
     "type": "overmap_terrain",
@@ -172,7 +167,7 @@
     "vision_levels": "island",
     "color": "cyan",
     "looks_like": "forest_water",
-    "see_cost": 1
+    "see_cost": "spaced_high"
   },
   {
     "type": "overmap_terrain",
@@ -182,7 +177,7 @@
     "sym": ".",
     "color": "brown",
     "looks_like": "field",
-    "see_cost": 1
+    "see_cost": "none"
   },
   {
     "type": "overmap_terrain",
@@ -191,7 +186,7 @@
     "vision_levels": "isolated_building",
     "sym": "C",
     "color": "i_green",
-    "see_cost": 5
+    "see_cost": "high"
   },
   {
     "type": "overmap_terrain",
@@ -209,7 +204,7 @@
     "vision_levels": "isolated_building",
     "sym": "+",
     "color": "i_yellow",
-    "see_cost": 5,
+    "see_cost": "high",
     "extras": "build",
     "mondensity": 1,
     "flags": [ "RISK_LOW", "SOURCE_SAFETY" ]
@@ -221,7 +216,7 @@
     "name": "cabin",
     "sym": "C",
     "color": "i_green",
-    "see_cost": 5,
+    "see_cost": "high",
     "flags": [ "RISK_LOW", "SOURCE_SAFETY" ]
   },
   {
@@ -229,9 +224,10 @@
     "id": [ "lake_cabin_water" ],
     "vision_levels": "water_body",
     "name": "lake",
+    "looks_like": "lake_surface",
     "sym": "#",
     "color": "blue",
-    "see_cost": 5
+    "see_cost": "none"
   },
   {
     "type": "overmap_terrain",
@@ -240,7 +236,7 @@
     "name": "cabin roof",
     "sym": "C",
     "color": "i_green",
-    "see_cost": 5
+    "see_cost": "none"
   },
   {
     "type": "overmap_terrain",
@@ -249,7 +245,7 @@
     "name": "cabin basement",
     "sym": "C",
     "color": "i_green",
-    "see_cost": 5,
+    "see_cost": "full_high",
     "extras": "build"
   },
   {
@@ -259,7 +255,7 @@
     "name": "cabin roof",
     "sym": "C",
     "color": "i_green",
-    "see_cost": 5
+    "see_cost": "none"
   },
   {
     "type": "overmap_terrain",
@@ -280,7 +276,7 @@
     "sym": "C",
     "color": "i_green",
     "vision_levels": "isolated_building",
-    "see_cost": 5,
+    "see_cost": "high",
     "extras": "build",
     "mondensity": 2,
     "flags": [ "RISK_LOW", "SOURCE_SAFETY", "SOURCE_FOOD" ]
@@ -303,7 +299,7 @@
     "name": "cabin roof",
     "sym": "C",
     "color": "i_green",
-    "see_cost": 5,
+    "see_cost": "none",
     "extras": "build"
   },
   {
@@ -333,7 +329,7 @@
     "vision_levels": "isolated_building",
     "copy-from": "generic_forest",
     "color": "light_green",
-    "see_cost": 4,
+    "see_cost": "high",
     "extend": { "flags": [ "SOURCE_GUN", "SOURCE_AMMO" ] }
   },
   {
@@ -344,7 +340,7 @@
     "vision_levels": "isolated_building",
     "copy-from": "generic_forest",
     "color": "light_green",
-    "see_cost": 4,
+    "see_cost": "high",
     "extend": { "flags": [ "SOURCE_GUN", "SOURCE_AMMO" ] }
   },
   {
@@ -354,7 +350,7 @@
     "vision_levels": "isolated_building",
     "copy-from": "generic_forest",
     "sym": "L",
-    "see_cost": 4,
+    "see_cost": "high",
     "color": "light_green"
   },
   {
@@ -364,7 +360,7 @@
     "vision_levels": "roof_or_air",
     "copy-from": "generic_forest",
     "sym": "L",
-    "see_cost": 4,
+    "see_cost": "none",
     "color": "light_green"
   },
   {
@@ -379,7 +375,7 @@
     "vision_levels": "underground_dirt",
     "copy-from": "generic_forest",
     "sym": "L",
-    "see_cost": 4,
+    "see_cost": "full_high",
     "color": "light_green"
   },
   {
@@ -394,7 +390,7 @@
     "vision_levels": "forested",
     "sym": "F",
     "color": "green",
-    "see_cost": 4
+    "see_cost": "spaced_high"
   },
   {
     "type": "overmap_terrain",
@@ -403,7 +399,7 @@
     "name": "forest",
     "sym": "F",
     "color": "green",
-    "see_cost": 4
+    "see_cost": "spaced_high"
   },
   {
     "type": "overmap_terrain",
@@ -412,7 +408,7 @@
     "name": "ruined cabin",
     "sym": "F",
     "color": "green",
-    "see_cost": 4,
+    "see_cost": "high",
     "flags": [ "RISK_LOW", "SOURCE_SAFETY" ]
   },
   {
@@ -422,7 +418,7 @@
     "name": "barn",
     "sym": "F",
     "color": "green",
-    "see_cost": 4,
+    "see_cost": "high",
     "flags": [ "RISK_LOW", "SOURCE_SAFETY" ]
   },
   {
@@ -432,7 +428,7 @@
     "name": "car corner",
     "sym": "F",
     "color": "green",
-    "see_cost": 4
+    "see_cost": "spaced_high"
   },
   {
     "type": "overmap_terrain",
@@ -441,7 +437,7 @@
     "name": "shipwreck",
     "sym": "w",
     "color": "red",
-    "see_cost": 4,
+    "see_cost": "spaced_high",
     "flags": [ "REQUIRES_PREDECESSOR" ]
   },
   {
@@ -451,7 +447,7 @@
     "name": "crater",
     "sym": "o",
     "color": "red",
-    "see_cost": 2,
+    "see_cost": "all_clear",
     "flags": [ "NO_ROTATE", "REQUIRES_PREDECESSOR" ]
   },
   {
@@ -475,7 +471,7 @@
     "name": "radio tower",
     "sym": "X",
     "color": "light_gray",
-    "see_cost": 2
+    "see_cost": "spaced_high"
   },
   {
     "type": "overmap_terrain",
@@ -493,7 +489,7 @@
     "name": "radio tower",
     "sym": "X",
     "color": "light_gray",
-    "see_cost": 2,
+    "see_cost": "high",
     "mondensity": 2,
     "spawns": { "group": "GROUP_WASP_GUARD", "population": [ 3, 8 ], "chance": 100 }
   },
@@ -503,12 +499,14 @@
     "vision_levels": "isolated_tower",
     "name": "wind turbine",
     "sym": "o",
+    "see_cost": "medium",
     "color": "light_gray"
   },
   {
     "type": "overmap_terrain",
     "id": [ "wind_turbine_nacelle" ],
     "vision_levels": "isolated_tower",
+    "see_cost": "medium",
     "name": "wind turbine",
     "sym": "Y",
     "color": "white"
@@ -529,7 +527,7 @@
     "name": "wooden fort",
     "sym": "+",
     "color": "brown",
-    "see_cost": 5,
+    "see_cost": "high",
     "//": "RISK_LOW due to risk and safety being based on NPCs perception of what the area may contain",
     "flags": [ "RISK_LOW", "SOURCE_SAFETY" ]
   },
@@ -552,7 +550,7 @@
     "name": "farm",
     "sym": "#",
     "color": "brown",
-    "see_cost": 5,
+    "see_cost": "high",
     "//": "RISK_LOW due to risk and safety being based on NPCs perception of what the area may contain",
     "flags": [ "RISK_LOW", "SOURCE_SAFETY" ]
   },
@@ -560,6 +558,7 @@
     "type": "overmap_terrain",
     "id": "debug_ramps",
     "name": "ramp testing area",
+    "see_cost": "none",
     "sym": "%",
     "color": "white",
     "flags": [ "NO_ROTATE", "SHOULD_NOT_SPAWN" ]
@@ -569,6 +568,7 @@
     "//": "Pseudo terrain used for Tacoma companion raids",
     "id": "looted_house",
     "name": "looted house",
+    "see_cost": "none",
     "sym": "%",
     "color": "white",
     "flags": [ "NO_ROTATE", "SHOULD_NOT_SPAWN" ]
@@ -578,6 +578,7 @@
     "//": "Pseudo terrain used for Tacoma companion raids",
     "id": "looted_house_roof",
     "name": "looted house roof",
+    "see_cost": "none",
     "sym": "%",
     "color": "white",
     "flags": [ "NO_ROTATE", "SHOULD_NOT_SPAWN" ]
@@ -587,6 +588,7 @@
     "//": "Pseudo terrain used for Tacoma companion raids",
     "id": "looted_house_basement",
     "name": "looted house basement",
+    "see_cost": "none",
     "sym": "%",
     "color": "white",
     "flags": [ "NO_ROTATE", "SHOULD_NOT_SPAWN" ]
@@ -596,6 +598,7 @@
     "//": "Pseudo terrain used for Tacoma companion raids",
     "id": "looted_hospital",
     "name": "looted hospital",
+    "see_cost": "none",
     "sym": "%",
     "color": "white",
     "flags": [ "NO_ROTATE", "SHOULD_NOT_SPAWN" ]
@@ -605,6 +608,7 @@
     "//": "Pseudo terrain used for Tacoma companion raids",
     "id": "looted_hospital_roof",
     "name": "looted hospital roof",
+    "see_cost": "none",
     "sym": "%",
     "color": "white",
     "flags": [ "NO_ROTATE", "SHOULD_NOT_SPAWN" ]
@@ -616,7 +620,7 @@
     "name": "campsite",
     "sym": "+",
     "color": "green",
-    "see_cost": 5,
+    "see_cost": "spaced_high",
     "spawns": { "group": "GROUP_FOREST", "population": [ 0, 1 ], "chance": 13 },
     "flags": [ "RISK_LOW", "SOURCE_SAFETY", "SOURCE_FOOD" ]
   },
@@ -627,7 +631,7 @@
     "vision_levels": "isolated_building",
     "sym": "+",
     "color": "light_green",
-    "see_cost": 5,
+    "see_cost": "spaced_high",
     "spawns": { "group": "GROUP_FOREST", "population": [ 0, 1 ], "chance": 13 },
     "flags": [ "RISK_LOW", "SOURCE_SAFETY" ]
   },
@@ -638,7 +642,7 @@
     "name": "incomplete cabin roof",
     "sym": "+",
     "color": "light_green",
-    "see_cost": 5,
+    "see_cost": "none",
     "flags": [ "RISK_LOW", "SOURCE_SAFETY" ]
   },
   {
@@ -648,7 +652,7 @@
     "name": "field campsite",
     "sym": "+",
     "color": "light_green",
-    "see_cost": 5,
+    "see_cost": "spaced_high",
     "spawns": { "group": "GROUP_FOREST", "population": [ 0, 1 ], "chance": 13 },
     "flags": [ "RISK_LOW", "SOURCE_SAFETY", "SOURCE_FOOD" ]
   },
@@ -659,7 +663,7 @@
     "vision_levels": "single_water",
     "sym": ".",
     "color": "blue",
-    "see_cost": 5,
+    "see_cost": "none",
     "mondensity": 2
   },
   {
@@ -669,7 +673,7 @@
     "vision_levels": "single_water",
     "sym": ".",
     "color": "light_blue",
-    "see_cost": 5,
+    "see_cost": "none",
     "mondensity": 1
   },
   {
@@ -679,7 +683,7 @@
     "name": "swamp shack",
     "sym": "+",
     "color": "i_cyan",
-    "see_cost": 5,
+    "see_cost": "high",
     "flags": [ "SOURCE_SAFETY", "SOURCE_FOOD" ]
   },
   {
@@ -689,7 +693,7 @@
     "vision_levels": "blends_till_details",
     "sym": "+",
     "color": "green",
-    "see_cost": 5,
+    "see_cost": "spaced_high",
     "flags": [ "REQUIRES_PREDECESSOR" ]
   },
   {
@@ -699,7 +703,7 @@
     "name": "swamp shack roof",
     "sym": "+",
     "color": "i_cyan",
-    "see_cost": 5
+    "see_cost": "none"
   },
   {
     "type": "overmap_terrain",
@@ -708,7 +712,7 @@
     "name": "drug lab",
     "sym": "^",
     "color": "brown",
-    "see_cost": 5
+    "see_cost": "high"
   },
   {
     "type": "overmap_terrain",
@@ -717,7 +721,7 @@
     "name": "drug lab roof",
     "sym": "^",
     "color": "brown",
-    "see_cost": 5
+    "see_cost": "none"
   },
   {
     "type": "overmap_terrain",
@@ -726,7 +730,7 @@
     "vision_levels": "blends_till_details",
     "sym": "+",
     "color": "i_green",
-    "see_cost": 5,
+    "see_cost": "spaced_high",
     "mondensity": 2,
     "flags": [ "RISK_LOW", "SOURCE_SAFETY", "SOURCE_FOOD" ]
   },
@@ -737,7 +741,7 @@
     "name": "campground roof",
     "sym": "+",
     "color": "i_green",
-    "see_cost": 5,
+    "see_cost": "none",
     "mondensity": 2
   },
   {
@@ -747,7 +751,7 @@
     "vision_levels": "isolated_building",
     "sym": "+",
     "color": "i_green",
-    "see_cost": 5,
+    "see_cost": "high",
     "flags": [ "RISK_LOW", "SOURCE_SAFETY", "SOURCE_FOOD" ]
   },
   {
@@ -769,7 +773,7 @@
     "name": "church retreat roof",
     "sym": "+",
     "color": "i_green",
-    "see_cost": 5
+    "see_cost": "none"
   },
   {
     "type": "overmap_terrain",
@@ -788,7 +792,7 @@
     "name": "garage",
     "sym": "O",
     "color": "white",
-    "see_cost": 5,
+    "see_cost": "high",
     "flags": [ "SOURCE_SAFETY", "SOURCE_FOOD" ]
   },
   {
@@ -797,6 +801,7 @@
     "vision_levels": "natural_depression",
     "sym": "O",
     "color": "brown",
+    "see_cost": "all_clear",
     "flags": [ "REQUIRES_PREDECESSOR" ]
   },
   {
@@ -835,7 +840,7 @@
     "name": "irradiation plant",
     "sym": "i",
     "color": "light_green",
-    "see_cost": 5
+    "see_cost": "full_high"
   },
   {
     "type": "overmap_terrain",
@@ -844,7 +849,7 @@
     "name": "irradiation plant",
     "sym": "I",
     "color": "light_green",
-    "see_cost": 5,
+    "see_cost": "full_high",
     "flags": [ "SIDEWALK" ]
   },
   {
@@ -863,7 +868,7 @@
     "vision_levels": "roof_or_air",
     "sym": "i",
     "color": "light_green",
-    "see_cost": 5
+    "see_cost": "none"
   },
   {
     "type": "overmap_terrain",
@@ -872,7 +877,7 @@
     "name": "irradiation plant",
     "sym": "I",
     "color": "light_green",
-    "see_cost": 5
+    "see_cost": "none"
   },
   {
     "type": "overmap_terrain",
@@ -899,7 +904,7 @@
     "sym": ".",
     "color": "brown",
     "vision_levels": "open_land",
-    "see_cost": 1
+    "see_cost": "medium"
   },
   {
     "type": "overmap_terrain",
@@ -917,7 +922,7 @@
     "vision_levels": "wreckage",
     "sym": "A",
     "color": "red",
-    "see_cost": 5
+    "see_cost": "spaced_high"
   },
   {
     "type": "overmap_terrain",
@@ -926,7 +931,7 @@
     "name": "wreckage",
     "sym": "A",
     "color": "light_gray",
-    "see_cost": 4
+    "see_cost": "high"
   },
   {
     "type": "overmap_terrain",
@@ -944,7 +949,7 @@
     "sym": ",",
     "color": "brown",
     "vision_levels": "open_land",
-    "see_cost": 2
+    "see_cost": "low"
   },
   {
     "type": "overmap_terrain",
@@ -953,7 +958,7 @@
     "name": "open air",
     "sym": ".",
     "color": "blue",
-    "see_cost": 5
+    "see_cost": "none"
   },
   {
     "type": "overmap_terrain",
@@ -962,7 +967,7 @@
     "vision_levels": "underground_dirt",
     "sym": "#",
     "color": "brown",
-    "see_cost": 5,
+    "see_cost": "full_high",
     "flags": [ "NO_ROTATE", "RISK_EXTREME" ]
   },
   {
@@ -972,7 +977,7 @@
     "name": "ventilation shaft",
     "sym": "%",
     "color": "dark_gray",
-    "see_cost": 5,
+    "see_cost": "full_high",
     "flags": [ "NO_ROTATE", "RISK_EXTREME" ]
   },
   {
@@ -980,6 +985,7 @@
     "abstract": "generic_bastion_fort",
     "vision_levels": "large_building",
     "name": "bastion fort",
+    "see_cost": "full_high",
     "sym": "F",
     "color": "red"
   },
@@ -1000,7 +1006,6 @@
       "fort_4c"
     ],
     "copy-from": "generic_bastion_fort",
-    "see_cost": 5,
     "flags": [ "REQUIRES_PREDECESSOR" ]
   },
   {
@@ -1020,7 +1025,7 @@
       "fort_4c_1"
     ],
     "copy-from": "generic_bastion_fort",
-    "see_cost": 2
+    "see_cost": "none"
   },
   {
     "type": "overmap_terrain",
@@ -1029,7 +1034,7 @@
     "name": "mound of dirt",
     "sym": "O",
     "color": "brown",
-    "see_cost": 2
+    "see_cost": "spaced_high"
   },
   {
     "type": "overmap_terrain",
@@ -1039,7 +1044,7 @@
     "sym": "#",
     "color": "white",
     "flags": [ "NO_ROTATE" ],
-    "see_cost": 5
+    "see_cost": "opaque"
   },
   {
     "type": "overmap_terrain",
@@ -1048,7 +1053,7 @@
     "vision_levels": "blends_till_details",
     "sym": "S",
     "color": "white",
-    "see_cost": 3,
+    "see_cost": "medium",
     "flags": [ "RISK_EXTREME" ]
   },
   {
@@ -1059,12 +1064,13 @@
     "looks_like": "cave_underground",
     "sym": "0",
     "color": "light_gray",
-    "see_cost": 5
+    "see_cost": "full_high"
   },
   {
     "type": "overmap_terrain",
     "id": [ "chemical_lab_ocu", "chemical_lab_roof_ocu" ],
     "vision_levels": "isolated_building",
+    "see_cost": "high",
     "name": "small cabin",
     "sym": "C",
     "color": "i_green",
@@ -1074,6 +1080,7 @@
     "type": "overmap_terrain",
     "id": [ "smallscrapyard_ocu" ],
     "vision_levels": "isolated_building",
+    "see_cost": "high",
     "name": "scrap yard",
     "sym": "s",
     "color": "red"
@@ -1082,6 +1089,7 @@
     "type": "overmap_terrain",
     "id": [ "smallscrapyard_ocu_roof" ],
     "vision_levels": "roof_or_air",
+    "see_cost": "none",
     "name": "scrap yard roof",
     "sym": "s",
     "color": "red"
@@ -1090,6 +1098,7 @@
     "type": "overmap_terrain",
     "id": [ "lumbermill_0_0_ocu", "lumbermill_0_1_ocu", "lumbermill_1_0_ocu", "lumbermill_1_1_ocu" ],
     "vision_levels": "isolated_building",
+    "see_cost": "high",
     "name": "lumbermill",
     "sym": "L",
     "color": "i_green",
@@ -1121,7 +1130,7 @@
     "name": "bee hive",
     "sym": "8",
     "color": "yellow",
-    "see_cost": 3,
+    "see_cost": "full_high",
     "flags": [ "RISK_EXTREME" ]
   },
   {

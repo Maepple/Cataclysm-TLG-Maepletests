@@ -6,7 +6,7 @@
     "name": "slime pit",
     "sym": "~",
     "color": "light_green",
-    "see_cost": 2,
+    "see_cost": "all_clear",
     "flags": [ "KNOWN_DOWN", "NO_ROTATE" ]
   },
   {
