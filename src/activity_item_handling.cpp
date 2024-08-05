@@ -3531,8 +3531,8 @@ int get_auto_consume_moves( Character &you, const bool food )
                 }
             }
         } else {
-            for( item &it : here.i_at( here.getlocal( loc ) ) ) {
-                item_location i_loc( map_cursor( here.bub_from_abs( loc ) ), &it );
+            for( item &it : here.i_at( here.bub_from_abs( loc ) ) ) {
+                item_location i_loc( map_cursor( loc ), &it );
                 visit_item_contents( i_loc, visit );
             }
         }

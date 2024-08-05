@@ -1166,6 +1166,7 @@
     "name": "sand pit",
     "sym": "#",
     "color": "yellow",
+    "see_cost": "high",
     "vision_levels": "blends_till_outlines",
     "flags": [ "REQUIRES_PREDECESSOR" ]
   }
