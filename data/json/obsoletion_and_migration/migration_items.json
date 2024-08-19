@@ -792,5 +792,10 @@
     "id": "stabilizer_mod",
     "type": "MIGRATION",
     "replace": "rail_laser_sight"
+  },
+    {
+    "id": "ar_pistol",
+    "type": "MIGRATION",
+    "replace": "modular_ar_pistol"
   }
 ]

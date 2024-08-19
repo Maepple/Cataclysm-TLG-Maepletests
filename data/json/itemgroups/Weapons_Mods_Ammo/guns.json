@@ -331,7 +331,7 @@
     "items": [
       { "item": "af2011a1_38super", "prob": 25 },
       { "item": "draco", "prob": 30 },
-      { "item": "ar_pistol", "prob": 35 },
+      { "group": "ar_pistol", "prob": 35 },
       { "item": "plr16", "prob": 3 },
       { "group": "guns_pistol_collectible", "prob": 1 },
       { "item": "minidraco556", "prob": 30 }
@@ -2095,7 +2095,7 @@
     "items": [
       { "group": "guns_improvised", "prob": 50 },
       { "group": "modular_ar15", "prob": 13, "charges": [ 0, 30 ] },
-      { "item": "ar_pistol", "prob": 2, "charges": [ 0, 30 ] },
+      { "group": "ar_pistol", "prob": 2, "charges": [ 0, 30 ] },
       { "item": "plr16", "prob": 1, "charges": [ 0, 30 ] },
       { "item": "mossberg_500", "prob": 10, "charges": [ 0, 6 ] },
       { "item": "remington_870", "prob": 11, "charges": [ 0, 5 ] },
