@@ -1032,10 +1032,7 @@ uilist::handle_mouse_result_t uilist::handle_mouse( const input_context &ctxt,
 void uilist::query( bool loop, int timeout, bool allow_unfiltered_hotkeys )
 {
 #if defined(__ANDROID__)
-    bool auto_pos = w_x_setup.fun == nullptr && w_y_setup.fun == nullptr &&
-                    w_width_setup.fun == nullptr && w_height_setup.fun == nullptr;
-
-    if( get_option<bool>( "ANDROID_NATIVE_UI" ) && !entries.empty() && auto_pos ) {
+    if( get_option<bool>( "ANDROID_NATIVE_UI" ) && !entries.empty() && !desired_bounds ) {
         if( !started ) {
             calc_data();
             started = true;
