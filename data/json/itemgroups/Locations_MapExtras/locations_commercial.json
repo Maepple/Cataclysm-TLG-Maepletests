@@ -548,7 +548,7 @@
       [ "bagh_nakha", 2 ],
       [ "leathersandals", 10 ],
       [ "maid_hat", 3 ],
-      [ "miner_hat", 3 ],
+      { "group": "hat_hard_flashlight", "prob": 3 },
       [ "grapnel", 1 ],
       [ "razor_blade", 6 ],
       [ "scabbard", 4 ],

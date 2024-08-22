@@ -797,5 +797,10 @@
     "id": "ar_pistol",
     "type": "MIGRATION",
     "replace": "modular_ar_pistol"
-  }
+  },
+    {
+    "id": "miner_hat",
+    "type": "MIGRATION",
+    "replace": "hat_hard"
+    }
 ]
