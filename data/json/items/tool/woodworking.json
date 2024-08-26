@@ -92,6 +92,7 @@
     "use_action": {
       "type": "effect_on_conditions",
       "menu_text": "Turn off",
+      "ammo_scale": 0,
       "effect_on_conditions": [
         {
           "id": "EOC_toolweapon_deactivate__chainsaw",
@@ -178,6 +179,7 @@
     "use_action": {
       "type": "effect_on_conditions",
       "menu_text": "Turn off",
+      "ammo_scale": 0,
       "effect_on_conditions": [
         {
           "id": "EOC_toolweapon_deactivate__polesaw",
@@ -265,6 +267,7 @@
     "use_action": {
       "type": "effect_on_conditions",
       "menu_text": "Turn off",
+      "ammo_scale": 0,
       "effect_on_conditions": [
         {
           "id": "EOC_toolweapon_deactivate__circsaw",
@@ -435,6 +438,7 @@
     "use_action": {
       "type": "effect_on_conditions",
       "menu_text": "Turn off",
+      "ammo_scale": 0,
       "effect_on_conditions": [
         {
           "id": "EOC_toolweapon_deactivate__elec_chainsaw",
@@ -506,6 +510,7 @@
       {
         "type": "effect_on_conditions",
         "menu_text": "Turn off",
+        "ammo_scale": 0,
         "effect_on_conditions": [
           {
             "id": "EOC_toolweapon_deactivate__elec_chainsaw_cord",
