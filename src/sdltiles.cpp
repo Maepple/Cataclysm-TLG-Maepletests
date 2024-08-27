@@ -3676,8 +3676,9 @@ static void CheckMessages()
         try_sdl_update();
     }
     if( quit ) {
-        catacurses::endwin();
-        exit( 0 );
+        if( g->uquit != quit_status::QUIT_EXIT_PENDING ) {
+            g->uquit = quit_status::QUIT_EXIT;
+        }
     }
 }
 
