@@ -11343,10 +11343,10 @@ bool Character::can_sleep()
         sleepy -= 4;
     }
     sleepy = enchantment_cache->modify_value( enchant_vals::mod::SLEEPY, sleepy );
-    if( get_sleepiness() < sleepiness_levels::TIRED + 1 ) {
-        sleepy -= int( ( sleepiness_levels::TIRED + 1 - get_sleepiness() ) / 4 );
+    if( get_fatigue() < fatigue_levels::TIRED + 1 ) {
+        sleepy -= int( ( fatigue_levels::TIRED + 1 - get_fatigue() ) / 4 );
     } else {
-        sleepy += int( ( get_sleepiness() - sleepiness_levels::TIRED + 1 ) / 16 );
+        sleepy += int( ( get_fatigue() - fatigue_levels::TIRED + 1 ) / 16 );
     }
     const int current_stim = get_stim();
     if( current_stim > 0 || !has_trait( trait_INSOMNIA ) ) {

@@ -986,8 +986,8 @@ class Character : public Creature, public visitable
         /** Equalizes heat between body parts */
         void temp_equalizer( const bodypart_id &bp1, const bodypart_id &bp2 );
 
-        /** Returns focus equilibrium cap due to sleepiness **/
-        int focus_equilibrium_sleepiness_cap( int equilibrium ) const;
+        /** Returns focus equilibrium cap due to fatigue **/
+        int focus_equilibrium_fatigue_cap( int equilibrium ) const;
         /** Uses morale and other factors to return the character's focus target goto value */
         int calc_focus_equilibrium( bool ignore_pain = false ) const;
         /** Calculates actual focus gain/loss value from focus equilibrium*/
