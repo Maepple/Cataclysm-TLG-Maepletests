@@ -8688,7 +8688,7 @@ std::optional<int> iuse::disassemble( Character *p, item *it, const tripoint & )
     return 0;
 }
 
-std::optional<int> iuse::postable( Character *p, item *it, const tripoint & )
+std::optional<int> iuse::post_up( Character *p, item *it, const tripoint & )
 {
     map &here = get_map();
 
