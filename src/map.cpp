@@ -8925,50 +8925,52 @@ void map::loadn( const point &grid, bool update_vehicles )
         set_floor_cache_dirty( z );
         set_pathfinding_cache_dirty( z );
         tmpsub = MAPBUFFER.lookup_submap( pos );
-        setsubmap( get_nonant( tripoint_rel_sm{ grid.x, grid.y, z } ), tmpsub );
-        if( !tmpsub->active_items.empty() ) {
-            submaps_with_active_items_dirty.emplace( pos );
-        }
-        if( tmpsub->field_count > 0 ) {
-            get_cache( z ).field_cache.set( grid.x + grid.y * MAPSIZE );
-        }
-
-        // Destroy bugged no-part vehicles
-        auto &veh_vec = tmpsub->vehicles;
-        for( auto iter = veh_vec.begin(); iter != veh_vec.end(); ) {
-            vehicle *veh = iter->get();
-            if( veh->part_count() > 0 ) {
-                // Always fix submap coordinates for easier Z-level-related operations
-                veh->sm_pos = { grid, z };
-                iter++;
-                if( main_inbounds ) {
-                    _main_requires_cleanup = true;
-                }
-            } else {
-                if( veh->tracking_on ) {
-                    overmap_buffer.remove_vehicle( veh );
-                }
-                dirty_vehicle_list.erase( veh );
-                iter = veh_vec.erase( iter );
+        if( tmpsub ) {
+            setsubmap( get_nonant( tripoint_rel_sm{ grid.x, grid.y, z } ), tmpsub );
+            if( !tmpsub->active_items.empty() ) {
+                submaps_with_active_items_dirty.emplace( pos );
             }
-        }
+            if( tmpsub->field_count > 0 ) {
+                get_cache( z ).field_cache.set( grid.x + grid.y * MAPSIZE );
+            }
 
-        // Update vehicle data
-        if( update_vehicles ) {
-            level_cache &map_cache = get_cache( z );
-            for( const auto &veh : tmpsub->vehicles ) {
-                // Only add if not tracking already.
-                if( map_cache.vehicle_list.find( veh.get() ) == map_cache.vehicle_list.end() ) {
-                    map_cache.vehicle_list.insert( veh.get() );
-                    if( !veh->loot_zones.empty() ) {
-                        map_cache.zone_vehicles.insert( veh.get() );
+            // Destroy bugged no-part vehicles
+            auto &veh_vec = tmpsub->vehicles;
+            for( auto iter = veh_vec.begin(); iter != veh_vec.end(); ) {
+                vehicle *veh = iter->get();
+                if( veh->part_count() > 0 ) {
+                    // Always fix submap coordinates for easier Z-level-related operations
+                    veh->sm_pos = { grid, z };
+                    iter++;
+                    if( main_inbounds ) {
+                        _main_requires_cleanup = true;
+                    }
+                } else {
+                    if( veh->tracking_on ) {
+                        overmap_buffer.remove_vehicle( veh );
+                    }
+                    dirty_vehicle_list.erase( veh );
+                    iter = veh_vec.erase( iter );
+                }
+            }
+
+            // Update vehicle data
+            if( update_vehicles ) {
+                level_cache &map_cache = get_cache( z );
+                for( const auto &veh : tmpsub->vehicles ) {
+                    // Only add if not tracking already.
+                    if( map_cache.vehicle_list.find( veh.get() ) == map_cache.vehicle_list.end() ) {
+                        map_cache.vehicle_list.insert( veh.get() );
+                        if( !veh->loot_zones.empty() ) {
+                            map_cache.zone_vehicles.insert( veh.get() );
+                        }
                     }
                 }
             }
-        }
 
-        if( zlevels ) {
-            add_tree_tops( tripoint_rel_sm( grid.x, grid.y, z ) );
+            if( zlevels ) {
+                add_tree_tops( tripoint_rel_sm( grid.x, grid.y, z ) );
+            }
         }
     }
 }
