@@ -616,7 +616,7 @@ int melee_actor::do_grab( monster &z, Creature *target, bodypart_id bp_id ) cons
             std::set<tripoint> intersect;
             std::set_intersection( neighbors.begin(), neighbors.end(), candidates.begin(), candidates.end(),
                                    std::inserter( intersect, intersect.begin() ) );
-            if( intersect.size() == 0 ) {
+            if( intersect.empty() ) {
                 return 0;
             }
             std::set<tripoint>::iterator intersect_iter = intersect.begin();
