@@ -1396,6 +1396,7 @@ void activity_handlers::butcher_finish( player_activity *act, Character *you )
         return;
     }
 
+    bool remove = false;
     //end messages and effects
     switch( action ) {
         case butcher_type::QUARTER:
@@ -1404,7 +1405,7 @@ void activity_handlers::butcher_finish( player_activity *act, Character *you )
             add_msg( m_good, SNIPPET.random_from_category( "harvest_drop_default_quick_butcher" ).value_or(
                          translation() ).translated() );
             // Remove the target from the map
-            target.remove_item();
+            remove = true;
             if( !act->targets.empty() ) {
                 act->targets.pop_back();
             }
@@ -1414,7 +1415,7 @@ void activity_handlers::butcher_finish( player_activity *act, Character *you )
                          translation() ).translated() );
 
             // Remove the target from the map
-            target.remove_item();
+            remove = true;
             if( !act->targets.empty() ) {
                 act->targets.pop_back();
             }
@@ -1467,7 +1468,7 @@ void activity_handlers::butcher_finish( player_activity *act, Character *you )
                          translation() ).translated() );
 
             // Remove the target from the map
-            target.remove_item();
+            remove = true;
             if( !act->targets.empty() ) {
                 act->targets.pop_back();
             }
@@ -1490,6 +1491,11 @@ void activity_handlers::butcher_finish( player_activity *act, Character *you )
 
     get_event_bus().send<event_type::character_butchered_corpse>( you->getID(),
             corpse_item.get_mtype()->id, act->id().str() );
+
+    if( remove ) {
+        target.remove_item();
+    }
+
 
     // Ready to move on to the next item, if there is one (for example if multibutchering)
     act->index = true;
