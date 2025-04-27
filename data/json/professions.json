@@ -664,10 +664,8 @@
           { "item": "gloves_light" },
           { "item": "hat_ball" },
           { "item": "duffelbag" },
-          { "item": "backpack" },
           { "item": "long_underpants" },
           { "item": "boots" },
-          { "item": "socks_wool" },
           { "item": "socks" },
           { "item": "hoodie" },
           { "item": "folding_poncho" },
@@ -679,9 +677,7 @@
           { "group": "charged_matches" },
           { "item": "tshirt" }
         ]
-      },
-      "male": { "entries": [ { "item": "boxer_briefs" } ] },
-      "female": { "entries": [ { "item": "bra" }, { "item": "panties" } ] }
+      }
     }
   },
   {
