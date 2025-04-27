@@ -133,7 +133,8 @@ std::string get_ascii_tile_id( const uint32_t sym, const int FG, const int BG )
                         } );
 }
 
-auto simple_point_hash = []( const auto & p ) {
+auto simple_point_hash = []( const auto &p )
+{
     return p.x + p.y * 65536;
 };
 
