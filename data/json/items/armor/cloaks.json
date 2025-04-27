@@ -17,6 +17,7 @@
     "material_thickness": 0.1,
     "environmental_protection": 1,
     "flags": [ "OVERSIZE", "BELTED", "ALLOWS_NATURAL_ATTACKS", "POCKETS", "COLLAR" ],
+    "use_action": [ "POST_UP" ],
     "armor": [
       { "encumbrance": 13, "coverage": 60, "covers": [ "torso", "arm_l", "arm_r" ] },
       {
