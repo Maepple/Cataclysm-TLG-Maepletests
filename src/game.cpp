@@ -12533,12 +12533,25 @@ void game::update_overmap_seen()
         const float multiplier = trigdist ? std::sqrt( h_squared ) / max_delta : 1;
         const std::vector<tripoint_abs_omt> line = line_to( ompos, p );
         float sight_points = dist;
-        for( auto it = line.begin();
-             it != line.end() && sight_points >= 0; ++it ) {
+        bool can_see = false;
+        for( auto it = line.begin(); it != line.end(); ++it ) {
             const oter_id &ter = overmap_buffer.ter( *it );
-            sight_points -= static_cast<int>( ter->get_see_cost() ) * multiplier;
+            const int see_cost = static_cast<int>( ter->get_see_cost() );
+
+            if( see_cost >= 5 ) {
+                break; // Solid wall blocks sight
+            }
+
+            sight_points -= see_cost * multiplier;
+            if( sight_points < 0 ) {
+                break;
+            }
+            if( *it == p ) {
+                can_see = true;
+                break;
+            }
         }
-        if( sight_points >= 0 ) {
+        if( can_see ) {
             tripoint_abs_omt seen( p );
             do {
                 overmap_buffer.set_seen( seen, true );
