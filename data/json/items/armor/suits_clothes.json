@@ -265,7 +265,7 @@
   {
     "id": "jumpsuit_long_xl",
     "type": "ARMOR",
-    "name": { "str": "long_sleeved jumpsuit" },
+    "name": { "str": "long-sleeved jumpsuit" },
     "copy-from": "jumpsuit_long",
     "proportional": { "weight": 1.125, "volume": 1.13, "price": 1.25 },
     "extend": { "flags": [ "OVERSIZE", "PREFIX_XL" ] }
@@ -273,7 +273,7 @@
   {
     "id": "jumpsuit_long_xs",
     "type": "ARMOR",
-    "name": { "str": "long_sleeved jumpsuit" },
+    "name": { "str": "long-sleeved jumpsuit" },
     "copy-from": "jumpsuit_long",
     "proportional": { "weight": 0.75, "volume": 0.75, "price": 0.5 },
     "extend": { "flags": [ "UNDERSIZE", "PREFIX_XS" ] }

@@ -61,7 +61,7 @@
     "time": "60 m",
     "difficulty": 2,
     "book_learn": [ [ "atomic_survival", 2 ], [ "manual_survival", 2 ], [ "textbook_survival", 2 ], [ "mag_survival", 2 ] ],
-    "using": [ [ "liquid_rubber", 18 ] ],
+    "tools": [ [ [ "rubber_spray_can", 18 ] ] ],
     "components": [ [ [ "sheet", 1 ] ] ]
   },
   {

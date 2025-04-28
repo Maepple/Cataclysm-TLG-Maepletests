@@ -658,7 +658,7 @@
     "longest_side": "21 cm",
     "price": "10 USD",
     "price_postapoc": "50 cent",
-    "material": [ "aluminum", "soft_rubber" ],
+    "material": [ "aluminum" ],
     "symbol": ";",
     "color": "light_gray",
     "pocket_data": [ { "pocket_type": "MAGAZINE", "ammo_restriction": { "liquid_rubber_spray": 10 }, "watertight": true, "rigid": true } ],
