@@ -609,7 +609,7 @@
       ],
       [ [ "duct_tape", 135 ] ]
     ],
-    "tools": [ [ [ "liquid_rubber_spray", 10]]],
+    "tools": [ [ [ rubber_spray_can", 10]]],
     "proficiencies": [
       { "proficiency": "prof_polymerworking" },
       { "proficiency": "prof_closures" },
@@ -622,7 +622,7 @@
     "copy-from": "longcoat_survivor",
     "time": "12 h 10 m",
     "using": [ [ "sewing_kevlar", 101 ], [ "tailoring_kevlar_fabric", 40 ] ],
-    "tools": [ [ [ "liquid_rubber_spray", 6 ] ] ],
+    "tools": [ [ [ "rubber_spray_can", 6 ] ] ],
     "components": [
       [ [ "longcoat_xs", 1 ] ],
       [ [ "sheet_kevlar", 70 ], [ "sheet_kevlar_patchwork", 70 ] ],
@@ -647,7 +647,7 @@
     "copy-from": "longcoat_survivor",
     "time": "13 h 40 m",
     "using": [ [ "sewing_kevlar", 175 ], [ "tailoring_kevlar_fabric", 75 ] ],
-    "tools": [ [ [ "liquid_rubber_spray", 14 ] ] ],
+    "tools": [ [ [ "rubber_spray_can", 14 ] ] ],
     "components": [
       [ [ "longcoat_xl", 1 ] ],
       [ [ "sheet_kevlar", 80 ], [ "sheet_kevlar_patchwork", 80 ] ],
