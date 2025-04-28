@@ -8384,16 +8384,27 @@ void Character::apply_damage( Creature *source, bodypart_id hurt, int dam,
         hurt = body_part_torso;
     }
 
-    if( !hurt->has_flag( json_flag_BIONIC_LIMB ) ) {
-        mod_pain( dam / 2 );
-    }
-
     const bodypart_id &part_to_damage = hurt->main_part;
 
     const int dam_to_bodypart = std::min( dam, get_part_hp_cur( part_to_damage ) );
 
     mod_part_hp_cur( part_to_damage, - dam_to_bodypart );
+
     get_event_bus().send<event_type::character_takes_damage>( getID(), dam_to_bodypart );
+
+    // Cap and scale our pain based on how injured our body part actually is.
+    // Prevents stubbing our toe 10 times from hurting worse than a gunshot wound and stops
+    // higher HP characters from getting more pain from the same relative injury level.
+    if( !hurt->has_flag( json_flag_BIONIC_LIMB ) && dam > 0 ) {
+        const int cur_pain = get_perceived_pain();
+        const int max_pain = max_injury_pain( hurt );
+        if( dam / 2 + cur_pain < max_pain ) {
+            const float pain_ratio = static_cast<float>(cur_pain) / max_pain;
+            mod_pain( static_cast<int>( ( dam / 2 ) * ( 1.0f - pain_ratio * pain_ratio ) ) );
+        } else if( dam / 2 + cur_pain > max_pain && cur_pain < max_pain ) {
+            mod_pain( max_pain - cur_pain );
+        }
+    }
 
     if( !weapon.is_null() && !can_wield( weapon ).success() &&
         can_drop( weapon ).success() ) {
@@ -12725,6 +12736,12 @@ void Character::mod_pain( int npain )
         npain = std::max( 0, npain );
     }
     Creature::mod_pain( npain );
+}
+
+int Character::max_injury_pain( bodypart_id part )
+{
+    // Always return at least 5 so chip damage still matters.
+    return 300 - ( 300 * ( get_part_hp_cur( part ) / get_part_hp_max( part ) ) );
 }
 
 void Character::set_pain( int npain )
