@@ -8399,7 +8399,7 @@ void Character::apply_damage( Creature *source, bodypart_id hurt, int dam,
         const int cur_pain = get_perceived_pain();
         const int max_pain = max_injury_pain( hurt );
         if( dam / 2 + cur_pain < max_pain ) {
-            const float pain_ratio = static_cast<float>(cur_pain) / max_pain;
+            const float pain_ratio = static_cast<float>( cur_pain ) / max_pain;
             mod_pain( static_cast<int>( ( dam / 2 ) * ( 1.0f - pain_ratio * pain_ratio ) ) );
         } else if( dam / 2 + cur_pain > max_pain && cur_pain < max_pain ) {
             mod_pain( max_pain - cur_pain );
@@ -12740,7 +12740,6 @@ void Character::mod_pain( int npain )
 
 int Character::max_injury_pain( bodypart_id part )
 {
-    // Always return at least 5 so chip damage still matters.
     return 300 - ( 300 * ( get_part_hp_cur( part ) / get_part_hp_max( part ) ) );
 }
 
