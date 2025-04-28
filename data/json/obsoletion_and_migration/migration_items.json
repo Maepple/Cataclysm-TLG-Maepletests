@@ -541,5 +541,20 @@
     "id": "bee_dress",
     "replace": "dress_costume_skimpy",
     "variant": "bee_dress"
+  },
+  {
+    "type": "MIGRATION",
+    "id": "plated_leather_armor_suit",
+    "replace": "armor_samurai"
+  },
+  {
+    "type": "MIGRATION",
+    "id": "plated_leather_armor_suit_xs",
+    "replace": "armor_samurai_xs"
+  },
+  {
+    "type": "MIGRATION",
+    "id": "plated_leather_armor_suit_xl",
+    "replace": "armor_samurai_xl"
   }
 ]
