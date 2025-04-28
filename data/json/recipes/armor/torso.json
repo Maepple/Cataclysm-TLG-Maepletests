@@ -609,7 +609,7 @@
       ],
       [ [ "duct_tape", 135 ] ]
     ],
-    "tools": [ [ [ rubber_spray_can", 10]]],
+    "tools": [ [ [ "rubber_spray_can", 10]]],
     "proficiencies": [
       { "proficiency": "prof_polymerworking" },
       { "proficiency": "prof_closures" },
