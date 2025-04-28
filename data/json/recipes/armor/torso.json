@@ -1558,7 +1558,7 @@
     "time": "10 h 20 m",
     "autolearn": true,
     "using": [ [ "sewing_kevlar", 75 ], [ "tailoring_kevlar_fabric", 20 ] ],
-    "tools": [ [ [ "liquid_rubber_spray", 8 ] ] ],
+    "tools": [ [ [ "rubber_spray_can", 8 ] ] ],
     "components": [
       [ [ "longcoat", 1 ], [ "sleeveless_longcoat", 1 ] ],
       [ [ "sheet_kevlar", 75 ], [ "sheet_kevlar_patchwork", 75 ] ],
@@ -1609,7 +1609,7 @@
     "time": "10 h 20 m",
     "autolearn": true,
     "using": [ [ "sewing_kevlar", 65 ], [ "tailoring_kevlar_fabric", 12 ] ],
-    "tools": [ [ [ "liquid_rubber_spray", 5 ] ] ],
+    "tools": [ [ [ "rubber_spray_can", 5 ] ] ],
     "components": [
       [ [ "longcoat_xs", 1 ], [ "sleeveless_longcoat_xs", 1 ] ],
       [ [ "sheet_kevlar", 60 ], [ "sheet_kevlar_patchwork", 60 ] ],
@@ -1660,7 +1660,7 @@
     "time": "11 h 20 m",
     "autolearn": true,
     "using": [ [ "sewing_kevlar", 100 ], [ "tailoring_kevlar_fabric", 20 ] ],
-    "tools": [ [ [ "liquid_rubber_spray", 12 ] ] ],
+    "tools": [ [ [ "rubber_spray_can", 12 ] ] ],
     "components": [
       [ [ "longcoat_xl", 1 ], [ "sleeveless_longcoat_xl", 1 ] ],
       [ [ "sheet_kevlar", 100 ], [ "sheet_kevlar_patchwork", 100 ] ],
