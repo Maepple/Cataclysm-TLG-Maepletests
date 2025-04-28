@@ -687,25 +687,25 @@ std::pair<std::string, nc_color> display::health_text_color( const Character &u 
     nc_color health_color = c_light_gray;
 
     if( health > character_health_category::great ) {
-        health_string = translate_marker( "Feel Great" );
+        health_string = translate_marker( "Thriving" );
         health_color = c_green;
     } else if( health > character_health_category::very_good ) {
-        health_string = translate_marker( "Feel Very Good" );
+        health_string = translate_marker( "Robust" );
         health_color = c_green;
     } else if( health > character_health_category::good ) {
-        health_string = translate_marker( "Feel Good" );
+        health_string = translate_marker( "Healthy" );
         health_color = c_green;
     } else if( health > character_health_category::fine ) {
-        health_string = translate_marker( "Feel Fine" );
+        health_string = translate_marker( "OK" );
         health_color = c_light_gray;
     } else if( health > character_health_category::bad ) {
-        health_string = translate_marker( "Feel Bad" );
+        health_string = translate_marker( "Unhealthy" );
         health_color = c_red;
     } else if( health > character_health_category::very_bad ) {
-        health_string = translate_marker( "Feel Very Bad" );
+        health_string = translate_marker( "Listless" );
         health_color = c_red;
     } else {
-        health_string = translate_marker( "Feel Awful" );
+        health_string = translate_marker( "Sickly" );
         health_color = c_red;
     }
     return std::make_pair( _( health_string ), health_color );
