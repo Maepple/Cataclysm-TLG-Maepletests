@@ -5618,7 +5618,7 @@ void play_with_pet_activity_actor::finish( player_activity &act, Character &who 
         if( !playstr.empty() ) {
             who.add_msg_if_player( m_good, playstr, pet_name );
         }
-        who.add_msg_if_player( m_good, _( "Your %s seems to enjoy the interaction, but you feel nothing." ),
+        who.add_msg_if_player( _( "Your %s seems to enjoy the interaction, but you feel nothing." ),
                                pet_name );
     }
     act.set_to_null();
