@@ -696,7 +696,7 @@ std::pair<std::string, nc_color> display::health_text_color( const Character &u 
         health_string = translate_marker( "Healthy" );
         health_color = c_green;
     } else if( health > character_health_category::fine ) {
-        health_string = translate_marker( "Average" );
+        health_string = translate_marker( "OK" );
         health_color = c_light_gray;
     } else if( health > character_health_category::bad ) {
         health_string = translate_marker( "Unhealthy" );

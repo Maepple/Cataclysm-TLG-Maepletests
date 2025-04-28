@@ -665,7 +665,6 @@ bool monexamine::pet_menu( monster &z )
                             pet_name );
         }
     }
-
     if( z.has_flag( mon_flag_CANPLAY ) ) {
         amenu.addentry( play_with_pet, true, 'y', _( "Play with %s" ), pet_name );
     }
@@ -679,7 +678,7 @@ bool monexamine::pet_menu( monster &z )
         bool available = true;
         if( season_of_year( calendar::turn ) == WINTER ) {
             amenu.addentry( shear, false, 'S',
-                            _( "This animal would freeze if you shear it during winter." ) );
+                            _( "This animal will freeze if you shear it during winter." ) );
             available = false;
         } else if( z.has_effect( effect_sheared ) ) {
             amenu.addentry( shear, false, 'S', _( "This animal is not ready to be sheared again yet." ) );

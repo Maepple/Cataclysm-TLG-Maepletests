@@ -272,6 +272,8 @@ static const ter_str_id ter_t_underbrush_harvested_spring( "t_underbrush_harvest
 static const ter_str_id ter_t_underbrush_harvested_summer( "t_underbrush_harvested_summer" );
 static const ter_str_id ter_t_underbrush_harvested_winter( "t_underbrush_harvested_winter" );
 
+static const trait_id trait_NUMB( "NUMB" );
+static const trait_id trait_PSYCHOPATH( "PSYCHOPATH" );
 static const trait_id trait_SCHIZOPHRENIC( "SCHIZOPHRENIC" );
 
 static const trap_str_id tr_ledge( "tr_ledge" );
@@ -1954,7 +1956,7 @@ bool read_activity_actor::player_read( avatar &you )
             // Fun bonus is no longer calculated here.
             learner->add_morale( morale_book,
                                  book_fun * 5, book_fun * 15,
-                                 1_hours, 30_minutes, true,
+                                 2_hours, 1_hours, true,
                                  book->type );
         }
 
@@ -2110,7 +2112,7 @@ bool read_activity_actor::npc_read( npc &learner )
         // Fun bonus is no longer calculated here.
         learner.add_morale( morale_book,
                             book_fun * 5, book_fun * 15,
-                            1_hours, 30_minutes, true,
+                            2_hours, 1_hours, true,
                             book->type );
     }
 
@@ -5583,7 +5585,7 @@ void meditate_activity_actor::start( player_activity &act, Character & )
 void meditate_activity_actor::finish( player_activity &act, Character &who )
 {
     who.add_msg_if_player( m_good, _( "You pause to engage in spiritual contemplation." ) );
-    who.add_morale( morale_feeling_good, 5, 10 );
+    who.add_morale( morale_feeling_good, 5, 10, 3_hours, 1_hours );
     act.set_to_null();
 }
 
@@ -5605,14 +5607,20 @@ void play_with_pet_activity_actor::start( player_activity &act, Character & )
 
 void play_with_pet_activity_actor::finish( player_activity &act, Character &who )
 {
-    who.add_morale( morale_play_with_pet, rng( 3, 10 ), 10, 5_hours, 25_minutes );
-
+    if( !who.has_trait( trait_PSYCHOPATH ) && !who.has_trait( trait_NUMB ) ) {
+    who.add_morale( morale_play_with_pet, 10, 10, 5_hours, 25_minutes );
     if( !playstr.empty() ) {
         who.add_msg_if_player( m_good, playstr, pet_name );
     }
-
     who.add_msg_if_player( m_good, _( "Playing with your %s has lifted your spirits a bit." ),
                            pet_name );
+    } else {
+        if( !playstr.empty() ) {
+            who.add_msg_if_player( m_good, playstr, pet_name );
+        }
+        who.add_msg_if_player( _( "Your %s seems to enjoy the interaction, but you feel nothing." ),
+                               pet_name );
+    }
     act.set_to_null();
 }
 
