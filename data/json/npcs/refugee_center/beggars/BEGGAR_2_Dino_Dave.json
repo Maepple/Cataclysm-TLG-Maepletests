@@ -210,7 +210,7 @@
     "responses": [
       {
         "condition": { "u_has_trait": "SCHIZOPHRENIC" },
-        "text": "[Kaluptic Psychosis] I think I do.  Are we the same?",
+        "text": "[Schizophrenic] I think I do.  Are we the same?",
         "topic": "TALK_REFUGEE_BEGGAR_2_FLAMINGEYE_YES"
       },
       { "text": "No, I don't.", "topic": "TALK_REFUGEE_BEGGAR_2_FLAMINGEYE_NO" },
