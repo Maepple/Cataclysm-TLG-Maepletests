@@ -775,7 +775,7 @@
     "time": "14 h",
     "autolearn": true,
     "using": [ [ "tailoring_kevlar_fabric", 4 ], [ "fastener_small", 1 ] ],
-    "tools": [ [ [ "rubber_spray_can, 4" ] ] ],
+    "tools": [ [ [ "rubber_spray_can", 4 ] ] ],
     "proficiencies": [
       { "proficiency": "prof_closures" },
       { "proficiency": "prof_closures_waterproofing" },
