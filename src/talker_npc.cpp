@@ -776,13 +776,13 @@ std::string talker_npc::evaluation_by( const talker &alpha ) const
     if( ability >= 100 - ( get_fatigue() / 10 ) ) {
         std::string how_tired;
         if( get_fatigue() > fatigue_levels::EXHAUSTED ) {
-            how_tired = _( "Exhausted" );
+            how_tired = _( "Nodding Off" );
         } else if( get_fatigue() > fatigue_levels::DEAD_TIRED ) {
-            how_tired = _( "Dead tired" );
+            how_tired = _( "Very Sleepy" );
         } else if( get_fatigue() > fatigue_levels::TIRED ) {
-            how_tired = _( "Tired" );
+            how_tired = _( "Drowsy" );
         } else {
-            how_tired = _( "Not tired" );
+            how_tired = _( "Alert" );
             if( ability >= 100 ) {
                 time_duration sleep_at = 5_minutes * ( fatigue_levels::TIRED -
                                                        get_fatigue() ) / rates.fatigue;

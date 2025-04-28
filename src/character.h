@@ -2643,7 +2643,10 @@ class Character : public Creature, public visitable
 
         /** Modifies a pain value by player traits before passing it to Creature::mod_pain() */
         void mod_pain( int npain ) override;
-        /** Sets new intensity of pain an reacts to it */
+        /** Returns a value used to cap pain from injury to this body part. 300 is a magic
+         * number for now, but should eventually become the cap for pain overall. */
+        int max_injury_pain( bodypart_id part );
+        /** Sets new intensity of pain and reacts to it */
         void set_pain( int npain ) override;
         /** Returns perceived pain (reduced with painkillers)*/
         int get_perceived_pain() const override;
