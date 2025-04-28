@@ -46,7 +46,7 @@
   {
     "type": "material",
     "id": "fiberglass",
-    "name": "Fiberglass Laminate",
+    "name": "Fiberglass",
     "//": "Fiberglass laminates, consisting of sheets of fiberglass and epoxy resin.  Includes FR-4, G-10, G-11 laminates.",
     "density": 1.8,
     "copy-from": "generic_polymer_resin",
