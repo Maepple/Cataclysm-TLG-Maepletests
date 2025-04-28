@@ -257,47 +257,6 @@
     "tools": [ [ [ "swage", -1 ] ] ]
   },
   {
-    "result": "plated_leather_armor_suit",
-    "type": "recipe",
-    "activity_level": "BRISK_EXERCISE",
-    "category": "CC_ARMOR",
-    "subcategory": "CSC_ARMOR_SUIT",
-    "skill_used": "fabrication",
-    "difficulty": 2,
-    "skills_required": [ "tailor", 3 ],
-    "time": "2 h",
-    "book_learn": [ [ "textbook_tailor", 5 ], [ "tailor_portfolio", 5 ], [ "textbook_armwest", 4 ], [ "textbook_armschina", 4 ] ],
-    "using": [ [ "sewing_standard", 26 ] ],
-    "qualities": [ { "id": "HAMMER", "level": 3 } ],
-    "proficiencies": [
-      { "proficiency": "prof_leatherworking_basic", "time_multiplier": 1.1, "skill_penalty": 0.15 },
-      { "proficiency": "prof_closures", "time_multiplier": 1.1 },
-      { "proficiency": "prof_metalworking" },
-      { "proficiency": "prof_blacksmithing" },
-      { "proficiency": "prof_armorsmithing" },
-      { "proficiency": "prof_articulation" }
-    ],
-    "components": [ [ [ "sheet_metal_small", 18 ] ], [ [ "leather_armor_suit", 1 ] ] ]
-  },
-  {
-    "result": "plated_leather_armor_suit_xs",
-    "type": "recipe",
-    "copy-from": "plated_leather_armor_suit",
-    "time": "2 h",
-    "using": [ [ "sewing_standard", 19 ] ],
-    "qualities": [ { "id": "HAMMER", "level": 3 } ],
-    "components": [ [ [ "sheet_metal_small", 14 ] ], [ [ "leather_armor_suit_xs", 1 ] ] ]
-  },
-  {
-    "result": "plated_leather_armor_suit_xl",
-    "type": "recipe",
-    "copy-from": "plated_leather_armor_suit",
-    "time": "2 h 15 m",
-    "using": [ [ "sewing_standard", 38 ] ],
-    "qualities": [ { "id": "HAMMER", "level": 3 } ],
-    "components": [ [ [ "sheet_metal_small", 24 ] ], [ [ "leather_armor_suit_xl", 1 ] ] ]
-  },
-  {
     "result": "armor_samurai",
     "type": "recipe",
     "activity_level": "BRISK_EXERCISE",
@@ -323,6 +282,24 @@
       { "proficiency": "prof_armorsmithing" },
       { "proficiency": "prof_articulation" }
     ]
+  },
+  {
+    "result": "armor_samurai_xs",
+    "type": "recipe",
+    "copy-from": "armor_samurai",
+    "time": "2 h",
+    "using": [ [ "sewing_standard", 19 ] ],
+    "qualities": [ { "id": "HAMMER", "level": 3 } ],
+    "components": [ [ [ "sheet_metal_small", 14 ] ], [ [ "leather_armor_suit_xs", 1 ] ] ]
+  },
+  {
+    "result": "armor_samurai_xl",
+    "type": "recipe",
+    "copy-from": "armor_samurai",
+    "time": "2 h 15 m",
+    "using": [ [ "sewing_standard", 38 ] ],
+    "qualities": [ { "id": "HAMMER", "level": 3 } ],
+    "components": [ [ [ "sheet_metal_small", 24 ] ], [ [ "leather_armor_suit_xl", 1 ] ] ]
   },
   {
     "result": "platemail_suit",
