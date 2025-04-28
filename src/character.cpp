@@ -8398,11 +8398,11 @@ void Character::apply_damage( Creature *source, bodypart_id hurt, int dam,
     if( !hurt->has_flag( json_flag_BIONIC_LIMB ) && dam > 0 ) {
         const int cur_pain = get_perceived_pain();
         const int max_pain = max_injury_pain( hurt );
-        if( dam / 2 + cur_pain < max_pain ) {
+        if( cur_pain < max_pain ) {
             const float pain_ratio = static_cast<float>( cur_pain ) / max_pain;
-            mod_pain( static_cast<int>( ( dam / 2 ) * ( 1.0f - pain_ratio * pain_ratio ) ) );
-        } else if( dam / 2 + cur_pain > max_pain && cur_pain < max_pain ) {
-            mod_pain( max_pain - cur_pain );
+            const int pain_to_add = static_cast<int>( ( dam / 2 ) * ( 1.0f - pain_ratio * pain_ratio ) );
+            // Clamp to not exceed max_pain
+            mod_pain( std::min( pain_to_add, max_pain - cur_pain ) );
         }
     }
 

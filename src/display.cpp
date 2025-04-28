@@ -687,25 +687,25 @@ std::pair<std::string, nc_color> display::health_text_color( const Character &u 
     nc_color health_color = c_light_gray;
 
     if( health > character_health_category::great ) {
-        health_string = translate_marker( "Feel Great" );
+        health_string = translate_marker( "Thriving" );
         health_color = c_green;
     } else if( health > character_health_category::very_good ) {
-        health_string = translate_marker( "Feel Very Good" );
+        health_string = translate_marker( "Robust" );
         health_color = c_green;
     } else if( health > character_health_category::good ) {
-        health_string = translate_marker( "Feel Good" );
+        health_string = translate_marker( "Healthy" );
         health_color = c_green;
     } else if( health > character_health_category::fine ) {
-        health_string = translate_marker( "Feel Fine" );
+        health_string = translate_marker( "Average" );
         health_color = c_light_gray;
     } else if( health > character_health_category::bad ) {
-        health_string = translate_marker( "Feel Bad" );
+        health_string = translate_marker( "Unhealthy" );
         health_color = c_red;
     } else if( health > character_health_category::very_bad ) {
-        health_string = translate_marker( "Feel Very Bad" );
+        health_string = translate_marker( "Listless" );
         health_color = c_red;
     } else {
-        health_string = translate_marker( "Feel Awful" );
+        health_string = translate_marker( "Sickly" );
         health_color = c_red;
     }
     return std::make_pair( _( health_string ), health_color );
@@ -752,13 +752,13 @@ std::pair<std::string, nc_color> display::fatigue_text_color( const Character &u
     nc_color fatigue_color = c_white;
     if( fatigue >= fatigue_levels::EXHAUSTED ) {
         fatigue_color = c_red;
-        fatigue_string = translate_marker( "Exhausted" );
+        fatigue_string = translate_marker( "Nodding off" );
     } else if( fatigue >= fatigue_levels::DEAD_TIRED ) {
         fatigue_color = c_light_red;
-        fatigue_string = translate_marker( "Dead Tired" );
+        fatigue_string = translate_marker( "Very sleepy" );
     } else if( fatigue >= fatigue_levels::TIRED ) {
         fatigue_color = c_yellow;
-        fatigue_string = translate_marker( "Tired" );
+        fatigue_string = translate_marker( "Drowsy" );
     }
     return std::make_pair( _( fatigue_string ), fatigue_color );
 }
@@ -768,9 +768,17 @@ std::pair<std::string, nc_color> display::pain_text_color( const Creature &c )
     float scale = c.get_perceived_pain() / 10.f;
     std::string pain_string;
     nc_color pain_color = c_yellow;
-    if( scale > 7 ) {
+    if( scale > 17 ) {
+        pain_string = _( "Agonizing pain" );
+    } else if( scale > 16 ) {
+        pain_string = _( "Debilitating pain" );
+    } else if( scale > 13 ) {
+        pain_string = _( "Unbearable pain" );
+    } else if( scale > 10 ) {
+        pain_string = _( "Excrutiating pain" );
+    } else if( scale > 8 ) {
         pain_string = _( "Severe pain" );
-    } else if( scale > 6 ) {
+    } else if( scale > 7 ) {
         pain_string = _( "Intense pain" );
     } else if( scale > 5 ) {
         pain_string = _( "Unmanageable pain" );
