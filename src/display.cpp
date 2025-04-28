@@ -752,10 +752,10 @@ std::pair<std::string, nc_color> display::fatigue_text_color( const Character &u
     nc_color fatigue_color = c_white;
     if( fatigue >= fatigue_levels::EXHAUSTED ) {
         fatigue_color = c_red;
-        fatigue_string = translate_marker( "Nodding off" );
+        fatigue_string = translate_marker( "Nodding Off" );
     } else if( fatigue >= fatigue_levels::DEAD_TIRED ) {
         fatigue_color = c_light_red;
-        fatigue_string = translate_marker( "Very sleepy" );
+        fatigue_string = translate_marker( "Very Sleepy" );
     } else if( fatigue >= fatigue_levels::TIRED ) {
         fatigue_color = c_yellow;
         fatigue_string = translate_marker( "Drowsy" );
