@@ -752,13 +752,13 @@ std::pair<std::string, nc_color> display::fatigue_text_color( const Character &u
     nc_color fatigue_color = c_white;
     if( fatigue >= fatigue_levels::EXHAUSTED ) {
         fatigue_color = c_red;
-        fatigue_string = translate_marker( "Exhausted" );
+        fatigue_string = translate_marker( "Nodding Off" );
     } else if( fatigue >= fatigue_levels::DEAD_TIRED ) {
         fatigue_color = c_light_red;
-        fatigue_string = translate_marker( "Dead Tired" );
+        fatigue_string = translate_marker( "Very Sleepy" );
     } else if( fatigue >= fatigue_levels::TIRED ) {
         fatigue_color = c_yellow;
-        fatigue_string = translate_marker( "Tired" );
+        fatigue_string = translate_marker( "Drowsy" );
     }
     return std::make_pair( _( fatigue_string ), fatigue_color );
 }
@@ -768,9 +768,17 @@ std::pair<std::string, nc_color> display::pain_text_color( const Creature &c )
     float scale = c.get_perceived_pain() / 10.f;
     std::string pain_string;
     nc_color pain_color = c_yellow;
-    if( scale > 7 ) {
+    if( scale > 17 ) {
+        pain_string = _( "Agonizing pain" );
+    } else if( scale > 16 ) {
+        pain_string = _( "Debilitating pain" );
+    } else if( scale > 13 ) {
+        pain_string = _( "Unbearable pain" );
+    } else if( scale > 10 ) {
+        pain_string = _( "Excrutiating pain" );
+    } else if( scale > 8 ) {
         pain_string = _( "Severe pain" );
-    } else if( scale > 6 ) {
+    } else if( scale > 7 ) {
         pain_string = _( "Intense pain" );
     } else if( scale > 5 ) {
         pain_string = _( "Unmanageable pain" );
