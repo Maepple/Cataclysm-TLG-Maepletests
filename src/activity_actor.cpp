@@ -1953,9 +1953,8 @@ bool read_activity_actor::player_read( avatar &you )
 
         const int book_fun = learner->book_fun_for( *book, *learner );
         if( book_fun != 0 ) {
-            // Fun bonus is no longer calculated here.
             learner->add_morale( morale_book,
-                                 book_fun * 5, book_fun * 15,
+                                 book_fun, book_fun * 10,
                                  2_hours, 1_hours, true,
                                  book->type );
         }
@@ -2109,9 +2108,8 @@ bool read_activity_actor::npc_read( npc &learner )
 
     const int book_fun = learner.book_fun_for( *book, learner );
     if( book_fun != 0 ) {
-        // Fun bonus is no longer calculated here.
         learner.add_morale( morale_book,
-                            book_fun * 5, book_fun * 15,
+                            book_fun, book_fun * 10,
                             2_hours, 1_hours, true,
                             book->type );
     }
@@ -5608,12 +5606,12 @@ void play_with_pet_activity_actor::start( player_activity &act, Character & )
 void play_with_pet_activity_actor::finish( player_activity &act, Character &who )
 {
     if( !who.has_trait( trait_PSYCHOPATH ) && !who.has_trait( trait_NUMB ) ) {
-    who.add_morale( morale_play_with_pet, 10, 10, 5_hours, 25_minutes );
-    if( !playstr.empty() ) {
-        who.add_msg_if_player( m_good, playstr, pet_name );
-    }
-    who.add_msg_if_player( m_good, _( "Playing with your %s has lifted your spirits a bit." ),
-                           pet_name );
+        who.add_morale( morale_play_with_pet, 10, 10, 5_hours, 25_minutes );
+        if( !playstr.empty() ) {
+            who.add_msg_if_player( m_good, playstr, pet_name );
+        }
+        who.add_msg_if_player( m_good, _( "Playing with your %s has lifted your spirits a bit." ),
+                               pet_name );
     } else {
         if( !playstr.empty() ) {
             who.add_msg_if_player( m_good, playstr, pet_name );

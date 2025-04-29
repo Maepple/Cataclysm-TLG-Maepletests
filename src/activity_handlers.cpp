@@ -2325,18 +2325,15 @@ void activity_handlers::vibe_do_turn( player_activity *act, Character *you )
                 add_msg( m_info, _( "The %s runs out of batteries." ), vibrator_item.tname() );
             }
         } else {
-            //twenty minutes to fill
+            // Twenty minutes to fill
             you->add_morale( morale_feeling_good, 1, 40 );
         }
     }
     // Dead Tired: different kind of relaxation needed
     if( you->get_fatigue() >= fatigue_levels::DEAD_TIRED ) {
         act->moves_left = 0;
-        add_msg( m_info, _( "You're too tired to continue." ) );
+        add_msg( m_info, _( "You're too drowsy to continue." ) );
     }
-
-    // Vibrator requires that you be able to move around, stretch, etc, so doesn't play
-    // well with roots.  Sorry.  :-(
 }
 
 void activity_handlers::start_engines_finish( player_activity *act, Character *you )
