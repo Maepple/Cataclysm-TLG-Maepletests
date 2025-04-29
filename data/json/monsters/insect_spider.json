@@ -857,6 +857,7 @@
     "stomach_size": 1000,
     "anger_triggers": [ "PLAYER_WEAK", "STALK" ],
     "reproduction": { "baby_egg": "egg_dragonfly", "baby_count": 3, "baby_timer": 1 },
+    "upgrades": { "half_life": 10, "into_group": "GROUP_EMPTY" },
     "baby_flags": [ "SPRING", "SUMMER", "AUTUMN" ],
     "flags": [ "SEES", "HEARS", "SMELLS", "STUMBLES", "SWIMS", "BASHES", "PUSH_MON", "PUSH_VEH", "EATS" ],
     "armor": { "electric": 2 }
@@ -1099,7 +1100,7 @@
     "vision_night": 8,
     "path_settings": { "max_dist": 10, "avoid_sharp": true, "avoid_dangerous_fields": true },
     "dissect": "dissect_spider_sample_single",
-    "upgrades": { "age_grow": 14, "into_group": "GROUP_SPIDER_CELLAR" },
+    "upgrades": { "half_life": 8, "into_group": "GROUP_SPIDER_CELLAR" },
     "delete": {
       "anger_triggers": [ "PLAYER_CLOSE", "PLAYER_WEAK", "HOSTILE_SEEN" ],
       "flags": [ "GRABS" ],
@@ -1153,7 +1154,7 @@
     "anger_triggers": [ "PLAYER_CLOSE", "PLAYER_WEAK" ],
     "path_settings": { "max_dist": 18, "avoid_sharp": true, "avoid_dangerous_fields": true },
     "fungalize_into": "mon_spider_fungus",
-    "upgrades": { "age_grow": 14, "into_group": "GROUP_SPIDER_CELLAR_GIANT" },
+    "upgrades": { "half_life": 10, "into_group": "GROUP_SPIDER_CELLAR_GIANT" },
     "flags": [ "SEES", "SMELLS", "HEARS", "GRABS", "WEBWALK", "CLIMBS", "HARDTOSHOOT", "PATH_AVOID_DANGER" ],
     "armor": { "bash": 1, "cut": 5, "acid": 3, "bullet": 2 }
   },
@@ -1285,7 +1286,7 @@
       }
     ],
     "bleed_rate": 60,
-    "upgrades": false,
+    "upgrades": { "half_life": 15, "into_group": "GROUP_EMPTY" },
     "extend": { "anger_triggers": [ "HOSTILE_SEEN" ], "flags": [ "BASHES" ] },
     "dissect": "dissect_spider_sample_large",
     "armor": { "bullet": 2, "bash": 5, "cut": 7, "stab": 7, "acid": 5, "electric": 3 }
@@ -1314,6 +1315,7 @@
     "melee_damage": [ { "damage_type": "cut", "amount": 4 } ],
     "grab_strength": 10,
     "special_attacks": [ { "id": "grab", "cooldown": 5 }, [ "SUICIDE", 180 ] ],
+    "upgrades": { "half_life": 1, "into_group": "GROUP_EMPTY" },
     "dodge": 7,
     "bleed_rate": 0,
     "families": [ "prof_intro_biology", "prof_physiology", "prof_wp_basic_bug", "prof_wp_spider" ],
@@ -1419,6 +1421,7 @@
       "message": "The %s explodes!"
     },
     "extend": { "flags": [ "DESTROYS", "PUSH_MON", "PUSH_VEH", "FLAMMABLE" ] },
+    "upgrades": { "half_life": 15, "into_group": "GROUP_EMPTY" },
     "armor": { "cut": 3, "bullet": 2, "electric": 1 }
   },
   {
@@ -1431,7 +1434,7 @@
     "volume": "30 L",
     "weight": "40 kg",
     "path_settings": { "max_dist": 10, "avoid_sharp": true, "avoid_dangerous_fields": true },
-    "upgrades": { "age_grow": 30, "into": "mon_spider_trapdoor_giant" },
+    "upgrades": { "half_life": 15, "into": "mon_spider_trapdoor_giant" },
     "extend": { "flags": [ "NO_BREED" ] }
   },
   {
@@ -1469,7 +1472,7 @@
     "reproduction": { "baby_egg": "egg_spider_trapdoor", "baby_count": 3, "baby_timer": 15 },
     "baby_flags": [ "SPRING", "SUMMER", "AUTUMN" ],
     "fungalize_into": "mon_spider_fungus",
-    "upgrades": { "age_grow": 42, "into": "mon_spider_trapdoor_mega" },
+    "upgrades": { "half_life": 32, "into": "mon_spider_trapdoor_mega" },
     "flags": [ "SEES", "SMELLS", "HEARS", "VENOM", "GRABS", "CAN_DIG", "WEBWALK", "CLIMBS", "PATH_AVOID_FIRE" ],
     "armor": { "bash": 4, "cut": 8, "bullet": 6 }
   },
@@ -1559,7 +1562,7 @@
     "baby_flags": [ "SPRING", "SUMMER", "AUTUMN" ],
     "fungalize_into": "mon_spider_fungus",
     "anger_triggers": [ "PLAYER_WEAK", "PLAYER_CLOSE" ],
-    "upgrades": { "age_grow": 42, "into": "mon_spider_web_mega" },
+    "upgrades": { "half_life": 30, "into": "mon_spider_web_mega" },
     "trap_avoids": [ "tr_sinkhole" ],
     "flags": [ "SEES", "SMELLS", "HEARS", "WEBWALK", "CLIMBS", "PATH_AVOID_FIRE", "PATH_AVOID_FALL" ],
     "armor": { "bash": 2, "cut": 6, "bullet": 5 }
@@ -1578,6 +1581,7 @@
     "grab_strength": 75,
     "path_settings": { "max_dist": 10, "avoid_sharp": true, "avoid_dangerous_fields": true },
     "special_attacks": [ { "id": "grab", "cooldown": 5, "condition": { "not": { "u_has_effect": "maimed_leg" } } } ],
+    "upgrades": { "half_life": 20, "into_group": "GROUP_EMPTY" },
     "extend": { "flags": [ "DESTROYS", "PUSH_MON", "PUSH_VEH" ] },
     "armor": { "bash": 2, "cut": 6, "bullet": 5, "electric": 1 }
   },
@@ -1612,7 +1616,7 @@
     "volume": "15 L",
     "weight": "20 kg",
     "path_settings": { "max_dist": 10, "avoid_sharp": true, "avoid_dangerous_fields": true },
-    "upgrades": { "age_grow": 30, "into": "mon_spider_widow_giant" },
+    "upgrades": { "half_life": 20, "into": "mon_spider_widow_giant" },
     "extend": { "flags": [ "NO_BREED" ] }
   },
   {
@@ -1650,7 +1654,7 @@
     "baby_flags": [ "SPRING", "SUMMER", "AUTUMN" ],
     "anger_triggers": [ "PLAYER_WEAK", "PLAYER_CLOSE" ],
     "fungalize_into": "mon_spider_fungus",
-    "upgrades": { "age_grow": 42, "into": "mon_spider_widow_mega" },
+    "upgrades": { "half_life": 24, "into": "mon_spider_widow_mega" },
     "flags": [ "SEES", "SMELLS", "HEARS", "BADVENOM", "WEBWALK", "CLIMBS", "PATH_AVOID_FIRE" ],
     "armor": { "bash": 2, "cut": 4, "bullet": 3 }
   },
@@ -1668,6 +1672,7 @@
     "grab_strength": 75,
     "path_settings": { "max_dist": 10, "avoid_sharp": true, "avoid_dangerous_fields": true },
     "special_attacks": [ { "id": "grab", "cooldown": 5, "condition": { "not": { "u_has_effect": "maimed_leg" } } } ],
+    "upgrades": { "half_life": 20, "into_group": "GROUP_EMPTY" },
     "extend": { "flags": [ "DESTROYS", "PUSH_MON", "PUSH_VEH" ] }
   },
   {
@@ -1700,7 +1705,7 @@
     "proportional": { "hp": 0.5, "speed": 1.1, "morale": 0.67, "melee_dice_sides": 0.67 },
     "volume": "30 L",
     "weight": "40 kg",
-    "upgrades": { "age_grow": 30, "into": "mon_spider_wolf_giant" },
+    "upgrades": { "half_life": 20, "into": "mon_spider_wolf_giant" },
     "path_settings": { "max_dist": 10, "avoid_sharp": true, "avoid_dangerous_fields": true },
     "extend": { "flags": [ "NO_BREED" ] }
   },
@@ -1740,7 +1745,7 @@
     "baby_flags": [ "SPRING", "SUMMER", "AUTUMN" ],
     "anger_triggers": [ "STALK", "PLAYER_WEAK", "HURT", "PLAYER_CLOSE" ],
     "fungalize_into": "mon_spider_fungus",
-    "upgrades": { "age_grow": 42, "into": "mon_spider_wolf_mega" },
+    "upgrades": { "half_life": 22, "into": "mon_spider_wolf_mega" },
     "flags": [ "SEES", "SMELLS", "HEARS", "CLIMBS", "PATH_AVOID_FIRE", "PATH_AVOID_FALL" ],
     "path_settings": { "max_dist": 10, "avoid_sharp": true, "avoid_dangerous_fields": true },
     "armor": { "bash": 4, "cut": 8, "bullet": 6 }
@@ -1777,6 +1782,7 @@
     "dissect": "dissect_spider_sample_large",
     "special_attacks": [ [ "HOWL", 10 ] ],
     "path_settings": { "max_dist": 10, "avoid_sharp": true, "avoid_dangerous_fields": true },
+    "upgrades": { "half_life": 20, "into_group": "GROUP_EMPTY" },
     "extend": { "flags": [ "DESTROYS", "PUSH_MON", "PUSH_VEH" ] }
   },
   {
@@ -3036,7 +3042,7 @@
       }
     ],
     "flags": [ "SEES", "HEARS", "SMELLS", "PATH_AVOID_FIRE" ],
-    "upgrades": { "age_grow": 42, "into": "mon_lady_bug_giant" },
+    "upgrades": { "half_life": 28, "into": "mon_lady_bug_giant" },
     "armor": { "bash": 3, "cut": 10, "bullet": 15, "electric": 3 }
   },
   {
