@@ -1745,7 +1745,7 @@
     "id": "milk_powder_various_full",
     "//": "This group was created by a fool and may contain errors.",
     "subtype": "distribution",
-    "entries": [ { "prob": 1, "group": "milk_powder_bag_paper_full", "container-item": "bag_paper_powder", "count": 40 } ]
+    "entries": [ { "prob": 1, "group": "milk_powder_bag_paper_full" } ]
   },
   {
     "type": "item_group",
@@ -1753,7 +1753,7 @@
     "subtype": "collection",
     "//": "This group was created automatically and may contain errors.",
     "container-item": "bag_paper_powder",
-    "entries": [ { "item": "milk_powder", "container-item": "null", "count": 40 } ]
+    "entries": [ { "item": "milk_powder", "count": 20 } ]
   },
   {
     "type": "item_group",
@@ -1797,7 +1797,7 @@
     "subtype": "collection",
     "//": "This group was created automatically and may contain errors.",
     "container-item": "bag_paper_powder",
-    "entries": [ { "item": "milk_powder", "container-item": "null", "count": [ 5, 40 ] } ]
+    "entries": [ { "item": "milk_powder", "container-item": "null", "count": [ 5, 20 ] } ]
   },
   {
     "type": "item_group",

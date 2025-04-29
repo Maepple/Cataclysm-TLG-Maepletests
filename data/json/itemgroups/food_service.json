@@ -753,7 +753,7 @@
       { "item": "milk_UHT", "prob": 15 },
       { "item": "milk_evap", "prob": 25 },
       { "item": "con_milk", "prob": 25 },
-      { "prob": 45, "group": "milk_powder_various_full" },
+      { "prob": 35, "group": "milk_powder_various_full" },
       { "prob": 50, "group": "salt_various_full" },
       { "item": "soysauce", "prob": 25 },
       { "item": "hot_sauce", "prob": 25 },
