@@ -620,8 +620,8 @@
         ],
         "prob": 80
       },
-      { "count": [ 1, 10 ], "prob": 80, "group": "tea_raw_bag_plastic_33" },
-      { "count": [ 1, 10 ], "prob": 40, "group": "tea_green_raw_bag_plastic_33" },
+      { "prob": 30, "group": "tea_raw_bag_plastic_33" },
+      { "prob": 20, "group": "tea_green_raw_bag_plastic_33" },
       { "item": "teapot", "prob": 70 },
       { "item": "kettle", "prob": 50 },
       { "prob": 90, "sealed": false, "group": "sugar_jar_glass_sealed_10_140" },
@@ -629,10 +629,10 @@
         "distribution": [
           {
             "item": "milk_powder",
-            "count": [ 5, 20 ],
+            "count": [ 1, 20 ],
             "container-item": "null",
             "entry-wrapper": "jar_3l_glass_sealed",
-            "prob": 60,
+            "prob": 30,
             "sealed": false
           },
           { "item": "con_milk", "count": [ 1, 6 ], "prob": 10 },
@@ -647,7 +647,7 @@
       },
       { "item": "spoon", "count": [ 1, 6 ] },
       { "item": "ceramic_mug", "count": [ 1, 6 ] },
-      { "group": "teabag_box", "prob": 60 }
+      { "group": "teabag_box", "prob": 40 }
     ]
   },
   {
@@ -711,10 +711,10 @@
         "distribution": [
           {
             "item": "milk_powder",
-            "count": [ 5, 20 ],
+            "count": [ 1, 20 ],
             "container-item": "null",
             "entry-wrapper": "jar_3l_glass_sealed",
-            "prob": 40,
+            "prob": 20,
             "sealed": false
           },
           { "item": "milk_evap", "count": [ 1, 6 ], "prob": 10 },
