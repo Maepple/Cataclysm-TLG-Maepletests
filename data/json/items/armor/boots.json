@@ -2152,7 +2152,7 @@
           "foot_arch_l"
         ],
         "material": [
-          { "type": "steel", "covered_by_mat": 100, "thickness": 1.2 },
+          { "type": "steel", "covered_by_mat": 100, "thickness": 2.0 },
           { "type": "leather", "covered_by_mat": 1, "thickness": 2.0 }
         ],
         "encumbrance": 5,

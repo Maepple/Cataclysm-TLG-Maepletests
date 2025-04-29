@@ -556,5 +556,10 @@
     "type": "MIGRATION",
     "id": "plated_leather_armor_suit_xl",
     "replace": "armor_samurai_xl"
+  },
+  {
+    "type": "MIGRATION",
+    "id": "tireplate",
+    "replace": "tire_cuirass"
   }
 ]
