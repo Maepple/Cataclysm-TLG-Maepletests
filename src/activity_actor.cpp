@@ -1953,9 +1953,8 @@ bool read_activity_actor::player_read( avatar &you )
 
         const int book_fun = learner->book_fun_for( *book, *learner );
         if( book_fun != 0 ) {
-            // Fun bonus is no longer calculated here.
             learner->add_morale( morale_book,
-                                 book_fun * 5, book_fun * 15,
+                                 book_fun, book_fun * 10,
                                  2_hours, 1_hours, true,
                                  book->type );
         }
@@ -2109,9 +2108,8 @@ bool read_activity_actor::npc_read( npc &learner )
 
     const int book_fun = learner.book_fun_for( *book, learner );
     if( book_fun != 0 ) {
-        // Fun bonus is no longer calculated here.
         learner.add_morale( morale_book,
-                            book_fun * 5, book_fun * 15,
+                            book_fun, book_fun * 10,
                             2_hours, 1_hours, true,
                             book->type );
     }
