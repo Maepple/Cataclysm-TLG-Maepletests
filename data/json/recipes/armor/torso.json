@@ -609,7 +609,7 @@
       ],
       [ [ "duct_tape", 135 ] ]
     ],
-    "tools": [ [ [ "rubber_spray_can", 10]]],
+    "tools": [ [ [ "rubber_spray_can", 10 ] ] ],
     "proficiencies": [
       { "proficiency": "prof_polymerworking" },
       { "proficiency": "prof_closures" },
@@ -639,7 +639,6 @@
       ],
       [ [ "duct_tape", 101 ] ]
     ]
-  
   },
   {
     "result": "longcoat_survivor_xl",
@@ -2047,19 +2046,6 @@
     "autolearn": true,
     "using": [ [ "tailoring_cotton_patchwork", 4 ] ],
     "byproducts": [ [ "scrap_cotton", 22 ] ]
-  },
-  {
-    "result": "tireplate",
-    "type": "recipe",
-    "activity_level": "NO_EXERCISE",
-    "category": "CC_ARMOR",
-    "subcategory": "CSC_ARMOR_TORSO",
-    "skill_used": "fabrication",
-    "difficulty": 3,
-    "time": "2 h",
-    "autolearn": true,
-    "qualities": [ { "id": "CUT", "level": 2 } ],
-    "components": [ [ [ "rubber_tire_chunk", 16 ] ], [ [ "duct_tape", 16 ] ] ]
   },
   {
     "result": "thermal_shirt",

@@ -453,7 +453,7 @@
     "armor": [
       {
         "covers": [ "arm_l", "arm_r" ],
-        "encumbrance": 14,
+        "encumbrance": 21,
         "coverage": 80,
         "specifically_covers": [ "arm_lower_r", "arm_lower_l", "arm_upper_r", "arm_upper_l" ],
         "rigid_layer_only": true
@@ -851,7 +851,7 @@
     "looks_like": "armguard_lightplate",
     "color": "yellow",
     "warmth": 15,
-    "material_thickness": 4,
+    "material_thickness": 2,
     "flags": [ "OUTER", "STURDY" ],
     "armor": [
       {
@@ -956,7 +956,7 @@
     "armor": [
       {
         "material": [
-          { "type": "steel", "covered_by_mat": 100, "thickness": 1.3 },
+          { "type": "steel", "covered_by_mat": 100, "thickness": 2.0 },
           { "type": "leather", "covered_by_mat": 2, "thickness": 1.0 }
         ],
         "covers": [ "arm_l", "arm_r" ],
@@ -1006,7 +1006,7 @@
     "flags": [ "OUTER", "STURDY", "CONDUCTIVE" ],
     "armor": [
       {
-        "material": [ { "type": "steel", "covered_by_mat": 100, "thickness": 1.3 } ],
+        "material": [ { "type": "steel", "covered_by_mat": 100, "thickness": 2.0 } ],
         "covers": [ "arm_l", "arm_r" ],
         "specifically_covers": [ "arm_shoulder_r", "arm_shoulder_l" ],
         "coverage": 100,

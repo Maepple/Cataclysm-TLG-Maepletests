@@ -12,7 +12,7 @@
     "bash_dmg_verb": "dented",
     "cut_dmg_verb": "gouged",
     "acid_dmg_verb": "burned",
-    "resist": { "bash": 4, "cut": 5, "acid": 10, "heat": 6, "bullet": 3 }
+    "resist": { "bash": 4, "cut": 4, "acid": 10, "heat": 6, "bullet": 2.5 }
   },
   {
     "type": "material",
@@ -1416,7 +1416,7 @@
       { "fuel": 0.2, "smoke": 10, "burn": 0.004, "volume_per_turn": "1 L" }
     ],
     "burn_products": [ [ "corpse_ash", 0.035 ] ],
-    "resist": { "bash": 1, "cut": 3, "acid": 4, "heat": 2, "bullet": 2 },
+    "resist": { "bash": 1.5, "cut": 2.5, "acid": 4, "heat": 2, "bullet": 2 },
     "repair_difficulty": 3
   },
   {
@@ -1432,6 +1432,7 @@
     "chip_resist": 10,
     "repaired_with": "leather",
     "salvaged_into": "leather",
+    "breathability": "IMPERMEABLE",
     "dmg_adj": [ "scratched", "cut", "shredded", "tattered" ],
     "bash_dmg_verb": "ripped",
     "cut_dmg_verb": "sliced",
@@ -1442,12 +1443,13 @@
       { "fuel": 0.2, "smoke": 10, "burn": 0.004, "volume_per_turn": "1 L" }
     ],
     "burn_products": [ [ "corpse_ash", 0.035 ] ],
-    "resist": { "bash": 1, "cut": 3, "acid": 8, "heat": 2, "bullet": 2 },
+    "resist": { "bash": 1.2, "cut": 2.5, "acid": 8, "heat": 2.2, "bullet": 2 },
     "repair_difficulty": 3
   },
   {
     "type": "material",
     "id": "leather_arthropod",
+    "//": "More elastic and rubbery than leather, but less cut-resistant. Weak to heat and acid.",
     "name": "Soft Chitin",
     "density": 2,
     "specific_heat_liquid": 1.5,
@@ -1474,7 +1476,7 @@
     "id": "lycra",
     "name": "Lycra",
     "//": "AKA Spandex. These values assume there's another material blended in such as polyester.",
-    "//1": "This stuff should max out at 1mm in like a wetsuit, but is generally muuuuuch thinner, as in women's tights.",
+    "//1": "This stuff should max out at 1mm in a wetsuit, but is generally much thinner, as in women's tights.",
     "density": 1.2,
     "specific_heat_liquid": 1.7,
     "specific_heat_solid": 1.7,
@@ -1676,7 +1678,7 @@
       { "fuel": 3.3, "smoke": 1, "burn": 0.075 }
     ],
     "burn_products": [ [ "ash", 0.013 ] ],
-    "resist": { "bash": 1, "cut": 1, "acid": 1, "heat": 0, "bullet": 1 }
+    "resist": { "bash": 0.4, "cut": 0.5, "acid": 0, "heat": 0, "bullet": 1 }
   },
   {
     "type": "material",
@@ -1765,7 +1767,7 @@
       { "fuel": 0.4, "smoke": 3, "burn": 0.003 },
       { "fuel": 1, "smoke": 5, "burn": 0.008 }
     ],
-    "resist": { "bash": 1, "cut": 0.5, "acid": 8, "heat": 1, "bullet": 0.5 },
+    "resist": { "bash": 0.6, "cut": 0.3, "acid": 8, "heat": 1, "bullet": 0.3 },
     "repair_difficulty": 5
   },
   {

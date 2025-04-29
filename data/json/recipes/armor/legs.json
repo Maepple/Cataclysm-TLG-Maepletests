@@ -791,7 +791,6 @@
     "using": [ [ "tailoring_kevlar_fabric", 3 ], [ "fastener_small", 1 ] ],
     "tools": [ [ [ "rubber_spray_can", 3 ] ] ],
     "components": [ [ [ "pants_army", 1 ], [ "pants_cargo", 1 ] ] ]
-    
   },
   {
     "result": "pants_survivor_xl",
@@ -801,7 +800,6 @@
     "using": [ [ "tailoring_kevlar_fabric", 6 ], [ "fastener_small", 1 ] ],
     "tools": [ [ [ "rubber_spray_can", 3 ] ] ],
     "components": [ [ [ "pants_army", 2 ], [ "pants_cargo", 2 ] ] ]
-    
   },
   {
     "result": "shorts",
