@@ -5046,6 +5046,7 @@
     "id": "airborne",
     "max_intensity": 1,
     "max_duration": "1 s",
+    "flags": [ "LEVITATION" ],
     "//": "Temporary effect for creatures who are leaping or getting flung.  Should only be applied during such events so that creatures aren't left hovering around."
   },
   {

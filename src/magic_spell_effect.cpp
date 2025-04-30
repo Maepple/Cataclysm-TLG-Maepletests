@@ -67,6 +67,7 @@
 #include "vehicle.h"
 #include "vpart_position.h"
 
+static const efftype_id effect_airborne( "airborne" );
 static const efftype_id effect_teleglow( "teleglow" );
 
 static const flag_id json_flag_FIT( "FIT" );
@@ -1843,6 +1844,12 @@ void spell_effect::dash( const spell &sp, Creature &caster, const tripoint &targ
     // save the amount of moves the caster has so we can restore them after the dash
     const int cur_moves = caster.get_moves();
     creature_tracker &creatures = get_creature_tracker();
+    // Use a bool here so that we know that we're only airborne because of this spell.
+    bool jumping = false;
+    if( sp.has_flag( spell_flag::AIRBORNE ) && !caster.has_effect( effect_airborne ) ) {
+        caster.add_effect( effect_airborne, 1_seconds, true );
+        jumping = true;
+    }
     while( walk_point != trajectory.end() ) {
         if( caster_you != nullptr ) {
             if( creatures.creature_at( here.bub_from_abs( *walk_point ) ) ||
@@ -1862,8 +1869,10 @@ void spell_effect::dash( const spell &sp, Creature &caster, const tripoint &targ
         // we want the last tripoint in the actually reached trajectory
         --walk_point;
     }
+    if( jumping ) {
+        caster.remove_effect( effect_airborne );
+    }
     caster.set_moves( cur_moves );
-
     tripoint far_target;
     calc_ray_end( coord_to_angle( source, target ), sp.aoe( caster ),
                   here.bub_from_abs( *walk_point ).raw(),
