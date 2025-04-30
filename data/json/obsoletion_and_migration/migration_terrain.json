@@ -1,0 +1,7 @@
+[
+  {
+    "type": "ter_furn_migration",
+    "from_ter": "t_thconc_warning",
+    "to_ter": "t_thconc_floor"
+  }
+]
