@@ -54,6 +54,7 @@ static const efftype_id effect_beartrap( "beartrap" );
 static const efftype_id effect_heavysnare( "heavysnare" );
 static const efftype_id effect_immobilization( "immobilization" );
 static const efftype_id effect_in_pit( "in_pit" );
+static const efftype_id effect_jumping( "jumping" );
 static const efftype_id effect_lightsnare( "lightsnare" );
 static const efftype_id effect_ridden( "ridden" );
 static const efftype_id effect_slimed( "slimed" );
@@ -1372,6 +1373,9 @@ bool trapfunc::ledge( const tripoint &p, Creature *c, item * )
     }
     if( you->has_effect( effect_strengthened_gravity ) ) {
         height += 1;
+    }
+    if( you->has_effect( effect_jumping ) ) {
+        height = std::max( 0, ( height - std::max( 0, ( you->get_effect_int( effect_jumping ) - 1 ) ) ) );
     }
     if( you->can_fly() && you->has_flag( json_flag_WINGS_1 ) ) {
         you->add_msg_player_or_npc( _( "You spread your wings to slow your fall." ),

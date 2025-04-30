@@ -68,6 +68,7 @@
 #include "vpart_position.h"
 
 static const efftype_id effect_airborne( "airborne" );
+static const efftype_id effect_jumping( "jumping" );
 static const efftype_id effect_teleglow( "teleglow" );
 
 static const flag_id json_flag_FIT( "FIT" );
@@ -1847,11 +1848,17 @@ void spell_effect::dash( const spell &sp, Creature &caster, const tripoint &targ
     // Use a bool here so that we know that we're only airborne because of this spell.
     bool jumping = false;
     if( sp.has_flag( spell_flag::AIRBORNE ) && !caster.has_effect( effect_airborne ) ) {
+        int jump_vert = 1 + std::abs( source.z - target.z );
         caster.add_effect( effect_airborne, 1_seconds, true );
+        caster.add_effect( effect_jumping, 1_seconds, true, jump_vert );
         jumping = true;
     }
     while( walk_point != trajectory.end() ) {
         if( caster_you != nullptr ) {
+            // Check if this is the second-to-last tile
+            if( jumping && ( walk_point + 1 ) == trajectory.end() ) {
+                caster.remove_effect( effect_airborne );
+            }
             if( creatures.creature_at( here.bub_from_abs( *walk_point ) ) ||
                 !g->walk_move( here.bub_from_abs( *walk_point ), false ) ) {
                 if( walk_point != trajectory.begin() ) {
@@ -1865,12 +1872,10 @@ void spell_effect::dash( const spell &sp, Creature &caster, const tripoint &targ
         }
         ++walk_point;
     }
-    if( walk_point == trajectory.end() ) {
-        // we want the last tripoint in the actually reached trajectory
-        --walk_point;
-    }
     if( jumping ) {
+        // Redundant effect removal for safety's sake.
         caster.remove_effect( effect_airborne );
+        caster.remove_effect( effect_jumping );
     }
     caster.set_moves( cur_moves );
     tripoint far_target;

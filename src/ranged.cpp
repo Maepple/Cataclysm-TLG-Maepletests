@@ -3256,7 +3256,16 @@ void target_ui::update_status()
 
 int target_ui::dist_fn( const tripoint &p )
 {
-    return static_cast<int>( std::round( rl_dist_exact( src, p ) ) );
+    int z_adjust = 0;
+    if( casting && casting->effect() == "dash" ) {
+        if( casting->has_flag( spell_flag::AIRBORNE ) ) {
+            z_adjust = 2 * std::abs( src.z - p.z );
+        } else {
+            // Arbitrarily high number to prevent ascending or descending.
+            z_adjust = 100 * std::abs( src.z - p.z );
+        }
+    }
+    return static_cast<int>( z_adjust + std::round( rl_dist_exact( src, p ) ) );
 }
 
 void target_ui::set_last_target()

@@ -251,6 +251,7 @@ static const efftype_id effect_downed( "downed" );
 static const efftype_id effect_fake_common_cold( "fake_common_cold" );
 static const efftype_id effect_fake_flu( "fake_flu" );
 static const efftype_id effect_gliding( "gliding" );
+static const efftype_id effect_jumping( "jumping" );
 static const efftype_id effect_laserlocked( "laserlocked" );
 static const efftype_id effect_led_by_leash( "led_by_leash" );
 static const efftype_id effect_no_sight( "no_sight" );
@@ -10179,7 +10180,8 @@ bool game::is_dangerous_tile( const tripoint &dest_loc ) const
 
 bool game::prompt_dangerous_tile( const tripoint &dest_loc ) const
 {
-    if( u.has_effect( effect_stunned ) || u.has_effect( effect_psi_stunned ) ) {
+    if( u.has_effect( effect_stunned ) || u.has_effect( effect_psi_stunned ) ||
+        u.has_effect( effect_jumping ) || u.has_effect( effect_airborne ) ) {
         return true;
     }
 
@@ -10260,10 +10262,12 @@ std::vector<std::string> game::get_dangerous_tile( const tripoint &dest_loc ) co
     const trap &tr = m.tr_at( dest_loc );
     // HACK: Hack for now, later ledge should stop being a trap
     if( tr == tr_ledge ) {
-        if( !veh_dest && !u.has_effect_with_flag( json_flag_LEVITATION ) ) {
+        if( !veh_dest && !u.has_effect_with_flag( json_flag_LEVITATION ) &&
+            !u.has_effect( effect_jumping ) ) {
             harmful_stuff.emplace_back( tr.name() );
         }
-    } else if( tr.can_see( dest_loc, u ) && !tr.is_benign() && !veh_dest ) {
+    } else if( tr.can_see( dest_loc, u ) && !tr.is_benign() && !veh_dest &&
+               !u.has_effect_with_flag( json_flag_LEVITATION ) ) {
         harmful_stuff.emplace_back( tr.name() );
     }
 
@@ -10933,11 +10937,12 @@ point game::place_player( const tripoint &dest_loc, bool quick )
     u.search_surroundings();
     if( u.is_mounted() ) {
         m.creature_on_trap( *u.mounted_creature );
-    } else {
+    } else if( !u.has_effect_with_flag( json_flag_LEVITATION ) ) {
         m.creature_on_trap( u );
     }
     // Drench the player if swimmable
     if( m.has_flag( ter_furn_flag::TFLAG_SWIMMABLE, u.pos_bub() ) &&
+        !u.has_effect_with_flag( json_flag_LEVITATION ) &&
         !m.has_flag_furn( "BRIDGE", u.pos_bub() ) &&
         !( u.is_mounted() || ( u.in_vehicle && vp1->vehicle().can_float() ) ) ) {
         u.drench( 80, u.get_drenching_body_parts( false, false ),
@@ -12128,7 +12133,7 @@ void game::vertical_move( int movez, bool force, bool peeking )
     here.invalidate_map_cache( here.get_abs_sub().z() );
     // Upon force movement, traps can not be avoided.
     if( !wall_cling && ( get_map().tr_at( u.pos() ) == tr_ledge &&
-                         !u.has_effect( effect_gliding ) ) )  {
+                         !u.has_effect( effect_gliding ) && !u.has_effect( effect_airborne ) ) )  {
         here.creature_on_trap( u, !force );
     }
 

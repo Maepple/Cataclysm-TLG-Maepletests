@@ -12866,7 +12866,6 @@ int Character::impact( const int force, const tripoint &p )
             }
         }
     }
-
     // A squirrel can fall a great distance without being harmed,
     // and it would have to be going unbelievably fast to hurt anything
     // it collided with.
@@ -12945,7 +12944,6 @@ int Character::impact( const int force, const tripoint &p )
     if( x_in_y( mod, 1.0f ) && !here.has_flag( ter_furn_flag::TFLAG_DEEP_WATER, p ) ) {
         add_effect( effect_downed, rng( 1_turns, 1_turns + mod * 3_turns ) );
     }
-
     return total_dealt;
 }
 
