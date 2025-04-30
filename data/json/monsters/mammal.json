@@ -1816,6 +1816,7 @@
     "upgrades": { "age_grow": 240, "into": "mon_sheep" },
     "//": "Puberty reached in 6-9 months.",
     "biosignature": { "biosig_item": "feces_manure", "biosig_timer": 7 },
+    "petfood": { "food": [ "CATTLEFOOD" ], "feed": "The %s seems to like you!  It lets you pat its head and seems friendly." },
     "flags": [ "SEES", "HEARS", "SMELLS", "ANIMAL", "PATH_AVOID_DANGER", "WARM", "CAN_BE_CULLED", "EATS" ]
   },
   {
@@ -1901,6 +1902,7 @@
     "path_settings": { "max_dist": 10, "avoid_dangerous_fields": true, "avoid_sharp": true },
     "baby_flags": [ "SPRING" ],
     "special_attacks": [ [ "EAT_CROP", 100 ], [ "GRAZE", 60 ] ],
+    "petfood": { "food": [ "CATTLEFOOD" ], "feed": "The %s seems to like you!  It lets you pat its head and seems friendly." },
     "zombify_into": "mon_zombie_goat",
     "flags": [
       "SEES",
@@ -2135,6 +2137,7 @@
     "special_attacks": [ [ "EAT_CROP", 150 ], [ "GRAZE", 150 ] ],
     "//": "Puberty reached in 6-9 months, copied from lamb but it probably applies the same on llamas.",
     "biosignature": { "biosig_item": "feces_manure", "biosig_timer": 7 },
+    "petfood": { "food": [ "CATTLEFOOD" ], "feed": "The %s seems to like you!  It lets you pat its head and seems friendly." },
     "flags": [ "SEES", "HEARS", "SMELLS", "ANIMAL", "PATH_AVOID_DANGER", "WARM", "EATS" ]
   },
   {
