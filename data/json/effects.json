@@ -5046,7 +5046,15 @@
     "id": "airborne",
     "max_intensity": 1,
     "max_duration": "1 s",
+    "flags": [ "LEVITATION" ],
     "//": "Temporary effect for creatures who are leaping or getting flung.  Should only be applied during such events so that creatures aren't left hovering around."
+  },
+  {
+    "type": "effect_type",
+    "id": "jumping",
+    "max_intensity": 20,
+    "max_duration": "1 s",
+    "//": "Helper for airborne effect, handles interactions with terrain, traps etc when landing after using AIRBORNE spells."
   },
   {
     "type": "effect_type",
