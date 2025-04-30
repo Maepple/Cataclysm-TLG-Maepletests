@@ -1053,7 +1053,7 @@
     "type": "recipe",
     "activity_level": "BRISK_EXERCISE",
     "category": "CC_ARMOR",
-    "subcategory": "CSC_ARMOR_TORSO",
+    "subcategory": "CSC_ARMOR_LEGS",
     "skill_used": "fabrication",
     "difficulty": 5,
     "time": "12 h",
@@ -1078,8 +1078,6 @@
     "result": "brigandine_leg_guards_xl",
     "type": "recipe",
     "copy-from": "brigandine_leg_guards",
-    "category": "CC_ARMOR",
-    "subcategory": "CSC_ARMOR_TORSO",
     "time": "14 h",
     "using": [
       [ "tailoring_canvas_patchwork", 5 ],
@@ -1095,8 +1093,6 @@
     "result": "brigandine_leg_guards_xs",
     "type": "recipe",
     "copy-from": "brigandine_leg_guards",
-    "category": "CC_ARMOR",
-    "subcategory": "CSC_ARMOR_TORSO",
     "time": "12 h",
     "using": [
       [ "tailoring_canvas_patchwork", 3 ],
