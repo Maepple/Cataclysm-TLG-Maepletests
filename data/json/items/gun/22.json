@@ -160,7 +160,7 @@
     "looks_like": "ar15",
     "type": "GUN",
     "reload_noise_volume": 10,
-    "name": { "str": ".22 pipe rifle" },
+    "name": { "str": "pipe rifle" },
     "description": "A home-made rifle.  It is simply a pipe attached to a stock, with a hammer to strike the single round it holds.",
     "ascii_picture": "sm_pipe_gun",
     "weight": "1953 g",
@@ -643,7 +643,7 @@
     "variants": [
       {
         "id": "rossi_gallery",
-        "name": { "str": "Rossi Gallery", "str_pl": "Rossi Galleries" },
+        "name": { "str": "Rossi Gallery rifle" },
         "description": "A modern take on the Winchester 1890, the Rossi Gallery is a .22 LR rifle, notably using a pump action.  Much like a pump action shotgun, the magazine tube is below it's 18 inch barrel and can hold 15 rounds.  While pump actions are quite often associated with shotguns, the mechanism can be applied to rifles as well, though in practice it's limited to .22 LR."
       }
     ],
