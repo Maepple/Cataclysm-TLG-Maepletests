@@ -25,7 +25,7 @@
     "shopkeeper_price_rules": [
       { "group": "NC_ANCILLA_DOCTOR_stock", "premium": 2.0 },
       { "group": "NC_ANCILLA_DOCTOR_EXPENSIVE_ITEMS", "premium": 6.0 },
-      { "item": "RobofacCoin", "price": 50, "fixed_adj": 0 }
+      { "item": "RobofacCoin", "price": 5000, "fixed_adj": 0 }
     ],
     "skills": [
       {
@@ -52,12 +52,12 @@
     "id": "NC_ANCILLA_DOCTOR_stock",
     "subtype": "collection",
     "entries": [
-      { "item": "RobofacCoin", "prob": 100, "count": [ 8, 10 ] },
-      { "item": "disinfectant", "prob": 100, "count": [ 2, 10 ] },
+      { "item": "RobofacCoin", "prob": 100, "count": [ 2, 4 ] },
+      { "item": "disinfectant", "prob": 70, "count": [ 2, 10 ] },
       { "item": "bandages", "prob": 100, "count": [ 3, 10 ] },
       { "item": "saline", "prob": 100, "count": [ 1, 2 ] },
-      { "group": "drugs_emergency", "prob": 100, "count": [ 4, 6 ] },
-      { "group": "drugs_analgesic", "prob": 100, "count": [ 2, 4 ] }
+      { "group": "drugs_emergency", "prob": 70, "count": [ 1, 4 ] },
+      { "group": "drugs_analgesic", "prob": 70, "count": [ 2, 4 ] }
     ]
   },
   {
@@ -65,12 +65,12 @@
     "id": "NC_ANCILLA_DOCTOR_EXPENSIVE_ITEMS",
     "subtype": "collection",
     "entries": [
-      { "item": "morphine", "prob": 100, "count": 4 },
-      { "prob": 100, "group": "antibiotics_bottle_plastic_pill_prescription_15" },
-      { "prob": 100, "group": "strong_antibiotic_bottle_plastic_pill_prescription_5" },
-      { "item": "anesthetic", "prob": 100 },
-      { "prob": 100, "group": "oxycodone_bottle_plastic_pill_prescription_10" },
-      { "prob": 100, "group": "codeine_bottle_plastic_pill_painkiller_10" }
+      { "item": "morphine", "prob": 80, "count": 4 },
+      { "prob": 80, "group": "antibiotics_bottle_plastic_pill_prescription_15" },
+      { "prob": 80, "group": "strong_antibiotic_bottle_plastic_pill_prescription_5" },
+      { "item": "anesthetic", "prob": 90 },
+      { "prob": 80, "group": "oxycodone_bottle_plastic_pill_prescription_10" },
+      { "prob": 80, "group": "codeine_bottle_plastic_pill_painkiller_10" }
     ]
   },
   {
