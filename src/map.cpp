@@ -5114,7 +5114,7 @@ void map::shoot( const tripoint &p, const tripoint &source, projectile &proj, co
     }
 
     // Rescale the damage
-    if( dam <= 0 ) {
+    if( dam < 1 ) {
         proj.impact.damage_units.clear();
         return;
     } else if( dam < initial_damage ) {

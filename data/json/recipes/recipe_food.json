@@ -6059,7 +6059,7 @@
       [ [ "tomato", 1 ], [ "can_tomato", 1 ] ],
       [ [ "meat_cooked", 1, "LIST" ], [ "dry_meat", 1 ], [ "can_chicken", 1 ] ],
       [ [ "can_beans", 1 ], [ "raw_beans", 1 ], [ "dry_beans", 1 ] ],
-      [ [ "chilly-p", 2 ], [ "chili_pepper", 1 ], [ "rehydrated_chili", 1 ] , [ "chili_pepper_cut", 2 ] ]
+      [ [ "chilly-p", 2 ], [ "chili_pepper", 1 ], [ "rehydrated_chili", 1 ], [ "chili_pepper_cut", 2 ] ]
     ]
   },
   {
@@ -9689,7 +9689,7 @@
         [ "rehydrated_garlic", 1 ],
         [ "garlic_powder", 20 ],
         [ "chili_pepper", 2 ],
-		[ "chili_pepper_cut", 4 ],
+        [ "chili_pepper_cut", 4 ],
         [ "rehydrated_chili", 2 ]
       ]
     ]
