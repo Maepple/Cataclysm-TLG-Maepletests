@@ -5008,7 +5008,7 @@ void map::shoot( const tripoint &p, const tripoint &source, projectile &proj, co
     * and "bad" shots, with 0.0f being perfect and 2000.0f being a pure gamble. See ranged.cpp
     * for more details on dispersion.
     */
-    if( coverage > 0 && dispersion < 1000.0f ) {
+    if( coverage > 0 && coverage < 100 && dispersion < 1000.0f ) {
         coverage *= dispersion / 1000.0f;
     }
     bool hit_something = false;
@@ -5057,7 +5057,7 @@ void map::shoot( const tripoint &p, const tripoint &source, projectile &proj, co
                     }
                 } else if( furn_hit ) {
                     shoot_furn_ter( furniture.obj() );
-                    if( laser_passthrough == false ) {
+                    if( ( laser_passthrough == false && laser ) || !laser ) {
                         int damdown = std::min( static_cast<int>( dam ), rng( furniture->bash.str_min,
                                                 furniture->bash.str_max ) );
                         bash( p, modified_dam, false );
@@ -5065,7 +5065,7 @@ void map::shoot( const tripoint &p, const tripoint &source, projectile &proj, co
                     }
                 } else if( ter_hit ) {
                     shoot_furn_ter( terrain.obj() );
-                    if( laser_passthrough == false ) {
+                    if( ( laser_passthrough == false && laser ) || !laser ) {
                         int damdown = std::min( static_cast<int>( dam ), rng( terrain->bash.str_min,
                                                 terrain->bash.str_max ) );
                         bash( p, modified_dam, false );
