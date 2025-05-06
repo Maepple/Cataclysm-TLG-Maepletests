@@ -192,7 +192,7 @@
     "components": [ [ [ "paper", 1200 ] ], [ [ "duct_tape", 150 ] ] ]
   },
   {
-    "result": "paper_breastplate_xl",
+    "result": "paper_breastplate_xs",
     "type": "recipe",
     "copy-from": "paper_breastplate",
     "time": "3 h",
@@ -200,7 +200,7 @@
     "components": [ [ [ "paper", 900 ] ], [ [ "duct_tape", 100 ] ] ]
   },
   {
-    "result": "paper_breastplate_xs",
+    "result": "paper_breastplate_xl",
     "type": "recipe",
     "copy-from": "paper_breastplate",
     "qualities": [ { "id": "CUT", "level": 2 } ],
