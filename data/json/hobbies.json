@@ -803,7 +803,7 @@
     "name": "Marathon Running",
     "description": "You ran the Boston Marathon every year.  That conditioning should make you better equipped than most in avoiding the dead.",
     "points": 5,
-    "traits": [ "GOODCARDIO", "FLEET" ],
+    "traits": [ "GOODCARDIO" ],
     "skills": [ { "level": 2, "name": "swimming" } ],
     "proficiencies": [ "prof_athlete_basic" ]
   },
@@ -1019,7 +1019,7 @@
     "points": 5,
     "skills": [ { "level": 3, "name": "throw" }, { "level": 3, "name": "dodge" }, { "level": 1, "name": "swimming" } ],
     "proficiencies": [ "prof_athlete_basic" ],
-    "traits": [ "TOUGH", "FLEET" ]
+    "traits": [ "TOUGH" ]
   },
   {
     "type": "profession",
@@ -1030,7 +1030,7 @@
     "points": 8,
     "skills": [ { "level": 4, "name": "throw" }, { "level": 5, "name": "dodge" }, { "level": 3, "name": "swimming" } ],
     "proficiencies": [ "prof_athlete_basic", "prof_athlete_expert" ],
-    "traits": [ "TOUGH", "FLEET", "PAINRESIST" ]
+    "traits": [ "TOUGH", "PAINRESIST" ]
   },
   {
     "type": "profession",
