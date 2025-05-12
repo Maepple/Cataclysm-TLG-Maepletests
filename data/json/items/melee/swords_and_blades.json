@@ -1094,7 +1094,7 @@
     "color": "yellow",
     "techniques": [ "WBLOCK_2" ],
     "qualities": [ [ "CUT", 1 ], [ "BUTCHER", 8 ] ],
-    "flags": [ "SHEATH_SWORD", "DURABLE_MELEE" ],
+    "flags": [ "SHEATH_SWORD" ],
     "weapon_category": [ "SHORT_SWORDS" ],
     "melee_damage": { "bash": 6, "cut": 28 }
   },
@@ -1113,11 +1113,11 @@
     "material": [ "bronze" ],
     "symbol": "/",
     "color": "yellow",
-    "techniques": [ "WBLOCK_2", "DEF_DISARM" ],
+    "techniques": [ "WBLOCK_1", "DEF_DISARM" ],
     "qualities": [ [ "CUT", 1 ], [ "BUTCHER", 8 ] ],
-    "flags": [ "DURABLE_MELEE", "SHEATH_SWORD" ],
+    "flags": [ "SHEATH_SWORD" ],
     "weapon_category": [ "SHORT_SWORDS" ],
-    "melee_damage": { "bash": 9, "cut": 27 }
+    "melee_damage": { "bash": 9, "cut": 23 }
   },
   {
     "id": "dao",
@@ -1136,7 +1136,7 @@
     "color": "yellow",
     "techniques": [ "WBLOCK_2" ],
     "qualities": [ [ "CUT", 1 ], [ "BUTCHER", 8 ] ],
-    "flags": [ "DURABLE_MELEE", "SHEATH_SWORD" ],
+    "flags": [ "SHEATH_SWORD" ],
     "weapon_category": [ "MEDIUM_SWORDS" ],
     "melee_damage": { "bash": 8, "cut": 24 }
   },
@@ -1145,7 +1145,7 @@
     "type": "TOOL",
     "category": "weapons",
     "name": { "str": "bronze sword" },
-    "description": "An imitation of a sword made from bronze.  It is a capable weapon, but it cannot compare to actual swords.",
+    "description": "A simple short sword made of bronze.",
     "weight": "800 g",
     "volume": "2 L",
     "longest_side": "50 cm",
@@ -1158,7 +1158,7 @@
     "looks_like": "sword_xiphos",
     "techniques": [ "WBLOCK_2" ],
     "qualities": [ [ "CUT", 1 ], [ "BUTCHER", 2 ] ],
-    "flags": [ "SHEATH_SWORD", "DURABLE_MELEE" ],
+    "flags": [ "SHEATH_SWORD" ],
     "weapon_category": [ "SHORT_SWORDS" ],
     "melee_damage": { "bash": 6, "cut": 21 }
   },

@@ -71,7 +71,7 @@
     "longest_side": "60 cm",
     "warmth": 15,
     "material_thickness": 2,
-    "flags": [ "OUTER", "STURDY" ],
+    "flags": [ "OUTER" ],
     "armor": [ { "encumbrance": 17, "coverage": 95, "covers": [ "torso" ], "rigid_layer_only": true } ],
     "melee_damage": { "bash": 6 }
   },
@@ -116,7 +116,7 @@
           { "type": "carpet_pilling", "covered_by_mat": 100, "thickness": 3.0 },
           { "type": "plastic", "covered_by_mat": 100, "thickness": 1.0 }
         ],
-        "encumbrance": 16,
+        "encumbrance": 38,
         "coverage": 85,
         "covers": [ "torso" ]
       },
@@ -125,7 +125,7 @@
           { "type": "carpet_pilling", "covered_by_mat": 100, "thickness": 3.0 },
           { "type": "plastic", "covered_by_mat": 100, "thickness": 1.0 }
         ],
-        "encumbrance": 5,
+        "encumbrance": 10,
         "coverage": 85,
         "covers": [ "arm_l", "arm_r" ],
         "specifically_covers": [ "arm_shoulder_l", "arm_shoulder_r" ]
@@ -135,7 +135,7 @@
           { "type": "carpet_pilling", "covered_by_mat": 100, "thickness": 3.0 },
           { "type": "plastic", "covered_by_mat": 100, "thickness": 1.0 }
         ],
-        "encumbrance": 5,
+        "encumbrance": 10,
         "coverage": 85,
         "covers": [ "leg_l", "leg_r" ],
         "specifically_covers": [ "leg_hip_l", "leg_hip_r" ]
