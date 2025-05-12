@@ -128,7 +128,7 @@
     "warmth": 2,
     "material_thickness": 2,
     "environmental_protection": 1,
-    "flags": [ "POCKETS", "BELTED", "WATER_FRIENDLY" ]
+    "flags": [ "POCKETS", "OUTER", "WATER_FRIENDLY" ]
   },
   {
     "id": "apron_plastic",
