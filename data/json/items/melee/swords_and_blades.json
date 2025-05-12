@@ -215,7 +215,7 @@
     "material": [ "budget_steel" ],
     "symbol": "/",
     "color": "light_gray",
-    "techniques": [ "RAPID", "WBLOCK_2", "PRECISE" ],
+    "techniques": [ "RAPID", "WBLOCK_1", "PRECISE" ],
     "qualities": [ [ "CUT", 1 ], [ "BUTCHER", -8 ] ],
     "flags": [ "DURABLE_MELEE", "SHEATH_SWORD" ],
     "weapon_category": [ "FENCING_WEAPONRY" ],
@@ -238,7 +238,6 @@
     "symbol": ";",
     "color": "dark_gray",
     "qualities": [ [ "CUT", 2 ], [ "CUT_FINE", 1 ], [ "BUTCHER", 14 ] ],
-    "techniques": [ "RAPID" ],
     "flags": [ "ALLOWS_BODY_BLOCK", "CONDUCTIVE" ],
     "weapon_category": [ "SHIVS" ],
     "melee_damage": { "stab": 15 }
@@ -259,7 +258,6 @@
     "symbol": ";",
     "color": "dark_gray",
     "qualities": [ [ "CUT", 2 ], [ "CUT_FINE", 1 ], [ "BUTCHER", 14 ] ],
-    "techniques": [ "RAPID" ],
     "flags": [ "ALLOWS_BODY_BLOCK", "CONDUCTIVE", "DURABLE_MELEE" ],
     "weapon_category": [ "SHIVS" ],
     "melee_damage": { "stab": 11 }
@@ -733,20 +731,6 @@
     "melee_damage": { "cut": 21 }
   },
   {
-    "id": "survivor_machete",
-    "copy-from": "machete",
-    "type": "TOOL",
-    "name": { "str": "combat machete" },
-    "description": "This common gardening tool has been customized and rebalanced to improve its performance as a weapon.",
-    "extend": { "techniques": [ "RAPID" ] },
-    "relative": {
-      "melee_damage": { "bash": 1, "cut": 2 },
-      "qualities": [ [ "BUTCHER", -5 ] ],
-      "price_postapoc": "10 USD",
-      "weight": "27 g"
-    }
-  },
-  {
     "id": "machete_gimmick",
     "name": { "str": "machete multitool" },
     "type": "TOOL",
@@ -785,7 +769,7 @@
     "techniques": [ "WBLOCK_2", "RAPID" ],
     "qualities": [ [ "CUT", 2 ], [ "BUTCHER", 7 ] ],
     "flags": [ "SHEATH_SWORD", "CONDUCTIVE", "DURABLE_MELEE" ],
-    "weapon_category": [ "MEDIUM_SWORDS", "FENCING_WEAPONRY" ],
+    "weapon_category": [ "MEDIUM_SWORDS" ],
     "melee_damage": { "bash": 5, "cut": 23 }
   },
   {
@@ -1006,7 +990,7 @@
     "material": [ { "type": "leather", "portion": 1.1 }, { "type": "steel", "portion": 112 } ],
     "repairs_with": [ "steel" ],
     "flags": [ "DURABLE_MELEE", "CONDUCTIVE", "SHEATH_SWORD" ],
-    "techniques": [ "WBLOCK_2", "BRUTAL", "RAPID" ],
+    "techniques": [ "WBLOCK_2", "BRUTAL" ],
     "to_hit": { "grip": "weapon", "length": "long", "surface": "line", "balance": "good" },
     "qualities": [ [ "CUT", 1 ], [ "BUTCHER", 7 ] ],
     "weapon_category": [ "LONG_SWORDS", "LONG_THRUSTING_SWORDS" ],
@@ -2256,7 +2240,7 @@
     "to_hit": { "grip": "solid", "length": "short", "surface": "line", "balance": "neutral" },
     "material": [ { "type": "leather", "portion": 1.1 }, { "type": "steel", "portion": 144 } ],
     "repairs_with": [ "steel" ],
-    "techniques": [ "WBLOCK_2", "RAPID", "BRUTAL" ],
+    "techniques": [ "WBLOCK_2", "BRUTAL" ],
     "qualities": [ [ "CUT", 2 ], [ "BUTCHER", 6 ] ],
     "flags": [ "DURABLE_MELEE", "CONDUCTIVE", "SHEATH_SWORD" ],
     "weapon_category": [ "MEDIUM_SWORDS", "FENCING_WEAPONRY" ],
@@ -2279,7 +2263,7 @@
     "to_hit": { "grip": "solid", "length": "short", "surface": "line", "balance": "neutral" },
     "material": [ { "type": "leather", "portion": 1.1 }, { "type": "steel", "portion": 144 } ],
     "repairs_with": [ "steel" ],
-    "techniques": [ "WBLOCK_2", "RAPID" ],
+    "techniques": [ "WBLOCK_2" ],
     "qualities": [ [ "CUT", 2 ], [ "BUTCHER", 6 ] ],
     "flags": [ "DURABLE_MELEE", "CONDUCTIVE", "SHEATH_SWORD" ],
     "weapon_category": [ "MEDIUM_SWORDS" ],
