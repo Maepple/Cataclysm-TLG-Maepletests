@@ -59,7 +59,7 @@
           { "type": "plastic", "covered_by_mat": 100, "thickness": 1.0 }
         ],
         "covers": [ "arm_l", "arm_r" ],
-        "encumbrance": 15,
+        "encumbrance": 28,
         "coverage": 90,
         "specifically_covers": [ "arm_lower_r", "arm_lower_l", "arm_upper_r", "arm_upper_l" ]
       }
@@ -122,7 +122,7 @@
         "covers": [ "arm_l", "arm_r" ],
         "encumbrance": 8,
         "coverage": 90,
-        "specifically_covers": [ "arm_lower_r", "arm_lower_l", "arm_elbow_r", "arm_elbow_l" ],
+        "specifically_covers": [ "arm_lower_r", "arm_lower_l", "arm_elbow_r", "arm_elbow_l", "arm_upper_l", "arm_upper_r" ],
         "rigid_layer_only": true
       }
     ]

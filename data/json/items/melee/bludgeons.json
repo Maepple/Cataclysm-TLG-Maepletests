@@ -824,7 +824,7 @@
     "looks_like": "mace",
     "material": [ "bronze", "wood" ],
     "techniques": [ "WBLOCK_1", "SWEEP" ],
-    "flags": [ "BELT_CLIP", "NONCONDUCTIVE", "DURABLE_MELEE" ],
+    "flags": [ "BELT_CLIP", "NONCONDUCTIVE" ],
     "weapon_category": [ "HAMMERS" ],
     "volume": "1250 ml",
     "longest_side": "60 cm",

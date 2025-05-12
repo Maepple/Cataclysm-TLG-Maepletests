@@ -505,6 +505,30 @@
     "difficulty": 3
   },
   {
+    "id": "nested_shirt_leather",
+    "type": "nested_category",
+    "activity_level": "LIGHT_EXERCISE",
+    "category": "CC_ARMOR",
+    "subcategory": "CSC_ARMOR_TORSO",
+    "name": "buckskin shirts",
+    "description": "Recipes related to tailoring lightweight leather shirts.",
+    "skill_used": "tailor",
+    "nested_category_data": [ "shirt_leather", "shirt_leather_xs", "shirt_leather_xl" ],
+    "difficulty": 3
+  },
+  {
+    "id": "nested_vest_leather_light",
+    "type": "nested_category",
+    "activity_level": "LIGHT_EXERCISE",
+    "category": "CC_ARMOR",
+    "subcategory": "CSC_ARMOR_TORSO",
+    "name": "buckskin vests",
+    "description": "Recipes related to tailoring lightweight leather vests.",
+    "skill_used": "tailor",
+    "nested_category_data": [ "vest_leather_light", "vest_leather_light_xs", "vest_leather_light_xl" ],
+    "difficulty": 3
+  },
+  {
     "id": "nested_fur_coat",
     "type": "nested_category",
     "activity_level": "LIGHT_EXERCISE",

@@ -298,7 +298,7 @@
     "specific_heat_solid": 0.39,
     "latent_heat": 205,
     "conductive": true,
-    "chip_resist": 15,
+    "chip_resist": 12,
     "dmg_adj": [ "marked", "dented", "smashed", "shattered" ],
     "bash_dmg_verb": "dented",
     "cut_dmg_verb": "scratched",
@@ -312,14 +312,14 @@
     "name": "Bronze",
     "density": 8.8,
     "conductive": true,
-    "chip_resist": 15,
+    "chip_resist": 13,
     "repaired_with": "scrap_bronze",
     "dmg_adj": [ "marked", "dented", "smashed", "shattered" ],
     "bash_dmg_verb": "dented",
     "cut_dmg_verb": "scratched",
     "acid_dmg_verb": "corroded",
     "burn_products": [ [ "scrap_bronze", 0.5 ] ],
-    "resist": { "bash": 4, "cut": 5, "acid": 1, "heat": 2, "bullet": 2 },
+    "resist": { "bash": 3.5, "cut": 4.5, "acid": 1, "heat": 2, "bullet": 2 },
     "repair_difficulty": 4
   },
   {
@@ -337,22 +337,6 @@
     "acid_dmg_verb": "burned",
     "burn_products": [ [ "corpse_ash", 0.035 ] ],
     "resist": { "bash": 8, "cut": 12, "acid": 20, "heat": 1, "bullet": 10 }
-  },
-  {
-    "type": "material",
-    "id": "fancy_bronze",
-    "name": "Thessalonian Bronze",
-    "density": 8.8,
-    "conductive": true,
-    "chip_resist": 15,
-    "repaired_with": "scrap_bronze",
-    "dmg_adj": [ "marked", "dented", "smashed", "shattered" ],
-    "bash_dmg_verb": "dented",
-    "cut_dmg_verb": "scratched",
-    "acid_dmg_verb": "corroded",
-    "burn_products": [ [ "scrap_bronze", 0.5 ] ],
-    "resist": { "bash": 5, "cut": 5, "acid": 5, "heat": 2, "bullet": 2 },
-    "repair_difficulty": 4
   },
   {
     "type": "material",
