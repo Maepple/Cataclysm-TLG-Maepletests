@@ -1476,41 +1476,41 @@ bool game::cancel_activity_or_ignore_query( const distraction_type type, const s
     const auto &allow_key = force_uc ? input_context::disallow_lower_case_or_non_modified_letters
                             : input_context::allow_all_keys;
 
-    while (true) {
-        const std::string& action = query_popup()
-            .preferred_keyboard_mode(keyboard_mode::keycode)
-            .context("CANCEL_ACTIVITY_OR_IGNORE_QUERY")
-            .message(force_uc && !is_keycode_mode_supported() ?
-                pgettext("cancel_activity_or_ignore_query",
-                    "<color_light_red>%s %s (Case Sensitive)</color>") :
-                pgettext("cancel_activity_or_ignore_query",
-                    "<color_light_red>%s %s</color>"),
-                text, u.activity.get_stop_phrase())
-            .option("YES", allow_key)
-            .option("NO", allow_key)
-            .option("MANAGER", allow_key)
-            .option("IGNORE", allow_key)
-            .option("VIEW", allow_key)
-            .query()
-            .action;
+    while( true ) {
+        const std::string &action = query_popup()
+                                    .preferred_keyboard_mode( keyboard_mode::keycode )
+                                    .context( "CANCEL_ACTIVITY_OR_IGNORE_QUERY" )
+                                    .message( force_uc && !is_keycode_mode_supported() ?
+                                              pgettext( "cancel_activity_or_ignore_query",
+                                                      "<color_light_red>%s %s (Case Sensitive)</color>" ) :
+                                              pgettext( "cancel_activity_or_ignore_query",
+                                                      "<color_light_red>%s %s</color>" ),
+                                              text, u.activity.get_stop_phrase() )
+                                    .option( "YES", allow_key )
+                                    .option( "NO", allow_key )
+                                    .option( "MANAGER", allow_key )
+                                    .option( "IGNORE", allow_key )
+                                    .option( "VIEW", allow_key )
+                                    .query()
+                                    .action;
 
-        if (action == "YES") {
+        if( action == "YES" ) {
             u.cancel_activity();
             return true;
         }
-        if (action == "IGNORE") {
-            u.activity.ignore_distraction(type);
-            for (player_activity& activity : u.backlog) {
-                activity.ignore_distraction(type);
+        if( action == "IGNORE" ) {
+            u.activity.ignore_distraction( type );
+            for( player_activity &activity : u.backlog ) {
+                activity.ignore_distraction( type );
             }
             return false;
         }
-        if (action == "MANAGER") {
+        if( action == "MANAGER" ) {
             u.cancel_activity();
             get_distraction_manager().show();
             return true;
         }
-        if (action == "VIEW") {
+        if( action == "VIEW" ) {
             temp_exit_fullscreen();
             list_items_monsters();
             reenter_fullscreen();
