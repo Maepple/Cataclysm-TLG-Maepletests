@@ -1568,7 +1568,7 @@
     },
     "warmth": 10,
     "material_thickness": 2,
-    "flags": [ "OVERSIZE", "BELTED", "SOFT" ],
+    "flags": [ "UNRESTRICTED", "BELTED", "SOFT" ],
     "armor": [ { "encumbrance": 2, "coverage": 50, "covers": [ "torso" ] } ]
   },
   {
@@ -1586,7 +1586,7 @@
       "msg": "The %s LED light flickers off.",
       "target": "dimensional_anchor"
     },
-    "flags": [ "DIMENSIONAL_ANCHOR", "OVERSIZE", "BELTED", "PORTAL_PROOF", "SOFT" ]
+    "flags": [ "DIMENSIONAL_ANCHOR", "UNRESTRICTED", "BELTED", "PORTAL_PROOF", "SOFT" ]
   },
   {
     "id": "broken_dimensional_anchor",
