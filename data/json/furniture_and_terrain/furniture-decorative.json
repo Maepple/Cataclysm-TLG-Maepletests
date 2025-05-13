@@ -138,7 +138,6 @@
     "flags": [ "PLACE_ITEM", "TRANSPARENT", "FLAMMABLE", "EASY_DECONSTRUCT" ],
     "deconstruct": { "items": [ { "item": "mannequin", "count": 1 } ] },
     "deployed_item": "mannequin",
-    "deconstruct": { "items": [ { "item": "mannequin", "count": 1 } ] },
     "examine_action": "deployed_furniture",
     "bash": {
       "str_min": 6,
