@@ -561,5 +561,10 @@
     "type": "MIGRATION",
     "id": "tireplate",
     "replace": "tire_cuirass"
+  },
+  {
+    "type": "MIGRATION",
+    "id": "survivor_machete",
+    "replace": "machete"
   }
 ]
