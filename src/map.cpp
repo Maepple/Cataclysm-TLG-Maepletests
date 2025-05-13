@@ -460,8 +460,7 @@ const_maptile map::maptile_at_internal( const tripoint &p ) const
 const_maptile map::maptile_at_internal( const tripoint_bub_ms &p ) const
 {
     point_sm_ms l;
-    const submap *const sm = get_submap_at( p, l );
-
+    const submap *const sm = get_submap_at( tripoint_bub_ms( p ), l );
     return const_maptile( sm, l );
 }
 
@@ -473,8 +472,7 @@ maptile map::maptile_at_internal( const tripoint &p )
 maptile map::maptile_at_internal( const tripoint_bub_ms &p )
 {
     point_sm_ms l;
-    submap *const sm = get_submap_at( p, l );
-
+    submap *const sm = get_submap_at( tripoint_bub_ms( p ), l );
     return maptile( sm, l );
 }
 
@@ -1823,7 +1821,7 @@ furn_id map::furn( const tripoint_bub_ms &p ) const
     }
 
     point_sm_ms l;
-    const submap *const current_submap = unsafe_get_submap_at( p, l );
+    const submap *const current_submap = unsafe_get_submap_at( tripoint_bub_ms( p ), l );
     if( current_submap == nullptr ) {
         debugmsg( "Tried process furniture at (%d,%d) but the submap is not loaded", l.x(), l.y() );
         return furn_str_id::NULL_ID();
@@ -2661,7 +2659,7 @@ int map::move_cost_ter_furn( const tripoint_bub_ms &p ) const
     }
 
     point_sm_ms l;
-    const submap *const current_submap = unsafe_get_submap_at( p, l );
+    const submap *const current_submap = unsafe_get_submap_at( tripoint_bub_ms( p ), l );
     if( current_submap == nullptr ) {
         debugmsg( "Tried process terrain at (%d,%d) but the submap is not loaded", l.x(), l.y() );
         return 0;
@@ -3341,7 +3339,7 @@ bool map::has_flag_ter_or_furn( const std::string &flag, const tripoint_bub_ms &
     }
 
     point_sm_ms l;
-    const submap *const current_submap = unsafe_get_submap_at( p, l );
+    const submap *const current_submap = unsafe_get_submap_at( tripoint_bub_ms( p ), l );
     if( current_submap == nullptr ) {
         debugmsg( "Tried to process terrain at (%d,%d) but the submap is not loaded", l.x(), l.y() );
         return false;
@@ -3393,7 +3391,7 @@ bool map::has_flag_ter_or_furn( const ter_furn_flag flag, const tripoint_bub_ms 
     }
 
     point_sm_ms l;
-    const submap *const current_submap = unsafe_get_submap_at( p, l );
+    const submap *const current_submap = unsafe_get_submap_at( tripoint_bub_ms( p ), l );
     if( current_submap == nullptr ) {
         debugmsg( "Tried to process terrain at (%d,%d) but the submap is not loaded", l.x(), l.y() );
         return false;
@@ -5520,7 +5518,7 @@ map_stack::iterator map::i_rem( const tripoint &p, const map_stack::const_iterat
 map_stack::iterator map::i_rem( const tripoint_bub_ms &p, const map_stack::const_iterator &it )
 {
     point_sm_ms l;
-    submap *const current_submap = get_submap_at( p, l );
+    submap *const current_submap = get_submap_at( tripoint_bub_ms( p ), l );
     if( current_submap == nullptr ) {
         debugmsg( "Tried to remove items at (%d,%d) but the submap is not loaded", l.x(), l.y() );
         nulitems.clear();
@@ -6870,7 +6868,7 @@ void map::trap_set( const tripoint_bub_ms &p, const trap_id &type )
         return;
     }
 
-    memory_cache_dec_set_dirty( p, true );
+    memory_cache_dec_set_dirty( p.raw(), true );
     avatar &player_character = get_avatar();
     if( player_character.sees( p ) ) {
         player_character.memorize_clear_decoration( getglobal( p ), "tr_" );
@@ -6907,7 +6905,7 @@ void map::remove_trap( const tripoint_bub_ms &p )
     trap_id tid = current_submap->get_trap( l );
     if( tid != tr_null ) {
         if( g != nullptr && this == &get_map() ) {
-            memory_cache_dec_set_dirty( p, true );
+            memory_cache_dec_set_dirty( p.raw(), true );
             avatar &player_character = get_avatar();
             if( player_character.sees( p ) ) {
                 player_character.memorize_clear_decoration( getglobal( p ), "tr_" );
@@ -8925,32 +8923,28 @@ void map::loadn( const point &grid, bool update_vehicles )
         set_floor_cache_dirty( z );
         set_pathfinding_cache_dirty( z );
         tmpsub = MAPBUFFER.lookup_submap( pos );
-        if( tmpsub ) {
-            setsubmap( get_nonant( tripoint_rel_sm{ grid.x, grid.y, z } ), tmpsub );
-            if( !tmpsub->active_items.empty() ) {
-                submaps_with_active_items_dirty.emplace( pos );
-            }
-            if( tmpsub->field_count > 0 ) {
-                get_cache( z ).field_cache.set( grid.x + grid.y * MAPSIZE );
-            }
+        setsubmap( get_nonant( tripoint_rel_sm{ grid.x, grid.y, z } ), tmpsub );
+        if( !tmpsub->active_items.empty() ) {
+            submaps_with_active_items_dirty.emplace( pos );
+        }
+        if( tmpsub->field_count > 0 ) {
+            get_cache( z ).field_cache.set( grid.x + grid.y * MAPSIZE );
+        }
 
-            // Destroy bugged no-part vehicles
-            auto &veh_vec = tmpsub->vehicles;
-            for( auto iter = veh_vec.begin(); iter != veh_vec.end(); ) {
-                vehicle *veh = iter->get();
-                if( veh->part_count() > 0 ) {
-                    // Always fix submap coordinates for easier Z-level-related operations
-                    veh->sm_pos = { grid, z };
-                    iter++;
-                    if( main_inbounds ) {
-                        _main_requires_cleanup = true;
-                    }
-                } else {
-                    if( veh->tracking_on ) {
-                        overmap_buffer.remove_vehicle( veh );
-                    }
-                    dirty_vehicle_list.erase( veh );
-                    iter = veh_vec.erase( iter );
+        // Destroy bugged no-part vehicles
+        auto &veh_vec = tmpsub->vehicles;
+        for( auto iter = veh_vec.begin(); iter != veh_vec.end(); ) {
+            vehicle *veh = iter->get();
+            if( veh->part_count() > 0 ) {
+                // Always fix submap coordinates for easier Z-level-related operations
+                veh->sm_pos = { grid, z };
+                iter++;
+                if( main_inbounds ) {
+                    _main_requires_cleanup = true;
+                }
+            } else {
+                if( veh->tracking_on ) {
+                    overmap_buffer.remove_vehicle( veh );
                 }
             }
 
@@ -8969,7 +8963,7 @@ void map::loadn( const point &grid, bool update_vehicles )
             }
 
             if( zlevels ) {
-                add_tree_tops( tripoint_rel_sm( grid.x, grid.y, z ) );
+                add_roofs( tripoint_rel_sm( grid.x, grid.y, z ) );
             }
         }
     }
@@ -9407,7 +9401,7 @@ void map::actualize( const tripoint_rel_sm &grid )
     tmpsub->last_touched = calendar::turn;
 }
 
-void map::add_tree_tops( const tripoint_rel_sm &grid )
+void map::add_roofs( const tripoint_rel_sm &grid )
 {
     if( !zlevels ) {
         // Can't add things on the level above when the map doesn't contain that level.
@@ -9416,18 +9410,17 @@ void map::add_tree_tops( const tripoint_rel_sm &grid )
 
     submap *const sub_here = get_submap_at_grid( grid );
     if( sub_here == nullptr ) {
-        debugmsg( "Tried to add tree tops on null submap on %d,%d,%d",
+        debugmsg( "Tried to add roofs/floors on null submap on %d,%d,%d",
                   grid.x(), grid.y(), grid.z() );
         return;
     }
 
-    bool check_tree_tops = grid.z() > -OVERMAP_DEPTH;
+    bool check_roof = grid.z() > -OVERMAP_DEPTH;
 
-    submap *const sub_below = check_tree_tops ? get_submap_at_grid( grid + tripoint_rel_sm_below ) :
-                              nullptr;
+    submap *const sub_below = check_roof ? get_submap_at_grid( grid + tripoint_rel_sm_below ) : nullptr;
 
-    if( check_tree_tops && sub_below == nullptr ) {
-        debugmsg( "Tried to add tree tops to sm at %d,%d,%d, but sm below doesn't exist",
+    if( check_roof && sub_below == nullptr ) {
+        debugmsg( "Tried to add roofs to sm at %d,%d,%d, but sm below doesn't exist",
                   grid.x(), grid.y(), grid.z() );
         return;
     }
@@ -9439,7 +9432,7 @@ void map::add_tree_tops( const tripoint_rel_sm &grid )
                 continue;
             }
 
-            if( !check_tree_tops ) {
+            if( !check_roof ) {
                 // Make sure we don't have empty space at lowest z-level
                 sub_here->set_ter( { x, y }, ter_t_rock_floor );
                 continue;
