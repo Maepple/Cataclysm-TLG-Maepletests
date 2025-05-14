@@ -344,7 +344,7 @@
     "id": "guns_pistol_improvised",
     "//": "Makeshift or otherwise poor quality pistols.",
     "items": [
-      { "item": "ashot", "prob": 100 },
+      { "item": "ashot", "prob": 100 }, { "item": "2_shot_special", "prob": 100 },
       { "item": "surv_hand_cannon", "prob": 100, "charges": [ 0, 5 ] },
       { "item": "surv_six_shooter", "prob": 100, "charges": [ 0, 6 ] }
     ]
@@ -832,7 +832,7 @@
     "type": "item_group",
     "id": "guns_rifle_improvised",
     "//": "Makeshift or otherwise poor quality rifles.",
-    "items": [ { "item": "rifle_22", "prob": 60 }, { "item": "remington_700", "prob": 30 }, { "item": "rifle_9mm", "prob": 60 } ]
+    "items": [ { "item": "rifle_22", "prob": 60 }, { "item": "rifle_38", "prob": 30 }, { "item": "rifle_44", "prob": 5 } ]
   },
   {
     "type": "item_group",
@@ -1024,12 +1024,12 @@
     "id": "guns_shotgun_improvised",
     "//": "Makeshift or otherwise poor quality shotguns.",
     "items": [
-      { "item": "blunderbuss", "prob": 70 },
-      { "item": "bigun", "prob": 10, "charges": [ 0, 6 ] },
-      { "item": "pipe_double_shotgun", "prob": 70, "charges": [ 0, 2 ] },
-      { "item": "pipe_shotgun", "prob": 100 },
-      { "item": "revolver_shotgun", "prob": 30, "charges": [ 0, 6 ] },
-      { "item": "lever_shotgun", "prob": 10, "charges": [ 0, 6 ] }
+      { "item": "blunderbuss", "prob": 10 },
+      { "item": "pipe_double_shotgun", "prob": 10 },
+      { "item": "pipe_shotgun", "prob": 20 },
+      { "item": "revolver_shotgun", "prob": 1 },
+      { "item": "slamfire_shotgun", "prob": 100 },
+      { "item": "slamfire_shotgun_d", "prob": 30 }
     ]
   },
   {
