@@ -67,7 +67,7 @@
     "dummy": true,
     "category": [ "HUMAN" ],
     "types": [ "EYES", "VISION" ],
-    "cancels": [ "EAGLEEYED", "EYEBULGE", "INFRARED", "MEMBRANE", "MYOPIC", "SEESLEEP" ],
+    "cancels": [ "EAGLEEYED", "EYEBULGE", "INFRARED", "MEMBRANE", "MYOPIC", "SEESLEEP", "MESOPIC" ],
     "description": "You have human eyes."
   },
   {
@@ -754,6 +754,7 @@
     "changes_to": [ "NIGHTVISION2" ],
     "category": [
       "BIRD",
+      "BATRACHIAN",
       "CATTLE",
       "INSECT",
       "BATRACHIAN",
@@ -764,6 +765,7 @@
       "LUPINE",
       "MOUSE",
       "SPIDER",
+      "URSINE",
       "TROGLOBITE"
     ],
     "active": true,
@@ -1402,7 +1404,7 @@
     "points": -2,
     "description": "Without glasses, your seeing radius is severely reduced!  However, you are guaranteed to start with a pair of glasses.",
     "starting_trait": true,
-    "cancels": [ "URSINE_EYE" ],
+    "cancels": [ "MESOPIC" ],
     "category": [ "BEAST" ],
     "flags": [ "MYOPIC" ]
   },
@@ -2245,26 +2247,12 @@
   },
   {
     "type": "mutation",
-    "id": "URSINE_EYE",
-    "name": { "str": "Ursine Vision" },
-    "points": 1,
-    "description": "Your visual processing has shifted: though you can see better in the dark, you're nearsighted in the light.  Maybe glasses would help.  Activate to toggle NV-visible areas on or off.",
-    "types": [ "EYES", "VISION" ],
-    "cancels": [ "MYOPIC", "MESOPIC" ],
-    "category": [ "URSINE" ],
-    "flags": [ "MYOPIC_IN_LIGHT" ],
-    "active": true,
-    "starts_active": true
-  },
-  {
-    "type": "mutation",
     "id": "MESOPIC",
     "name": { "str": "Mesopic" },
     "points": -1,
     "description": "You find it difficult to see very far in bright light.  On its own, this doesn't necessarily make you any better in the dark.",
-    "types": [ "EYES", "VISION" ],
     "cancels": [ "MYOPIC" ],
-    "category": [ "CHIROPTERAN", "TROGLOBITE" ],
+    "category": [ "CHIROPTERAN", "TROGLOBITE", "URSINE" ],
     "flags": [ "MYOPIC_IN_LIGHT" ]
   },
   {
@@ -2431,7 +2419,6 @@
   {
     "type": "mutation",
     "id": "FROG_EYES",
-    "//": "Currently without the NV from URSINE_EYE",
     "name": { "str": "Frog Eyes" },
     "points": 1,
     "visibility": 8,
@@ -2440,8 +2427,8 @@
     "prereqs": [ "EYEBULGE" ],
     "category": [ "BATRACHIAN" ],
     "flags": [ "EYE_MEMBRANE", "SEESLEEP", "MYOPIC_IN_LIGHT" ],
-    "types": [ "EYES", "VISION" ],
-    "cancels": [ "MEMBRANE", "MYOPIC", "URSINE_EYE", "MESOPIC" ],
+    "types": [ "EYES" ],
+    "cancels": [ "MEMBRANE", "MYOPIC", "MESOPIC" ],
     "threshreq": [ "THRESH_BATRACHIAN" ],
     "wet_protection": [ { "part": "eyes", "neutral": 1 } ],
     "armor": [ { "parts": "eyes", "cut": 3, "bash": 1 } ],
