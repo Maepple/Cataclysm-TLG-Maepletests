@@ -68,11 +68,11 @@
       },
       "toilets": { "B": {  } },
       "items": {
-        "A": { "item": "petstore_shelves", "chance": 70, "repeat": [ 2, 8 ] },
-        "L": { "item": "petstore_shelves", "chance": 70, "repeat": [ 2, 8 ] },
-        "G": { "item": "cleaning", "chance": 70, "repeat": [ 1, 4 ] },
-        "C": { "item": "petstore_misc", "chance": 70, "repeat": [ 2, 8 ] },
-        "K": { "item": "petstore_misc", "chance": 70, "repeat": [ 2, 8 ] },
+        "A": { "item": "petstore_shelves", "chance": 40, "repeat": [ 0, 3 ] },
+        "L": { "item": "petstore_shelves", "chance": 40, "repeat": [ 0, 3 ] },
+        "G": { "item": "cleaning", "chance": 50, "repeat": [ 0, 4 ] },
+        "C": { "item": "petstore_misc", "chance": 40, "repeat": [ 0, 4 ] },
+        "K": { "item": "petstore_misc", "chance": 40, "repeat": [ 0, 4 ] },
         "d": { "item": "office", "chance": 50, "repeat": [ 2, 4 ] },
         "U": { "item": "trash", "chance": 20, "repeat": [ 2, 4 ] }
       },
@@ -164,7 +164,7 @@
       "items": {
         "l": { "item": "cleaning", "chance": 30 },
         "T": { "item": "softdrugs", "chance": 30 },
-        "{": { "item": "petstore_shelves", "chance": 70, "repeat": [ 2, 8 ] }
+        "{": { "item": "petstore_shelves", "chance": 40, "repeat": [ 0, 4 ] }
       },
       "place_monster": [
         { "group": "GROUP_PET_CATS", "x": 2, "y": 3 },
@@ -307,9 +307,9 @@
         { "item": "cash_register_random", "x": 7, "y": [ 7, 11 ], "chance": 100 }
       ],
       "items": {
-        "{": { "item": "petstore_shelves", "chance": 70, "repeat": [ 1, 4 ] },
-        "G": { "item": "cleaning", "chance": 70, "repeat": [ 1, 4 ] },
-        "l": { "item": "petstore_misc", "chance": 70, "repeat": [ 1, 4 ] },
+        "{": { "item": "petstore_shelves", "chance": 40, "repeat": [ 0, 3 ] },
+        "G": { "item": "cleaning", "chance": 60, "repeat": [ 1, 4 ] },
+        "l": { "item": "petstore_misc", "chance": 60, "repeat": [ 0, 4 ] },
         "Y": [ { "item": "jackets", "chance": 10 }, { "item": "bags", "chance": 10 } ]
       },
       "place_monster": [
