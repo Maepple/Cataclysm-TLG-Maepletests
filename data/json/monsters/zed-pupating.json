@@ -9,7 +9,6 @@
     "bleed_rate": 50,
     "regenerates": 5,
     "melee_skill": 0,
-    "dodge": 0,
     "harvest": "zombie_pupating",
     "extend": { "flags": [ "SMALLSLUDGETRAIL", "SLUDGEPROOF" ] },
     "upgrades": { "half_life": 4, "into": "mon_zombie_crawler_pupa" },
@@ -46,7 +45,6 @@
     "upgrades": { "half_life": 4, "into": "mon_zombie_pupa" },
     "regenerates": 5,
     "melee_skill": 0,
-    "dodge": 0,
     "extend": { "flags": [ "SMALLSLUDGETRAIL", "SLUDGEPROOF" ] },
     "armor": { "electric": 2, "bash": 8, "cut": 6, "bullet": 6 }
   },
@@ -234,7 +232,6 @@
     "vision_day": 8,
     "vision_night": 15,
     "melee_skill": 0,
-    "dodge": 0,
     "harvest": "zombie_humanoid_pupating_shadow",
     "upgrades": { "half_life": 4, "into": "mon_zombie_pupa_shady" },
     "extend": { "flags": [ "SMALLSLUDGETRAIL", "SLUDGEPROOF", "NIGHT_INVISIBILITY" ] },

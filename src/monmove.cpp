@@ -2017,7 +2017,7 @@ bool monster::move_to( const tripoint &p, bool force, bool step_on_critter,
     if( has_flag( mon_flag_SLUDGETRAIL ) ) {
         for( const tripoint &sludge_p : here.points_in_radius( pos(), 1 ) ) {
             const int fstr = 3 - ( std::abs( sludge_p.x - posx() ) + std::abs( sludge_p.y - posy() ) );
-            if( fstr >= 2 ) {
+            if( ( fstr >= 2 ) && ( rng( 0, 3 ) > 0 ) ) {
                 here.add_field( sludge_p, fd_sludge, fstr );
             }
         }
