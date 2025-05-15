@@ -269,7 +269,7 @@
       { "item": "22_cb", "prob": 30, "charges": [ 1, 100 ] },
       { "item": "22_fmj", "prob": 50, "charges": [ 1, 80 ] },
       { "item": "22_lr", "prob": 100, "charges": [ 1, 80 ] },
-      { "item": "22_ratshot", "prob": 30, "charges": [ 1, 100 ] },
+      { "item": "22_ratshot", "prob": 10, "charges": [ 1, 80 ] },
       { "item": "270win_jsp", "prob": 25, "charges": [ 1, 20 ] },
       { "item": "3006", "prob": 19, "charges": [ 1, 20 ] },
       { "item": "3006_jsp", "prob": 6, "charges": [ 1, 20 ] },
@@ -291,7 +291,7 @@
       { "item": "22_cb", "prob": 30 },
       { "item": "22_fmj", "prob": 50 },
       { "item": "22_lr", "prob": 40 },
-      { "item": "22_ratshot", "prob": 30 },
+      { "item": "22_ratshot", "prob": 10 },
       { "item": "270win_jsp", "prob": 25 },
       { "item": "3006", "prob": 25 },
       { "item": "3006_incendiary", "prob": 1 },
@@ -305,11 +305,11 @@
     "//": "Loose rifle ammo commonly owned by citizens and found in many locations.",
     "subtype": "collection",
     "entries": [
-      { "item": "223", "prob": 10, "charges": [ 0, 6 ] },
+      { "item": "223", "prob": 15, "charges": [ 0, 6 ] },
       { "item": "22_cb", "prob": 20, "charges": [ 0, 6 ] },
       { "item": "22_fmj", "prob": 15, "charges": [ 0, 6 ] },
       { "item": "22_lr", "prob": 20, "charges": [ 0, 6 ] },
-      { "item": "22_ratshot", "prob": 10, "charges": [ 0, 6 ] },
+      { "item": "22_ratshot", "prob": 5, "charges": [ 0, 6 ] },
       { "item": "270win_jsp", "prob": 2, "charges": [ 0, 6 ] },
       { "item": "3006", "prob": 9, "charges": [ 0, 6 ] },
       { "item": "3006_jsp", "prob": 3, "charges": [ 0, 6 ] },
@@ -327,7 +327,7 @@
       { "item": "303_bthp", "prob": 30 },
       { "item": "303_sp", "prob": 25 },
       { "item": "303_fmjbt", "prob": 25 },
-      { "item": "77mm_arisaka_jsp", "prob": 10 },
+      { "item": "77mm_arisaka_jsp", "prob": 2 },
       { "item": "223", "prob": 74 },
       { "item": "556", "prob": 25 },
       { "item": "556_m855a1", "prob": 1 },
@@ -340,10 +340,10 @@
       { "item": "4570_pen", "prob": 20 },
       { "item": "4570_low", "prob": 40 },
       { "item": "762_m87", "prob": 25 },
-      { "item": "300blk", "prob": 15 },
+      { "item": "300blk", "prob": 10 },
       { "item": "300blk_ss", "prob": 10 },
-      { "item": "50beowulf_xtp", "prob": 15 },
-      { "item": "50beowulf_penetrator", "prob": 10 },
+      { "item": "50beowulf_xtp", "prob": 5 },
+      { "item": "50beowulf_penetrator", "prob": 5 },
       { "item": "450_ftx", "prob": 20 },
       { "item": "450_penetrator", "prob": 15 },
       { "item": "338lapua_hpbt", "prob": 15 },
@@ -361,7 +361,7 @@
       { "item": "303_bthp", "prob": 30 },
       { "item": "303_sp", "prob": 25 },
       { "item": "303_fmjbt", "prob": 25 },
-      { "item": "77mm_arisaka_jsp", "prob": 10 },
+      { "item": "77mm_arisaka_jsp", "prob": 2 },
       { "item": "556", "prob": 75 },
       { "item": "762_51", "prob": 75 },
       { "item": "4570_sp", "prob": 40 },
@@ -372,7 +372,7 @@
       { "item": "8mm_caseless", "prob": 30 },
       { "item": "8mm_caseless", "prob": 30 },
       { "item": "8mm_jhp", "prob": 10 },
-      { "item": "300blk", "prob": 20 },
+      { "item": "300blk", "prob": 15 },
       { "item": "762_54R", "prob": 35 },
       { "item": "762_m87", "prob": 20 },
       { "item": "300blk_ss", "prob": 15 },
@@ -456,8 +456,6 @@
     "subtype": "distribution",
     "entries": [
       { "item": "reloaded_223", "prob": 60 },
-      { "item": "reloaded_22_fmj", "prob": 20 },
-      { "item": "reloaded_22_lr", "prob": 70 },
       { "item": "reloaded_270win_jsp", "prob": 15 },
       { "item": "reloaded_300_winmag", "prob": 15 },
       { "item": "reloaded_3006", "prob": 54 },
@@ -474,8 +472,8 @@
       { "item": "reloaded_762_51_incendiary", "prob": 5 },
       { "item": "reloaded_762_54R", "prob": 40 },
       { "item": "reloaded_762_m87", "prob": 2 },
-      { "item": "reloaded_300blk", "prob": 10 },
-      { "item": "reloaded_50beowulf_xtp", "prob": 10 },
+      { "item": "reloaded_300blk", "prob": 5 },
+      { "item": "reloaded_50beowulf_xtp", "prob": 5 },
       { "item": "reloaded_50beowulf_penetrator", "prob": 5 },
       { "item": "reloaded_450_ftx", "prob": 10 },
       { "item": "reloaded_450_penetrator", "prob": 5 },
@@ -492,12 +490,12 @@
     "//": "Shotgun ammo commonly owned by citizens and found in many locations.",
     "subtype": "distribution",
     "entries": [
-      { "item": "shot_00", "prob": 200, "charges": [ 1, 20 ] },
-      { "item": "shot_bird", "prob": 140, "charges": [ 1, 20 ] },
+      { "item": "shot_00", "prob": 200, "charges": [ 1, 30 ] },
+      { "item": "shot_bird", "prob": 120, "charges": [ 1, 30 ] },
       { "item": "shot_slug", "prob": 140, "charges": [ 1, 20 ] },
       { "item": "410shot_slug", "prob": 3, "charges": [ 1, 20 ] },
       { "item": "410shot_000", "prob": 4, "charges": [ 1, 20 ] },
-      { "item": "410shot_bird", "prob": 19, "charges": [ 1, 20 ] }
+      { "item": "410shot_bird", "prob": 10, "charges": [ 1, 20 ] }
     ]
   },
   {
@@ -507,11 +505,11 @@
     "subtype": "collection",
     "entries": [
       { "item": "shot_00", "prob": 200 },
-      { "item": "shot_bird", "prob": 140 },
+      { "item": "shot_bird", "prob": 120 },
       { "item": "shot_slug", "prob": 140 },
       { "item": "410shot_slug", "prob": 3 },
       { "item": "410shot_000", "prob": 4 },
-      { "item": "410shot_bird", "prob": 19 }
+      { "item": "410shot_bird", "prob": 10 }
     ]
   },
   {
@@ -520,12 +518,12 @@
     "//": "Loose shotgun ammo commonly owned by citizens and found in many locations.",
     "subtype": "collection",
     "entries": [
-      { "item": "shot_00", "prob": 200, "charges": [ 0, 4 ] },
-      { "item": "shot_bird", "prob": 140, "charges": [ 0, 4 ] },
-      { "item": "shot_slug", "prob": 140, "charges": [ 0, 4 ] },
-      { "item": "410shot_slug", "prob": 3, "charges": [ 0, 4 ] },
-      { "item": "410shot_000", "prob": 4, "charges": [ 0, 4 ] },
-      { "item": "410shot_bird", "prob": 19, "charges": [ 0, 4 ] }
+      { "item": "shot_00", "prob": 200, "charges": [ 0, 6 ] },
+      { "item": "shot_bird", "prob": 120, "charges": [ 0, 6 ] },
+      { "item": "shot_slug", "prob": 140, "charges": [ 0, 6 ] },
+      { "item": "410shot_slug", "prob": 3, "charges": [ 0, 6 ] },
+      { "item": "410shot_000", "prob": 4, "charges": [ 0, 6 ] },
+      { "item": "410shot_bird", "prob": 19, "charges": [ 0, 6 ] }
     ]
   },
   {
