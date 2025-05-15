@@ -12576,6 +12576,7 @@ void game::update_overmap_seen()
         if( sight_points < 0 ) {
             continue;
         }
+        if( can_see ) {
         const auto set_seen = []( const tripoint_abs_omt & p, om_vision_level level ) {
             tripoint_abs_omt seen( p );
             do {
@@ -12593,6 +12594,7 @@ void game::update_overmap_seen()
         } else {
             set_seen( p, om_vision_level::vague );
         }
+    }
     }
 }
 

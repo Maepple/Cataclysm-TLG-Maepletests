@@ -789,7 +789,7 @@
     "name": "derelict property",
     "sym": "X",
     "color": "i_brown",
-    "see_cost": 5,
+    "see_cost": "high",
     "extras": "build",
     "mondensity": 2
   },
@@ -799,7 +799,7 @@
     "name": "scavenger bunker",
     "sym": "B",
     "color": "light_green",
-    "see_cost": 5,
+    "see_cost": "high",
     "extras": "build",
     "mondensity": 2
   },
