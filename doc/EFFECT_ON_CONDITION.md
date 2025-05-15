@@ -61,9 +61,9 @@ For example, `{ "npc_has_effect": "Shadow_Reveal" }`, used by shadow lieutenant,
 
 ### Typical Alpha and Beta Talkers by cases
 
-| EOC                                              | Alpha (possible types)      | Beta (possible types)       |
-| ------------------------------------------------ | ----------------------      | --------------------------- |
-| Talk with NPC                                    | player (Avatar)             | NPC (NPC)                   |
+| EOC                                              | Alpha (possible types)      | Beta (possible types)       | variables sent              |
+| ------------------------------------------------ | ----------------------      | --------------------------- | --------------------------- |
+| Talk with NPC                                    | player (Avatar)             | NPC (NPC)                   |                             |
 | Talk with monster                                | player (Avatar)             | monster (monster)           |
 | Use computer                                     | player (Avatar)             | computer (Furniture)        |
 | furniture: "examine_action"                      | player (Avatar)             | NONE                        |
@@ -76,17 +76,26 @@ For example, `{ "npc_has_effect": "Shadow_Reveal" }`, used by shadow lieutenant,
 | activity_type: "completion_eoc"                  | character (Character)       | NONE                        |
 | activity_type: "do_turn_eoc"                     | character (Character)       | NONE                        |
 | addiction_type: "effect_on_condition"            | character (Character)       | NONE                        |
-| bionics: "activated_eocs"                        | character (Character)       | NONE                        |
+| bionics: "activated_eocs"                        | character (Character)       | NONE                        | `act_cost`, int, cost of activation of item
 | bionics: "deactivated_eocs"                      | character (Character)       | NONE                        |
 | bionics: "processed_eocs"                        | character (Character)       | NONE                        |
 | mutation: "activated_eocs"                       | character (Character)       | NONE                        |
 | mutation: "deactivated_eocs"                     | character (Character)       | NONE                        |
 | mutation: "processed_eocs"                       | character (Character)       | NONE                        |
 | recipe: "result_eocs"                            | crafter (Character)         | NONE                        |
-| monster death: "death_function"                  | killed monster (monster)    | you (avatar)                |
+| monster death: "death_function"                  | victim (Creature)           | NONE                        |
+| ammo_effect: "eoc"                               | shooter (Creature)          | victim (if exist, otherwise NONE) (Creature) | `proj_damage`, int, amount of damage projectile dealt. Detonation via SPECIAL_COOKOFF ammo effect return `proj_damage` as 1. Note that if projectile miss the target, EoC would be built without beta talker, so using EoC referencing `npc_` or `n_` would result in error. Use `has_beta` condition before manipulating with npc
 
-Using `use_action: "type": "effect_on_conditions"` automatically passes the context variable `id`, that stores the id of an item that was activated
-Using `bionics: "activated_eocs"` automatically passes the context variable `act_cost` that stores the value of `act_cost` field
+Some actions sent additional context variables, that can be used in EoC, in format:
+
+```json
+{ "compare_string": [ "bio_uncanny_dodge", { "context_val": "id" } ] }
+```
+
+```json
+{ "math": [ "_act_cost", "==", "2000" ] }
+```
+
 ## Value types
 
 Effect on Condition uses a huge variety of different values for effects or for conditions to check against, so to standardize it, most of them are explained here
@@ -279,6 +288,22 @@ Checks there is portal storm **and** you have `MAKAYLA_MUTATOR` mutation **and**
 
 ## Possible conditions
 
+### `has_alpha`, `has_beta`
+- type: simple string
+- return true if alpha or beta talker exist
+
+#### Valid talkers:
+
+| Avatar | Character | NPC | Monster |  Furniture | Item |
+| ------ | --------- | --------- | ---- | ------- | --- | 
+| ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+
+#### Examples
+return true if beta talker exists
+```json
+"condition": "has_beta",
+```
+
 ### `u_male`, `u_female`, `npc_male`, `npc_female`
 - type: simple string
 - return true if alpha or beta talker is male or female
@@ -383,6 +408,24 @@ Checks do alpha talker has `FEATHERS` mutation
 ```json
 { "u_has_trait": "FEATHERS" }
 ```
+
+### `u_is_trait_purifiable`, `npc_is_trait_purifiable`
+- type: string or [variable object](##variable-object)
+- return true if the checked trait is purifiable for the alpha or beta talker
+- non-purifiability is either set globally in the trait definition or per-character via `u/npc_set_trait_purifiability`
+
+#### Valid talkers:
+
+| Avatar | Character | NPC | Monster |  Furniture | Item |
+| ------ | --------- | --------- | ---- | ------- | --- | 
+| ✔️ | ✔️ | ✔️ | ❌ | ❌ | ❌ |
+
+#### Examples
+Checks if the `FEATHERS` trait is purifiable for the character (returns true as per the trait definition unless another effect set the trait non-purifiable for the target)
+```json
+{ "u_is_trait_purifiable": "FEATHERS" }
+```
+
 
 ### `u_has_martial_art`, `npc_has_martial_art`
 - type: string or [variable object](##variable-object)
@@ -2324,6 +2367,23 @@ Mutate towards Tail Stub (removing any incompatibilities) using the category set
         "category": { "u_val": "upcoming_mutation_category", },
         "use_vitamins": true
       },
+```
+
+#### `u_set_trait_purifiability`, `npc_set_trait_purifiability`
+
+If you have the given trait it will be added to /removed from your list of non-purifiable traits, overriding `purifiable: true` in the given trait's definition.
+
+| Syntax | Optionality | Value  | Info |
+| --- | --- | --- | --- | 
+| "u/npc_set_trait_purifiablility" | **mandatory** | string or [variable object](##variable-object) | id of the trait to change
+| "purifiable" | **mandatory** | bool | `true` adds the trait to the unpurifiable trait list, `false` removes it |
+
+```json
+{
+  "u_set_trait_purifiability": "BEAK",   // Trait ID to change
+  "purifiable": false   // Turns the trait unpurifiable for the talker
+}
+
 ```
 
 #### `u_add_effect`, `npc_add_effect`

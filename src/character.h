@@ -819,6 +819,8 @@ class Character : public Creature, public visitable
         /* Adjusts provided sight dispersion to account for player stats */
         int effective_dispersion( int dispersion, bool zoom = false ) const;
 
+        dispersion_sources total_gun_dispersion( const item &gun, double recoil, int spread ) const;
+
         int get_character_parallax( bool zoom = false ) const;
 
         /* Accessors for aspects of aim speed. */
@@ -3996,6 +3998,8 @@ class Character : public Creature, public visitable
          * Contains mutation ids of the base traits.
          */
         std::unordered_set<trait_id> my_traits;
+        // Mutations that have been turned unpurifiable via EoC
+        std::unordered_set<trait_id> my_intrinsic_mutations;
         /**
          * Pointers to mutation branches in @ref my_mutations.
          */
