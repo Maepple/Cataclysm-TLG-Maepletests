@@ -151,7 +151,7 @@
       [ "underbarrel mount", 1 ]
     ],
     "faults": [ "fault_gun_blackpowder", "fault_gun_dirt" ],
-    "flags": [ "RELOAD_ONE", "NEVER_JAMS", "RELOAD_EJECT", "EASY_CLEAN" ],
+    "flags": [ "RELOAD_ONE", "NEVER_JAMS", "RELOAD_EJECT", "EASY_CLEAN", "ALLOWS_BODY_BLOCK" ],
     "pocket_data": [ { "pocket_type": "MAGAZINE", "rigid": true, "ammo_restriction": { "22": 4 } } ],
     "melee_damage": { "bash": 1 }
   },
@@ -200,7 +200,7 @@
     "variants": [
       {
         "id": "ruger_1022",
-        "name": { "str": "Ruger 10/22 rifle" },
+        "name": { "str": "Ruger 10/22 carbine" },
         "description": "A combination of negligible recoil, high customization, and inexpensive ammunition made the Ruger 10/22 a popular choice among enthusiasts and small game hunters.  Even though it fires the weak .22 round, it's perfectly capable of killing."
       }
     ],

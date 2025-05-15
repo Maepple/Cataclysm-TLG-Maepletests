@@ -99,6 +99,8 @@
     "dispersion": 480,
     "durability": 8,
     "min_cycle_recoil": 135,
+    "flags": [ "ALLOWS_BODY_BLOCK" ],
+    "weapon_category": [ "AUTOMATIC_PISTOLS" ],
     "pocket_data": [ { "magazine_well": "41 ml", "pocket_type": "MAGAZINE_WELL", "item_restriction": [ "kp32mag" ] } ],
     "melee_damage": { "bash": 1 }
   },

@@ -355,7 +355,7 @@
     "id": "guns_smg_common",
     "//": "Semi-auto civilian SMGs owned by citizens and found in many locations.",
     "//2": "Making the assumption any loaded gun will have additional ammo and mags with it.",
-    "items": [ { "group": "nested_mp40semi", "prob": 200 }, { "group": "nested_hk_mp5_semi_pistol", "prob": 70 } ]
+    "items": [ { "group": "nested_mp40semi", "prob": 10 }, { "group": "nested_hk_mp5_semi_pistol", "prob": 70 } ]
   },
   {
     "type": "item_group",
@@ -363,7 +363,7 @@
     "//": "Semi-auto civilian SMGs owned by citizens and found in many locations.",
     "//2": "This is for worn items so ammo should be handled elsewhere so that mods can be added directly.",
     "items": [
-      { "item": "mp40semi", "charges": [ 0, 32 ], "prob": 200 },
+      { "item": "mp40semi", "charges": [ 0, 32 ], "prob": 10 },
       { "item": "hk_mp5_semi_pistol", "charges": [ 0, 30 ], "prob": 70 }
     ]
   },
@@ -372,7 +372,7 @@
     "subtype": "distribution",
     "id": "guns_smg_common_display",
     "//": "Empty Semi-auto civilian SMGs owned by citizens and found in many locations.",
-    "items": [ { "item": "mp40semi", "prob": 70 }, { "item": "hk_mp5_semi_pistol", "prob": 70 }, { "item": "TDI_10", "prob": 70 } ]
+    "items": [ { "item": "mp40semi", "prob": 10 }, { "item": "hk_mp5_semi_pistol", "prob": 70 }, { "item": "TDI_10", "prob": 70 } ]
   },
   {
     "type": "item_group",
@@ -382,7 +382,7 @@
     "items": [
       { "group": "nested_calico", "prob": 30 },
       { "group": "nested_fn_p90", "prob": 50 },
-      { "group": "nested_mp40", "prob": 185 },
+      { "group": "nested_mp40", "prob": 5 },
       { "group": "nested_tommygun", "prob": 70 },
       { "group": "nested_sten", "prob": 100 },
       { "group": "nested_uzi", "prob": 100 },
@@ -407,7 +407,7 @@
     "items": [
       { "item": "calico", "prob": 30 },
       { "item": "fn_p90", "prob": 50 },
-      { "item": "mp40", "prob": 185 },
+      { "item": "mp40", "prob": 5 },
       { "item": "tommygun", "prob": 70 },
       { "item": "sten", "prob": 100 },
       { "item": "uzi", "prob": 100 },
