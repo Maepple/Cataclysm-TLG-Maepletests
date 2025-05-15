@@ -1078,7 +1078,7 @@
       { "level": 4, "name": "throw" },
       { "level": 4, "name": "swimming" }
     ],
-    "proficiencies": [ "prof_athlete_basic", "prof_maces_familiar", "prof_maces_pro" ],
+    "proficiencies": [ "prof_athlete_basic", "prof_bludgeons_familiar", "prof_bludgeons_pro" ],
     "items": {
       "both": {
         "entries": [
