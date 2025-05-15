@@ -31,7 +31,7 @@
       [ "stock mount", 1 ],
       [ "underbarrel mount", 1 ]
     ],
-    "flags": [ "RELOAD_ONE", "NEVER_JAMS", "RELOAD_EJECT", "EASY_CLEAN", "NO_TURRET" ],
+    "flags": [ "RELOAD_ONE", "NEVER_JAMS", "RELOAD_EJECT", "EASY_CLEAN", "NO_TURRET", "ALLOWS_BODY_BLOCK" ],
     "pocket_data": [ { "pocket_type": "MAGAZINE", "rigid": true, "ammo_restriction": { "45colt": 2, "410shot": 2 } } ],
     "melee_damage": { "bash": 2 }
   },
@@ -96,7 +96,7 @@
     "clip_size": 6,
     "blackpowder_tolerance": 56,
     "//proportional": { "reload": 1.5 },
-    "flags": [ "NO_TURRET" ],
+    "flags": [ "NO_TURRET", "ALLOWS_BODY_BLOCK" ],
     "pocket_data": [ { "pocket_type": "MAGAZINE", "rigid": true, "ammo_restriction": { "45colt": 6 } } ],
     "melee_damage": { "bash": 8 }
   },
@@ -112,7 +112,7 @@
       {
         "id": "taurus_judge",
         "name": { "str": "Taurus Judge revolver" },
-        "description": "Marketed for home defense, the Taurus Judge is a 5 shot cylinder revolver, capable of firing .410 shotshells or .45 Colt cartridges out of it's 3 inch barrel.  While it doesn't compete ballistically with a proper rifle, or even a full length revolver, it's still a handy handgun against the undead and soon to be."
+        "description": "Marketed for home defense, the Taurus Judge is a 5 shot cylinder revolver, capable of firing .410 shotshells or .45 Colt cartridges out of its 3 inch barrel.  While it doesn't compete ballistically with a proper rifle, or even a full length revolver, it's still a handy handgun against the undead and soon to be."
       }
     ],
     "weight": "822 g",
@@ -124,6 +124,7 @@
     "price_postapoc": "20 USD",
     "to_hit": -2,
     "ammo": [ "410shot", "45colt" ],
+    "flags": [ "NO_TURRET", "ALLOWS_BODY_BLOCK" ],
     "dispersion": 280,
     "clip_size": 5,
     "pocket_data": [
