@@ -8,6 +8,10 @@
 // #define VERSION "1.0"
 //#endif
 
+// Forward declarations (satisfy -Wmissing-declarations)
+std::string getVersionFromFile();
+const char *getVersionString();
+
 std::string getVersionFromFile()
 {
     std::ifstream versionFile("VERSION.txt");

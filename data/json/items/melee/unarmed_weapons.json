@@ -64,7 +64,7 @@
     "proportional": { "weight": 0.75, "volume": 0.75 },
     "extend": { "flags": [ "UNDERSIZE", "PREFIX_XS" ] }
   },
-    {
+  {
     "type": "ARMOR",
     "id": "bagh_nakha",
     "name": { "str": "pair of bagh nakh", "str_pl": "pairs of bagh nakh" },
