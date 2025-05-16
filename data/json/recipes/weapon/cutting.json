@@ -829,7 +829,7 @@
     "qualities": [ { "id": "GRIND", "level": 2 } ],
     "tools": [ [ [ "hotcut_any", 1, "LIST" ] ] ]
   },
-    {
+  {
     "result": "bagh_nakha_xl",
     "type": "recipe",
     "copy-from": "bagh_nakha",
