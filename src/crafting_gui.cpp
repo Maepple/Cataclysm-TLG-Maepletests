@@ -1034,20 +1034,21 @@ static recipe_subset filter_recipes( const recipe_subset &available_recipes,
                     // Filter by category e.g. armor
                     std::string user_cat = qry_filter_str.substr( 2 );
                     if( !user_cat.empty() ) {
-                        for (std::string::size_type i = 0; i < user_cat.size(); ++i) {
-                            user_cat[i] = std::toupper(static_cast<unsigned char>(user_cat[i]));
+                        for( std::string::size_type i = 0; i < user_cat.size(); ++i ) {
+                            user_cat[i] = std::toupper( static_cast<unsigned char>( user_cat[i] ) );
                         }
                     }
                     std::string cat_id = "CC_" + user_cat;
-                    filtered_recipes = recipe_subset( filtered_recipes, filtered_recipes.in_category( crafting_category_id( cat_id ) ) );
+                    filtered_recipes = recipe_subset( filtered_recipes,
+                                                      filtered_recipes.in_category( crafting_category_id( cat_id ) ) );
                     break;
                 }
                 case 'S': {
                     // Filter by subcategory e.g. food_snack
                     std::string user_subcat = qry_filter_str.substr( 2 );
                     if( !user_subcat.empty() ) {
-                        for (std::string::size_type i = 0; i < user_subcat.size(); ++i) {
-                            user_subcat[i] = std::toupper(static_cast<unsigned char>(user_subcat[i]));
+                        for( std::string::size_type i = 0; i < user_subcat.size(); ++i ) {
+                            user_subcat[i] = std::toupper( static_cast<unsigned char>( user_subcat[i] ) );
                         }
                     }
                     std::string subcat_id = "CSC_" + user_subcat;
