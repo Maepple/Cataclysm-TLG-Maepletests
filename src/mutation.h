@@ -523,7 +523,7 @@ struct mutation_category_trait {
         // The trait that you gain when you break the threshold for this category
         trait_id threshold_mut;
         // Amount of vitamin necessary to attempt breaking the threshold
-        int threshold_min = 2200;
+        int threshold_min = 600;
         // Mutation vitamin
         vitamin_id vitamin;
         // Chance to remove base traits
