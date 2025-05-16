@@ -14,15 +14,15 @@ const char *getVersionString();
 
 std::string getVersionFromFile()
 {
-    std::ifstream versionFile("VERSION.txt");
-    if (versionFile.is_open()) {
+    std::ifstream versionFile( "VERSION.txt" );
+    if( versionFile.is_open() ) {
         std::string line;
-        while (std::getline(versionFile, line)) {
-            if (line.rfind("build number:", 0) == 0) {
-                size_t colonPos = line.find(':');
-                if (colonPos != std::string::npos) {
-                    std::string buildNumber = line.substr(colonPos + 1);
-                    buildNumber.erase(0, buildNumber.find_first_not_of(" \t"));
+        while( std::getline( versionFile, line ) ) {
+            if( line.rfind( "build number:", 0 ) == 0 ) {
+                size_t colonPos = line.find( ':' );
+                if( colonPos != std::string::npos ) {
+                    std::string buildNumber = line.substr( colonPos + 1 );
+                    buildNumber.erase( 0, buildNumber.find_first_not_of( " \t" ) );
                     versionFile.close();
                     return buildNumber;
                 }
