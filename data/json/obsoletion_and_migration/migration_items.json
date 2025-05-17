@@ -777,7 +777,7 @@
     "type": "MIGRATION",
     "replace": "bread"
   },
-    {
+  {
     "id": "superglue",
     "type": "MIGRATION",
     "replace": "small_squeeze_tube",
@@ -793,7 +793,7 @@
     "type": "MIGRATION",
     "replace": "rail_laser_sight"
   },
-    {
+  {
     "id": "ar_pistol",
     "type": "MIGRATION",
     "replace": "modular_ar_pistol"

@@ -827,7 +827,11 @@
     "color": "pink",
     "healthy": -3,
     "addiction_potential": 8,
-    "use_action": { "type": "consume_drug", "activation_message": "You drink the purifier.", "vitamins": [ [ "mutagen_human", 120, 220 ] ] }
+    "use_action": {
+      "type": "consume_drug",
+      "activation_message": "You drink the purifier.",
+      "vitamins": [ [ "mutagen_human", 120, 220 ] ]
+    }
   },
   {
     "id": "iv_purifier",
