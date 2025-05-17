@@ -1764,7 +1764,7 @@
     "material": [ "flesh" ],
     "volume": "500 ml",
     "fun": -25,
-    "vitamins": [ [ "mutagen_beast", 250 ], [ "meat_allergen", 1 ] ],
+    "vitamins": [ [ "mutagen_beast", 220, 320 ], [ "meat_allergen", 1 ] ],
     "flags": [ "PREDATOR_FUN" ]
   },
   {
@@ -1783,7 +1783,7 @@
     "material": [ "flesh" ],
     "volume": "1 L",
     "fun": -25,
-    "vitamins": [ [ "mutagen_beast", 300 ], [ "meat_allergen", 1 ] ],
+    "vitamins": [ [ "mutagen_beast", 220, 320 ], [ "meat_allergen", 1 ] ],
     "flags": [ "PREDATOR_FUN" ]
   },
   {
@@ -1800,7 +1800,6 @@
     "price": "10 USD",
     "price_postapoc": "25 cent",
     "material": [ "flesh" ],
-    "use_action": [ "POISON" ],
     "volume": "250 ml",
     "fun": -30,
     "vitamins": [ [ "meat_allergen", 1 ] ]
