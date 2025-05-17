@@ -136,7 +136,6 @@ static const efftype_id effect_laserlocked( "laserlocked" );
 static const efftype_id effect_narcosis( "narcosis" );
 static const efftype_id effect_stunned( "stunned" );
 
-static const flag_id json_flag_GRAB_FILTER( "GRAB_FILTER" );
 static const flag_id json_flag_MOP( "MOP" );
 static const flag_id json_flag_NO_GRAB( "NO_GRAB" );
 
@@ -716,18 +715,7 @@ static void grab()
         return;
     }
 
-    if( you.grab_1.victim != nullptr ) {
-        add_msg( _( "You release %s." ), you.grab_1.victim->disp_name() );
-        you.grab_1.victim->remove_effect( effect_grabbed );
-        for( const effect &eff : you.get_effects_with_flag( json_flag_GRAB_FILTER ) ) {
-            const efftype_id effid = eff.get_id();
-            if( eff.get_intensity() == you.grab_1.grab_strength ) {
-                you.remove_effect( effid );
-            }
-        }
-        you.grab_1.clear();
-        return;
-    }
+    you.release_grapple();
 
     const std::optional<tripoint> grabp_ = choose_adjacent( _( "Grab where?" ) );
     if( !grabp_ ) {
