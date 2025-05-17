@@ -1607,10 +1607,15 @@
       "sound": "crunch!",
       "sound_fail": "whack!",
       "items": [
-        { "item": "stick", "count": [ 2, 7 ] },
-        { "item": "splinter", "count": [ 8, 20 ] },
-        { "item": "pine_bough", "count": [ 0, 2 ] }
+        { "item": "pointy_stick", "count": [ 1, 4 ] },
+        { "item": "splinter", "count": [ 0, 10 ] },
+        { "item": "string_6", "count": [ 0, 4 ] },
+        { "item": "pine_bough", "count": [ 0, 4 ] }
       ]
+    },
+    "deconstruct": {
+      "ter_set": "t_dirt",
+      "items": [ { "item": "pointy_stick", "count": 4 }, { "item": "string_6", "count": 4 }, { "item": "pine_bough", "count": 4 } ]
     },
     "connect_groups": "INDOORFLOOR",
     "flags": [
