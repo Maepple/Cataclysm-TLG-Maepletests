@@ -2955,7 +2955,7 @@ drop_location inventory_selector::get_only_choice() const
     for( const inventory_column *col : columns ) {
         const std::vector<inventory_entry *> ent = col->get_entries( return_item, true );
         if( !ent.empty() ) {
-            return { ent.front()->any_item(), static_cast<int>( ent.front()->get_available_count() ) };
+            return { ent.front()->any_item(), static_cast<int>( ent.front()->chosen_count ) };
         }
     }
 
@@ -3422,7 +3422,7 @@ void ammo_inventory_selector::set_all_entries_chosen_count()
         for( inventory_entry *entry : col->get_entries( return_item, true ) ) {
             for( const item_location &loc : get_possible_reload_targets( reload_loc ) ) {
                 item_location it = entry->any_item();
-                if( loc.can_reload_with( it, true ) ) {
+                if( loc->can_reload_with( *it, true ) ) {
                     item::reload_option tmp_opt( &u, loc, it );
                     int count = entry->get_available_count();
                     if( it->has_flag( flag_SPEEDLOADER ) || it->has_flag( flag_SPEEDLOADER_CLIP ) ) {
@@ -3974,9 +3974,9 @@ void inventory_multiselector::on_input( const inventory_input &input )
         if( entry.is_selectable() ) {
             size_t const count = entry.chosen_count;
             size_t const max = entry.get_available_count();
-            size_t const newcount = std::clamp<size_t>( 0,
-                                    count + ( input.action == "INCREASE_COUNT" ? +1 : -1 ),
-                                    max );
+            size_t const newcount = input.action == "INCREASE_COUNT"
+                                    ? count < max ? count + 1 : max
+                                    : count > 1 ? count - 1 : 0;
             toggle_entry( entry, newcount );
         }
     } else if( input.action == "VIEW_CATEGORY_MODE" ) {
