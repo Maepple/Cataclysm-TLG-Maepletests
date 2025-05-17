@@ -350,8 +350,15 @@ map_bash_info::map_bash_info() : str_min( -1 ), str_max( -1 ),
     str_min_supported( -1 ), str_max_supported( -1 ),
     explosive( 0 ), sound_vol( -1 ), sound_fail_vol( -1 ),
     collapse_radius( 1 ), destroy_only( false ), bash_below( false ),
-    drop_group( Item_spawn_data_EMPTY_GROUP ),
-    ter_set( ter_str_id::NULL_ID() ), furn_set( furn_str_id::NULL_ID() ) {}
+    ter_set( ter_str_id::NULL_ID() ), furn_set( furn_str_id::NULL_ID() )
+{
+    // NOTE: This got pulled out of the initializer list above
+    //       to fix a segmentation fault at startup on newer Arch Linux systems.
+    //       If/when C:DDA's commit 89657123e0124f1e75fd5d7fd6a1a85b74b5a98b from Nov 2024
+    //       gets backported, this divergence of the old versions should be safe to
+    //       ignore, as the new code of that commit stopped using initializer lists for this.
+    drop_group = Item_spawn_data_EMPTY_GROUP;
+}
 
 bool map_bash_info::load( const JsonObject &jsobj, const std::string_view member,
                           map_object_type obj_type, const std::string &context )
