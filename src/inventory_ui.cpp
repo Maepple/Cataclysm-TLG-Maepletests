@@ -2128,6 +2128,13 @@ void inventory_selector::RemoveItem( item *&remove )
     }
 }
 
+void inventory_selector::add_character_ebooks( Character &character )
+{
+    for( item_location &ereader : character.all_items_loc() ) {
+        add_contained_ebooks( ereader );
+    }
+}
+
 void inventory_selector::add_map_items( const tripoint &target )
 {
     map &here = get_map();

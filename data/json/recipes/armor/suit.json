@@ -709,7 +709,7 @@
     "skills_required": [ "tailor", 6 ],
     "time": "6 h",
     "book_learn": [ [ "textbook_fireman", 8 ], [ "tailor_portfolio", 8 ] ],
-    "using": [ [ "sewing_standard", 200 ], [ "tailoring_nomex_patchwork", 40 ] ],
+    "using": [ [ "sewing_standard", 200 ], [ "tailoring_nomex_patchwork", 40 ], [ "glue_strong", 5 ] ],
     "qualities": [ { "id": "FABRIC_CUT", "level": 2 } ],
     "proficiencies": [
       { "proficiency": "prof_closures" },
@@ -718,7 +718,7 @@
     ],
     "components": [
       [ [ "sheet_kevlar_layered", 8 ] ],
-      [ [ "duct_tape", 200 ], [ "superglue", 5 ] ],
+      [ [ "duct_tape", 200 ] ],
       [
         [ "kevlar", 1 ],
         [ "ballistic_vest_light", 1 ],
@@ -732,11 +732,11 @@
     "type": "recipe",
     "copy-from": "entry_suit",
     "time": "6 h",
-    "using": [ [ "sewing_standard", 150 ], [ "tailoring_nomex_patchwork", 30 ] ],
+    "using": [ [ "sewing_standard", 150 ], [ "tailoring_nomex_patchwork", 30 ], [ "glue_strong", 3 ] ],
     "qualities": [ { "id": "FABRIC_CUT", "level": 2 } ],
     "components": [
       [ [ "sheet_kevlar_layered", 6 ] ],
-      [ [ "duct_tape", 150 ], [ "superglue", 3 ] ],
+      [ [ "duct_tape", 150 ] ],
       [
         [ "kevlar", 1 ],
         [ "ballistic_vest_light", 1 ],
@@ -750,11 +750,11 @@
     "type": "recipe",
     "copy-from": "entry_suit",
     "time": "6 h 45 m",
-    "using": [ [ "sewing_standard", 300 ], [ "tailoring_nomex_patchwork", 50 ] ],
+    "using": [ [ "sewing_standard", 300 ], [ "tailoring_nomex_patchwork", 50 ], [ "glue_strong", 1 ] ],
     "qualities": [ { "id": "FABRIC_CUT", "level": 2 } ],
     "components": [
       [ [ "sheet_kevlar_layered", 12 ] ],
-      [ [ "duct_tape", 300 ], [ "superglue", 7 ] ],
+      [ [ "duct_tape", 300 ] ],
       [
         [ "kevlar", 2 ],
         [ "ballistic_vest_light", 2 ],
