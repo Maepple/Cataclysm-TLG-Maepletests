@@ -6603,7 +6603,7 @@ void item::on_wield( Character &you )
 {
     int wield_cost = on_wield_cost( you );
     you.mod_moves( -wield_cost );
-
+    you.release_grapple();
     std::string msg;
 
     msg = _( "You wield your %s." );

@@ -316,6 +316,8 @@ static const json_character_flag json_flag_EYE_MEMBRANE( "EYE_MEMBRANE" );
 static const json_character_flag json_flag_FEATHER_FALL( "FEATHER_FALL" );
 static const json_character_flag json_flag_GLIDE( "GLIDE" );
 static const json_character_flag json_flag_GLIDING( "GLIDING" );
+static const json_character_flag json_flag_GRAB( "GRAB" );
+static const json_character_flag json_flag_GRAB_FILTER( "GRAB_FILTER" );
 static const json_character_flag json_flag_HEAL_OVERRIDE( "HEAL_OVERRIDE" );
 static const json_character_flag json_flag_HEATSINK( "HEATSINK" );
 static const json_character_flag json_flag_HYPEROPIC( "HYPEROPIC" );
@@ -350,9 +352,6 @@ static const json_character_flag json_flag_WINGS_1( "WINGS_1" );
 static const json_character_flag json_flag_WINGS_2( "WINGS_2" );
 static const json_character_flag json_flag_WING_ARMS( "WING_ARMS" );
 static const json_character_flag json_flag_WING_GLIDE( "WING_GLIDE" );
-
-static const flag_id json_flag_GRAB( "GRAB" );
-static const flag_id json_flag_GRAB_FILTER( "GRAB_FILTER" );
 
 static const limb_score_id limb_score_balance( "balance" );
 static const limb_score_id limb_score_breathing( "breathing" );
@@ -1697,6 +1696,27 @@ player_activity Character::get_destination_activity() const
     return destination_activity;
 }
 
+void Character::release_grapple()
+{
+    if( has_effect_with_flag( json_flag_GRAB_FILTER ) ) {
+        if( grab_1.victim ) {
+            for( const effect &eff : grab_1.victim->get_effects_with_flag( json_flag_GRAB ) ) {
+                const efftype_id effid = eff.get_id();
+                if( eff.get_intensity() == grab_1.grab_strength ) {
+                    add_msg( _( "You release %s." ), grab_1.victim->disp_name() );
+                    grab_1.victim->remove_effect( effid );
+                }
+            }
+        }
+        for( const effect &eff : get_effects_with_flag( json_flag_GRAB_FILTER ) ) {
+            const efftype_id effid = eff.get_id();
+            if( eff.get_intensity() == grab_1.grab_strength ) {
+                remove_effect( effid );
+            }
+        }
+    }
+}
+
 void Character::mount_creature( monster &z )
 {
     tripoint pnt = z.pos();
@@ -1722,6 +1742,7 @@ void Character::mount_creature( monster &z )
     }
     mounted_creature = mons;
     mons->mounted_player = this;
+    release_grapple();
     avatar &player_avatar = get_avatar();
     if( is_avatar() && player_avatar.get_grab_type() != object_type::NONE ) {
         add_msg( m_warning, _( "You let go of the grabbed object." ) );

@@ -112,8 +112,6 @@ static const itype_id itype_guidebook( "guidebook" );
 static const itype_id itype_mut_longpull( "mut_longpull" );
 
 static const json_character_flag json_flag_ALARMCLOCK( "ALARMCLOCK" );
-static const json_character_flag json_flag_GRAB( "GRAB" );
-static const json_character_flag json_flag_GRAB_FILTER( "GRAB_FILTER" );
 static const json_character_flag json_flag_PAIN_IMMUNE( "PAIN_IMMUNE" );
 static const json_character_flag json_flag_WEBBED_HANDS( "WEBBED_HANDS" );
 
@@ -1469,27 +1467,6 @@ bool avatar::wield( item &target, const int obtain_cost )
     if( worn ) {
         target.on_takeoff( *this );
     }
-
-    // TODO: Standardize this as a single function in Character::
-    if( has_effect_with_flag( json_flag_GRAB_FILTER ) ) {
-        if( as_character()->grab_1.victim ) {
-            for( const effect &eff : as_character()->grab_1.victim->get_effects_with_flag( json_flag_GRAB ) ) {
-                const efftype_id effid = eff.get_id();
-                if( eff.get_intensity() == as_character()->grab_1.grab_strength ) {
-                    add_msg( _( "You release %s." ), as_character()->grab_1.victim->disp_name() );
-                    as_character()->grab_1.victim->remove_effect( effid );
-                }
-            }
-        }
-        for( const effect &eff : get_effects_with_flag( json_flag_GRAB_FILTER ) ) {
-            const efftype_id effid = eff.get_id();
-            if( eff.get_intensity() == as_character()->grab_1.grab_strength ) {
-                remove_effect( effid );
-            }
-        }
-
-    }
-
     add_msg_debug( debugmode::DF_AVATAR, "wielding took %d moves", mv );
     mod_moves( -mv );
 

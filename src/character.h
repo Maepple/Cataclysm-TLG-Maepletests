@@ -1487,6 +1487,8 @@ class Character : public Creature, public visitable
         void activate_mutation( const trait_id &mutation );
         void deactivate_mutation( const trait_id &mut );
 
+        void release_grapple();
+
         bool can_mount( const monster &critter ) const;
         void mount_creature( monster &z );
         bool cant_do_mounted( bool msg = true ) const;
