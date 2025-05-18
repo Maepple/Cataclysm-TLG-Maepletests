@@ -324,7 +324,7 @@
     "price": "18 USD",
     "price_postapoc": "1 USD",
     "material": [ "plastic" ],
-    "weight": "1 g",
+    "weight": "26 mg",
     "volume": "1 ml",
     "ammo_type": "superglue",
     "//": "1 charge of superglue should cover an area of 5mm^2",
@@ -1381,19 +1381,6 @@
     "material": [ "steel", "plastic" ],
     "weight": "5 g",
     "volume": "1 ml"
-  },
-  {
-    "type": "GENERIC",
-    "id": "toaster",
-    "symbol": ",",
-    "color": "light_gray",
-    "name": { "str": "toaster" },
-    "description": "A small two-slice toaster, not much use as anything but spare parts.",
-    "price": "10 USD",
-    "price_postapoc": "10 cent",
-    "material": [ "aluminum", "plastic" ],
-    "weight": "725 g",
-    "volume": "750 ml"
   },
   {
     "type": "GENERIC",
