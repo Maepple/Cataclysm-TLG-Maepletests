@@ -773,7 +773,7 @@
     "looks_like": "boiled_leather_armor_suit",
     "color": "light_red",
     "warmth": 0,
-    "flags": [ "STURDY", "ALLOWS_TAIL" ],
+    "flags": [ "STURDY", "ALLOWS_TAIL", "NORMAL" ],
     "use_action": {
       "type": "transform",
       "msg": "You adjust your mail for a looser fit.",
@@ -859,6 +859,7 @@
     "description": "A knee-length long-sleeved tunic made of interlocking steel rings.  It can be adjusted to fit closer to the body.",
     "copy-from": "chainmail_hauberk",
     "extend": { "flags": [ "OUTER" ] },
+    "delete": { "flags": [ "NORMAL" ] },
     "use_action": {
       "type": "transform",
       "msg": "You adjust your mail for a closer fit.",
