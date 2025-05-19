@@ -150,7 +150,7 @@
     "category": "CC_WEAPON",
     "subcategory": "CSC_WEAPON_BASHING",
     "skill_used": "fabrication",
-      "skills_required": [ [ "bashing", 2 ], [ "mechanics", 1 ] ],
+    "skills_required": [ [ "bashing", 2 ], [ "mechanics", 1 ] ],
     "difficulty": 7,
     "time": "7 h",
     "book_learn": [ [ "textbook_weapwest", 6 ] ],
