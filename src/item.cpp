@@ -7915,25 +7915,11 @@ void item::randomize_rot()
                                     rng_float( 0.2, 1.2 );
         set_rot( loot_adjust );
     }
-    for( item_pocket *pocket : contents.get_all_contained_pockets() ) {
-        if( pocket->spoil_multiplier() > 0.0f ) {
-            time_duration pocket_loot_adjust = ( calendar::fall_of_civilization - calendar::start_of_cataclysm )
-                                               * rng_float( 0.2, 1.2 );
-            // Apply the same adjustment to all items in this pocket
-            for( item *subitem : pocket->all_items_top() ) {
-                if( subitem->is_comestible() && subitem->get_comestible()->spoils > 0_turns ) {
-                    subitem->set_rot( pocket_loot_adjust );
-                }
-            }
-        }
-    }
 
     for( item_pocket *pocket : contents.get_all_contained_pockets() ) {
         if( pocket->spoil_multiplier() > 0.0f ) {
             for( item *subitem : pocket->all_items_top() ) {
-                if( !subitem->contents.empty() ) {
-                    subitem->randomize_rot();
-                }
+                subitem->randomize_rot();
             }
         }
     }
