@@ -2061,7 +2061,7 @@ static bool mx_corpses( map &m, const tripoint &abs_sub )
         const tripoint_bub_ms corpse_location = { rng( 1, SEEX * 2 - 1 ), rng( 1, SEEY * 2 - 1 ), abs_sub.z };
         const std::vector<item> gibs =
             item_group::items_from( Item_spawn_data_remains_human_generic,
-                                    calendar::start_of_cataclysm );
+                                    calendar::fall_of_civilization );
         m.spawn_items( corpse_location, gibs );
         m.add_field( corpse_location, fd_gibs_flesh, rng( 1, 3 ) );
         //50% chance to spawn gibs and dogs in every tile around what's left of human corpse in 1-tile radius
