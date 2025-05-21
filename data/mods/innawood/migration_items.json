@@ -1,6 +1,6 @@
 [
   {
-    "id": "small_squeeze_tube",
+    "id": "bottle_plastic_tiny",
     "type": "MIGRATION",
     "replace": "clay_canister"
   }

@@ -780,8 +780,8 @@
   {
     "id": "superglue",
     "type": "MIGRATION",
-    "replace": "small_squeeze_tube",
-    "contents": [ { "id": "super_glue", "count": 40 } ]
+    "replace": "bottle_plastic_tiny",
+    "contents": [ { "id": "super_glue", "count": 10 } ]
   },
   {
     "id": "stabilizer",
@@ -802,5 +802,15 @@
     "id": "miner_hat",
     "type": "MIGRATION",
     "replace": "hat_hard"
+  },
+  {
+    "id": "small_squeeze_tube",
+    "type": "MIGRATION",
+    "replace": "bottle_plastic_small"
+  },
+  {
+    "id": "bottle_plastic_tiny_glue",
+    "type": "MIGRATION",
+    "replace": "bottle_plastic_tiny"
   }
 ]

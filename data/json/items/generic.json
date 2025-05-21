@@ -328,7 +328,7 @@
     "volume": "1 ml",
     "ammo_type": "superglue",
     "//": "1 charge of superglue should cover an area of 5mm^2",
-    "count": 40,
+    "count": 10,
     "flags": [ "UNRECOVERABLE" ]
   },
   {
