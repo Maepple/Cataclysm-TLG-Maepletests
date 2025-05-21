@@ -2373,13 +2373,13 @@ std::string Character::melee_special_effects( Creature &t, damage_instance &d, i
         weap.spill_contents( pos() );
         // Take damage
         damage_instance di = damage_instance();
-        di.add_damage( damage_cut, std::clamp( rng( 0, vol * 2 ), 0, 7 ) );
+        di.add_damage( damage_cut, rng( 0, 5 + std::min( 5, static_cast<int>( vol * 1.5 ) ) ) );
         deal_damage( nullptr, bodypart_id( "arm_r" ), di );
         if( weap.is_two_handed( *this ) ) { // Hurt left arm too, if it was big
             //redeclare shatter_dam because deal_damage mutates it
             deal_damage( nullptr, bodypart_id( "arm_l" ), di );
         }
-        d.add_damage( damage_cut, rng( 0, 5 + static_cast<int>( vol * 1.5 ) ) ); // Hurt the monster extra
+        d.add_damage( damage_cut, rng( 0, 5 + std::min( 5, static_cast<int>( vol * 1.5 ) ) ) ); // Hurt the monster extra
         remove_weapon();
     }
 
@@ -2391,19 +2391,6 @@ std::string Character::melee_special_effects( Creature &t, damage_instance &d, i
 
 static damage_instance hardcoded_mutation_attack( const Character &u, const trait_id &id )
 {
-    // if( id == trait_BEAK_PECK ) {
-    //     // method open to improvement, please feel free to suggest
-    //     // a better way to simulate target's anti-peck efforts
-    //     /** @EFFECT_DEX increases number of hits with BEAK_PECK */
-
-    //     /** @EFFECT_UNARMED increases number of hits with BEAK_PECK */
-    //     int num_hits = std::max( 1, std::min<int>( 6,
-    //                              u.get_dex() + u.get_skill_level( skill_unarmed ) - rng( 4, 10 ) ) );
-    //     damage_instance di = damage_instance();
-    //     di.add_damage( damage_stab, num_hits * 10 );
-    //     return di;
-    // }
-
     if( id == trait_ARM_TENTACLES || id == trait_ARM_TENTACLES_4 || id == trait_ARM_TENTACLES_8 ) {
         int num_attacks = 1;
         if( id == trait_ARM_TENTACLES_4 ) {

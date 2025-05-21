@@ -968,6 +968,27 @@
   },
   {
     "type": "material",
+    "id": "tempered_glass",
+    "name": "Tempered Glass",
+    "density": 2.5,
+    "specific_heat_liquid": 0.2,
+    "specific_heat_solid": 0.2,
+    "latent_heat": 100,
+    "chip_resist": 0,
+    "dmg_adj": [ "scratched", "cut", "cracked", "shattered" ],
+    "bash_dmg_verb": "cracked",
+    "cut_dmg_verb": "scratched",
+    "acid_dmg_verb": "etched",
+    "burn_data": [
+      { "fuel": 0, "smoke": 0, "burn": 0 },
+      { "fuel": 0, "smoke": 0, "burn": 0 },
+      { "fuel": 0, "smoke": 0, "burn": 1000, "volume_per_turn": "5000 ml", "//": "More like shattering than melting" }
+    ],
+    "burn_products": [ [ "tempered_glass_shard", 0.5 ] ],
+    "resist": { "bash": 4.5, "cut": 4, "acid": 10, "heat": 3, "bullet": 1 }
+  },
+  {
+    "type": "material",
     "id": "crystal",
     "name": "Crystal",
     "//": "Specific heat and latent heat copied from glass",
