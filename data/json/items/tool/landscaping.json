@@ -124,7 +124,7 @@
     "price": "7 USD 50 cent",
     "price_postapoc": "1 USD",
     "material": [ "plastic", "wood" ],
-        "to_hit": { "grip": "solid", "length": "long", "surface": "point", "balance": "uneven" },
+    "to_hit": { "grip": "solid", "length": "long", "surface": "point", "balance": "uneven" },
     "symbol": "/",
     "color": "brown",
     "flags": [ "NONCONDUCTIVE", "FRAGILE_MELEE" ],
