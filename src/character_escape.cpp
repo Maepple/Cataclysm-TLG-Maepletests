@@ -128,15 +128,19 @@ void Character::try_remove_lightsnare()
     if( is_mounted() ) {
         auto *mon = mounted_creature.get();
         if( x_in_y( mon->type->melee_dice * mon->type->melee_sides, 12 ) ) {
+            map &here = get_map();
             mon->remove_effect( effect_lightsnare );
             remove_effect( effect_lightsnare );
             add_msg( _( "The %s escapes the light snare!" ), mon->get_name() );
+            here.spawn_item( pos(), "light_snare_kit" );
         }
     } else {
         if( can_escape_trap( 12 ) ) {
+            map &here = get_map();
             remove_effect( effect_lightsnare );
             add_msg_player_or_npc( m_good, _( "You free yourself from the light snare!" ),
                                    _( "<npcname> frees themselves from the light snare!" ) );
+            here.spawn_item( pos(), "light_snare_kit" );
         } else {
             add_msg_if_player( m_bad,
                                _( "You try to free yourself from the light snare, but can't get loose!" ) );
@@ -476,15 +480,15 @@ void Character::wait_effects( bool attacking )
         try_remove_downed();
         return;
     }
-    if( has_effect( effect_beartrap ) && !attacking ) {
+    if( has_effect( effect_beartrap ) ) {
         try_remove_bear_trap();
         return;
     }
-    if( has_effect( effect_lightsnare ) && !attacking ) {
+    if( has_effect( effect_lightsnare ) ) {
         try_remove_lightsnare();
         return;
     }
-    if( has_effect( effect_heavysnare ) && !attacking ) {
+    if( has_effect( effect_heavysnare ) ) {
         try_remove_heavysnare();
         return;
     }
