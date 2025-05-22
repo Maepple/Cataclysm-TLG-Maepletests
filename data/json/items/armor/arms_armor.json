@@ -669,7 +669,7 @@
     "looks_like": "armguard_metal",
     "color": "light_red",
     "warmth": 10,
-    "flags": [ "STURDY" ],
+    "flags": [ "STURDY", "NORMAL" ],
     "use_action": {
       "type": "transform",
       "msg": "You adjust your mail for a looser fit.",
@@ -747,7 +747,8 @@
       "msg": "You adjust your mail for a looser fit.",
       "target": "chainmail_junk_sleeves_loose",
       "menu_text": "Loosen"
-    }
+    },
+    "delete": { "flags": [ "STURDY" ] }
   },
   {
     "id": "chainmail_sleeves_loose",
@@ -761,6 +762,7 @@
       "target": "chainmail_junk_sleeves",
       "menu_text": "Tighten"
     },
+    "delete": { "flags": [ "NORMAL" ] },
     "extend": { "flags": [ "OUTER" ] }
   },
   {
@@ -775,6 +777,7 @@
       "target": "chainmail_sleeves_xs",
       "menu_text": "Tighten"
     },
+    "delete": { "flags": [ "NORMAL" ] },
     "extend": { "flags": [ "OUTER" ] }
   },
   {
@@ -789,6 +792,7 @@
       "target": "chainmail_sleeves_xl",
       "menu_text": "Tighten"
     },
+    "delete": { "flags": [ "NORMAL" ] },
     "extend": { "flags": [ "OUTER" ] }
   },
   {
@@ -802,6 +806,7 @@
       "target": "chainmail_junk_sleeves",
       "menu_text": "Tighten"
     },
+    "delete": { "flags": [ "NORMAL", "STURDY" ] },
     "extend": { "flags": [ "OUTER" ] }
   },
   {
