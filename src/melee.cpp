@@ -2379,7 +2379,8 @@ std::string Character::melee_special_effects( Creature &t, damage_instance &d, i
             //redeclare shatter_dam because deal_damage mutates it
             deal_damage( nullptr, bodypart_id( "arm_l" ), di );
         }
-        d.add_damage( damage_cut, rng( 0, 5 + std::min( 5, static_cast<int>( vol * 1.5 ) ) ) ); // Hurt the monster extra
+        d.add_damage( damage_cut, rng( 0, 5 + std::min( 5,
+                                       static_cast<int>( vol * 1.5 ) ) ) ); // Hurt the monster extra
         remove_weapon();
     }
 

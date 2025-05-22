@@ -98,9 +98,12 @@ void Character::try_remove_bear_trap()
         auto *mon = mounted_creature.get();
         if( mon->type->melee_dice * mon->type->melee_sides >= 18 ) {
             if( x_in_y( mon->type->melee_dice * mon->type->melee_sides, 200 ) ) {
+                map &here = get_map();
                 mon->remove_effect( effect_beartrap );
                 remove_effect( effect_beartrap );
                 add_msg( _( "The %s escapes the bear trap!" ), mon->get_name() );
+
+                here.spawn_item( mon->pos(), "beartrap" );
             } else {
                 add_msg_if_player( m_bad,
                                    _( "Your %s tries to free itself from the bear trap, but can't get loose!" ), mon->get_name() );
@@ -111,6 +114,8 @@ void Character::try_remove_bear_trap()
             remove_effect( effect_beartrap );
             add_msg_player_or_npc( m_good, _( "You free yourself from the bear trap!" ),
                                    _( "<npcname> frees themselves from the bear trap!" ) );
+            map &here = get_map();
+            here.spawn_item( pos(), "beartrap" );
         } else {
             add_msg_if_player( m_bad,
                                _( "You try to free yourself from the bear trap, but can't get loose!" ) );
@@ -413,7 +418,7 @@ void Character::try_remove_impeding_effect()
 
 bool Character::move_effects( bool attacking )
 {
-    if( has_effect( effect_downed ) ) {
+    if( has_effect( effect_downed ) && !attacking ) {
         try_remove_downed();
         return false;
     }
@@ -421,16 +426,16 @@ bool Character::move_effects( bool attacking )
         try_remove_webs();
         return false;
     }
-    if( has_effect( effect_lightsnare ) ) {
+    if( has_effect( effect_lightsnare ) && !attacking ) {
         try_remove_lightsnare();
         return false;
 
     }
-    if( has_effect( effect_heavysnare ) ) {
+    if( has_effect( effect_heavysnare ) && !attacking ) {
         try_remove_heavysnare();
         return false;
     }
-    if( has_effect( effect_beartrap ) ) {
+    if( has_effect( effect_beartrap ) && !attacking ) {
         try_remove_bear_trap();
         return false;
     }
@@ -471,15 +476,15 @@ void Character::wait_effects( bool attacking )
         try_remove_downed();
         return;
     }
-    if( has_effect( effect_beartrap ) ) {
+    if( has_effect( effect_beartrap ) && !attacking ) {
         try_remove_bear_trap();
         return;
     }
-    if( has_effect( effect_lightsnare ) ) {
+    if( has_effect( effect_lightsnare ) && !attacking ) {
         try_remove_lightsnare();
         return;
     }
-    if( has_effect( effect_heavysnare ) ) {
+    if( has_effect( effect_heavysnare ) && !attacking ) {
         try_remove_heavysnare();
         return;
     }
