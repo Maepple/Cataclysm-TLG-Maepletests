@@ -1886,7 +1886,7 @@
         "material": [ { "type": "bone", "covered_by_mat": 100, "thickness": 3.2 } ],
         "covers": [ "mouth" ],
         "specifically_covers": [ "mouth_lips" ],
-        "coverage": 100,
+        "coverage": 0,
         "encumbrance": 0
       }
     ],
@@ -1913,7 +1913,7 @@
         "material": [ { "type": "bone", "covered_by_mat": 100, "thickness": 3.2 } ],
         "covers": [ "mouth" ],
         "specifically_covers": [ "mouth_lips" ],
-        "coverage": 100,
+        "coverage": 20,
         "encumbrance": 0
       }
     ],
@@ -1937,7 +1937,7 @@
     "flags": [ "INTEGRATED", "ALLOWS_NATURAL_ATTACKS", "UNBREAKABLE", "PERSONAL", "PADDED", "PROVIDES_TECHNIQUES", "NATURAL_WEAPON" ],
     "armor": [
       {
-        "material": [ { "type": "bone", "covered_by_mat": 100, "thickness": 10 } ],
+        "material": [ { "type": "bone", "covered_by_mat": 100, "thickness": 7 } ],
         "covers": [ "mouth" ],
         "specifically_covers": [ "mouth_lips" ],
         "coverage": 20,
@@ -1969,7 +1969,7 @@
     "flags": [ "INTEGRATED", "ALLOWS_NATURAL_ATTACKS", "UNBREAKABLE", "PERSONAL", "PADDED", "PROVIDES_TECHNIQUES", "NATURAL_WEAPON" ],
     "armor": [
       {
-        "material": [ { "type": "bone", "covered_by_mat": 100, "thickness": 8 } ],
+        "material": [ { "type": "bone", "covered_by_mat": 100, "thickness": 7 } ],
         "covers": [ "mouth" ],
         "specifically_covers": [ "mouth_lips" ],
         "coverage": 10,
@@ -1995,7 +1995,7 @@
     "flags": [ "INTEGRATED", "ALLOWS_NATURAL_ATTACKS", "UNBREAKABLE", "PERSONAL", "PADDED", "PROVIDES_TECHNIQUES", "NATURAL_WEAPON" ],
     "armor": [
       {
-        "material": [ { "type": "bone", "covered_by_mat": 100, "thickness": 10 } ],
+        "material": [ { "type": "bone", "covered_by_mat": 100, "thickness": 7 } ],
         "covers": [ "mouth" ],
         "coverage": 0,
         "encumbrance": 0
@@ -2021,7 +2021,7 @@
     "flags": [ "INTEGRATED", "ALLOWS_NATURAL_ATTACKS", "UNBREAKABLE", "PERSONAL", "PADDED", "PROVIDES_TECHNIQUES", "NATURAL_WEAPON" ],
     "armor": [
       {
-        "material": [ { "type": "keratin", "covered_by_mat": 100, "thickness": 10 } ],
+        "material": [ { "type": "keratin", "covered_by_mat": 100, "thickness": 7 } ],
         "covers": [ "mouth" ],
         "coverage": 60,
         "encumbrance": 0
@@ -2047,7 +2047,7 @@
     "flags": [ "INTEGRATED", "ALLOWS_NATURAL_ATTACKS", "UNBREAKABLE", "PERSONAL", "PADDED", "PROVIDES_TECHNIQUES", "NATURAL_WEAPON" ],
     "armor": [
       {
-        "material": [ { "type": "keratin", "covered_by_mat": 100, "thickness": 10 } ],
+        "material": [ { "type": "keratin", "covered_by_mat": 100, "thickness": 7 } ],
         "covers": [ "mouth" ],
         "coverage": 60,
         "encumbrance": 0
