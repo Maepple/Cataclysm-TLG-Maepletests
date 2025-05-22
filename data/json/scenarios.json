@@ -654,7 +654,6 @@
     "start_name": "Prison",
     "professions": [
       "convict",
-      "death_row_convict",
       "convict_assassin",
       "convict_embezzler",
       "convict_drugs",
@@ -675,7 +674,6 @@
     "start_name": "Island prison",
     "professions": [
       "convict",
-      "death_row_convict",
       "convict_assassin",
       "convict_embezzler",
       "convict_drugs",

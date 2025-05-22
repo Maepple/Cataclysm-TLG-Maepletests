@@ -2021,9 +2021,9 @@
     "flags": [ "INTEGRATED", "ALLOWS_NATURAL_ATTACKS", "UNBREAKABLE", "PERSONAL", "PADDED", "PROVIDES_TECHNIQUES", "NATURAL_WEAPON" ],
     "armor": [
       {
-        "material": [ { "type": "chitin", "covered_by_mat": 100, "thickness": 10 } ],
+        "material": [ { "type": "keratin", "covered_by_mat": 100, "thickness": 10 } ],
         "covers": [ "mouth" ],
-        "coverage": 0,
+        "coverage": 60,
         "encumbrance": 0
       }
     ],
@@ -2047,9 +2047,9 @@
     "flags": [ "INTEGRATED", "ALLOWS_NATURAL_ATTACKS", "UNBREAKABLE", "PERSONAL", "PADDED", "PROVIDES_TECHNIQUES", "NATURAL_WEAPON" ],
     "armor": [
       {
-        "material": [ { "type": "chitin", "covered_by_mat": 100, "thickness": 10 } ],
+        "material": [ { "type": "keratin", "covered_by_mat": 100, "thickness": 10 } ],
         "covers": [ "mouth" ],
-        "coverage": 0,
+        "coverage": 60,
         "encumbrance": 0
       }
     ],
