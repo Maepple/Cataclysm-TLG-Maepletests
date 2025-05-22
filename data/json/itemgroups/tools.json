@@ -359,7 +359,7 @@
     "items": [
       { "group": "tools_common_small", "prob": 90 },
       { "item": "soldering_iron", "prob": 90 },
-      { "item": "soldering_iron_portable", "prob":70, "charges": [ 0, 50 ] },
+      { "item": "soldering_iron_portable", "prob": 70, "charges": [ 0, 50 ] },
       [ "magnifying_glass", 100 ],
       { "item": "voltmeter", "prob": 10, "charges": [ 0, 100 ] },
       { "item": "multimeter", "prob": 90, "charges": [ 0, 100 ] },
@@ -1072,6 +1072,6 @@
     "type": "item_group",
     "subtype": "distribution",
     "id": "superglue",
-    "items": [ { "item": "super_glue", "charges-min": 0, "charges-max": 10, "container-item": "bottle_plastic_tiny" } ]
+    "items": [ { "item": "super_glue", "charges-min": 0, "charges-max": 10, "container-item": "bottle_plastic_superglue" } ]
   }
 ]

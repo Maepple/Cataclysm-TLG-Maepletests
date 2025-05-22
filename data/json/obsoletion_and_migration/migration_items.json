@@ -780,7 +780,7 @@
   {
     "id": "superglue",
     "type": "MIGRATION",
-    "replace": "bottle_plastic_tiny",
+    "replace": "bottle_plastic_superglue",
     "contents": [ { "id": "super_glue", "count": 10 } ]
   },
   {
@@ -806,11 +806,11 @@
   {
     "id": "small_squeeze_tube",
     "type": "MIGRATION",
-    "replace": "bottle_plastic_small"
+    "replace": "bottle_plastic_superglue"
   },
   {
     "id": "bottle_plastic_tiny_glue",
     "type": "MIGRATION",
-    "replace": "bottle_plastic_tiny"
+    "replace": "bottle_plastic_superglue"
   }
 ]

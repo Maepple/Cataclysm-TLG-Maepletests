@@ -481,8 +481,8 @@
   },
   {
     "type": "ammunition_type",
-    "id": "superglue",
-    "name": "super glue",
+    "id": "super_glue",
+    "name": "superglue",
     "default": "super_glue"
   },
   {
