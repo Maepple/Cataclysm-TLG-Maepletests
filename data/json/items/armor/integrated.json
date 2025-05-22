@@ -1590,7 +1590,7 @@
     "techniques": [ "TEC_CLAW" ],
     "armor": [
       {
-        "material": [ { "type": "chitin", "covered_by_mat": 100, "thickness": 2 } ],
+        "material": [ { "type": "keratin", "covered_by_mat": 100, "thickness": 2 } ],
         "covers": [ "hand_l", "hand_r" ],
         "specifically_covers": [ "hand_fingers_l", "hand_fingers_r" ],
         "coverage": 2,
@@ -1666,7 +1666,7 @@
     "techniques": [ "TEC_CLAW" ],
     "armor": [
       {
-        "material": [ { "type": "chitin", "covered_by_mat": 100, "thickness": 3 } ],
+        "material": [ { "type": "keratin", "covered_by_mat": 100, "thickness": 3 } ],
         "covers": [ "hand_l", "hand_r" ],
         "specifically_covers": [ "hand_fingers_l", "hand_fingers_r" ],
         "coverage": 10,
@@ -1704,7 +1704,7 @@
     "techniques": [ "TEC_CLAW" ],
     "armor": [
       {
-        "material": [ { "type": "chitin", "covered_by_mat": 100, "thickness": 3 } ],
+        "material": [ { "type": "keratin", "covered_by_mat": 100, "thickness": 3 } ],
         "covers": [ "hand_l", "hand_r" ],
         "specifically_covers": [ "hand_fingers_l", "hand_fingers_r" ],
         "coverage": 20,
@@ -1742,7 +1742,7 @@
     "techniques": [ "TEC_CLAW" ],
     "armor": [
       {
-        "material": [ { "type": "chitin", "covered_by_mat": 100, "thickness": 3 } ],
+        "material": [ { "type": "keratin", "covered_by_mat": 100, "thickness": 3 } ],
         "covers": [ "hand_l", "hand_r" ],
         "specifically_covers": [ "hand_fingers_l", "hand_fingers_r" ],
         "coverage": 40,
@@ -1782,7 +1782,7 @@
     "techniques": [ "TEC_CLAW" ],
     "armor": [
       {
-        "material": [ { "type": "chitin", "covered_by_mat": 100, "thickness": 3 } ],
+        "material": [ { "type": "keratin", "covered_by_mat": 100, "thickness": 3 } ],
         "covers": [ "hand_l", "hand_r" ],
         "specifically_covers": [ "hand_fingers_l", "hand_fingers_r" ],
         "coverage": 10,
@@ -1924,7 +1924,7 @@
     "type": "ARMOR",
     "category": "armor",
     "name": { "str_sp": "saber teeth" },
-    "description": "A pair of enormous fangs, strong enough to punch through bone.",
+    "description": "A pair of enormous protruding fangs, strong enough to punch through bone.",
     "weight": "200 g",
     "volume": "250 ml",
     "price": "0 cent",
@@ -1940,7 +1940,7 @@
         "material": [ { "type": "bone", "covered_by_mat": 100, "thickness": 10 } ],
         "covers": [ "mouth" ],
         "specifically_covers": [ "mouth_lips" ],
-        "coverage": 0,
+        "coverage": 20,
         "encumbrance": 0
       }
     ],
@@ -1969,10 +1969,10 @@
     "flags": [ "INTEGRATED", "ALLOWS_NATURAL_ATTACKS", "UNBREAKABLE", "PERSONAL", "PADDED", "PROVIDES_TECHNIQUES", "NATURAL_WEAPON" ],
     "armor": [
       {
-        "material": [ { "type": "bone", "covered_by_mat": 100, "thickness": 10 } ],
+        "material": [ { "type": "bone", "covered_by_mat": 100, "thickness": 8 } ],
         "covers": [ "mouth" ],
         "specifically_covers": [ "mouth_lips" ],
-        "coverage": 0,
+        "coverage": 10,
         "encumbrance": 0
       }
     ],
