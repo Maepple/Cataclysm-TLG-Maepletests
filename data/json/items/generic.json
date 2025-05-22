@@ -326,9 +326,9 @@
     "material": [ "plastic" ],
     "weight": "26 mg",
     "volume": "1 ml",
-    "ammo_type": "superglue",
+    "ammo_type": "super_glue",
     "//": "1 charge of superglue should cover an area of 5mm^2",
-    "count": 40,
+    "count": 10,
     "flags": [ "UNRECOVERABLE" ]
   },
   {

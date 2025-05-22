@@ -228,7 +228,7 @@
     "qualities": [ { "id": "SCREW", "level": 1 } ],
     "proficiencies": [ { "proficiency": "prof_traps" }, { "proficiency": "prof_trapsetting" } ],
     "components": [
-      [ [ "super_glue", 150 ], [ "duct_tape", 75 ] ],
+      [ [ "super_glue", 3 ], [ "duct_tape", 75 ] ],
       [ [ "scrap", 3 ], [ "steel_chunk", 1 ], [ "canister_empty", 1 ], [ "clay_canister", 1 ], [ "can_food", 1 ] ],
       [ [ "bb", 200 ], [ "nails", 100, "LIST" ] ],
       [
