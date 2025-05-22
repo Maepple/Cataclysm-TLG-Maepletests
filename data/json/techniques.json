@@ -3510,7 +3510,7 @@
     "down_dur": 2,
     "messages": [ "You throw yourself down, dragging %s with you", "<npcname> falls, dragging %s down as well!" ],
     "description": "Down 2 turns, min 3 melee",
-    "attack_vectors": [ "GRAPPLE" ]
+    "attack_vectors": [ "vector_arm_grapple" ]
   },
   {
     "type": "technique",
