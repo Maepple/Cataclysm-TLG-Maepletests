@@ -2339,6 +2339,7 @@ bool monster::move_effects( bool )
             if( u_see_me && get_option<bool>( "LOG_MONSTER_MOVE_EFFECTS" ) ) {
                 add_msg( _( "The %s escapes the light snare!" ), name() );
             }
+            here.spawn_item( pos(), "light_snare_kit" );
         }
         return false;
     }
@@ -2362,6 +2363,7 @@ bool monster::move_effects( bool )
                 if( u_see_me && get_option<bool>( "LOG_MONSTER_MOVE_EFFECTS" ) ) {
                     add_msg( _( "The %s escapes the bear trap!" ), name() );
                 }
+                here.spawn_item( pos(), "beartrap" );
             }
         }
         return false;

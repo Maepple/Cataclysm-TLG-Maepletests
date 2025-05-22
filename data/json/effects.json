@@ -4713,7 +4713,8 @@
     "rating": "bad",
     "show_intensity": false,
     "//": "Don't multiply speed by 0 or else the effect will never be removed for creatures with 0 damage(e.g. rabbits)",
-    "enchantments": [ { "values": [ { "value": "SPEED", "multiply": 0.01 } ] } ]
+    "enchantments": [ { "values": [ { "value": "SPEED", "multiply": 0.01 } ] } ],
+    "show_in_info": true
   },
   {
     "id": "Shadow_Reveal",
