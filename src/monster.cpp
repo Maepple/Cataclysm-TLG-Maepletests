@@ -2570,6 +2570,14 @@ float monster::get_dodge() const
         ret /= 2;
     }
 
+    if( has_effect_with_flag( json_flag_GRAB ) ) {
+        ret *= 0;
+    }
+
+    if( has_effect_with_flag( json_flag_GRAB_FILTER ) ) {
+        ret -= 5;
+    }
+
     if( has_effect( effect_bouldering ) ) {
         ret /= 4;
     }
