@@ -3625,7 +3625,7 @@
     "show_in_info": true,
     "show_intensity": true,
     "//mods": "No swimmin' or manipulatin' with a held limb, other scores start severly debilitated and reach useless at about 50 grab strength",
-    "base_mods": { "dodge_mod": [ -10 ] },
+    "enchantments": [ { "values": [ { "value": "DODGE_CHANCE", "multiply": 0.0 } ] } ],
     "limb_score_mods": [
       { "limb_score": "manip", "modifier": 0.0 },
       { "limb_score": "grip", "modifier": 0.0 },
@@ -3647,7 +3647,7 @@
     "max_intensity": 1,
     "show_in_info": true,
     "//": "-dodge (can't really miss something holding you)",
-    "base_mods": { "dodge_mod": [ -8 ] },
+    "enchantments": [ { "values": [ { "value": "DODGE_CHANCE", "add": -8.0 } ] } ],
     "flags": [ "GRAB_FILTER" ]
   },
   {
@@ -3658,7 +3658,7 @@
     "max_intensity": 1,
     "show_in_info": true,
     "//": "-dodge (can't really miss something holding you)",
-    "base_mods": { "dodge_mod": [ -8 ] },
+    "enchantments": [ { "values": [ { "value": "DODGE_CHANCE", "add": -8.0 } ] } ],
     "flags": [ "GRAB_FILTER" ]
   },
   {
@@ -3669,7 +3669,7 @@
     "max_intensity": 1,
     "show_in_info": true,
     "//": "-dodge (can't really miss something holding you)",
-    "base_mods": { "dodge_mod": [ -8 ] },
+    "enchantments": [ { "values": [ { "value": "DODGE_CHANCE", "add": -8.0 } ] } ],
     "flags": [ "GRAB_FILTER" ]
   },
   {
