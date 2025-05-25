@@ -1477,8 +1477,8 @@ bool game::cancel_activity_or_ignore_query( const distraction_type type, const s
                             : input_context::allow_all_keys;
 
     while (true) {
-        const std::string& action = query_popup()
-            .preferred_keyboard_mode(keyboard_mode::keycode)
+        query_popup qp;
+        qp.preferred_keyboard_mode(keyboard_mode::keycode)
             .context("CANCEL_ACTIVITY_OR_IGNORE_QUERY")
             .message(force_uc && !is_keycode_mode_supported() ?
                 pgettext("cancel_activity_or_ignore_query",
@@ -1489,10 +1489,14 @@ bool game::cancel_activity_or_ignore_query( const distraction_type type, const s
             .option("YES", allow_key)
             .option("NO", allow_key)
             .option("MANAGER", allow_key)
-            .option("IGNORE", allow_key)
-            .option("VIEW", allow_key)
-            .query()
-            .action;
+            .option("IGNORE", allow_key);
+
+        // Only show VIEW if the distraction is from a hostile enemy
+        if (type == distraction_type::hostile_spotted_near || type == distraction_type::hostile_spotted_far) {
+            qp.option("VIEW", allow_key);
+        }
+
+        const std::string& action = qp.query().action;
 
         if (action == "YES") {
             u.cancel_activity();
