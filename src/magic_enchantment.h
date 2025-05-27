@@ -39,7 +39,8 @@ enum class mod : int {
     SPEED,
     ATTACK_SPEED, // affects attack speed of item even if it's not the one you're wielding
     MOVE_COST,
-    METABOLISM,
+    METABOLISM,  // Metabolism affecting used BMR outsidee of body function
+    BIO_METABOLISM, // For use for body function working metabolism having affect the weariness threshold
     MAX_MANA,
     REGEN_MANA,
     BIONIC_POWER,

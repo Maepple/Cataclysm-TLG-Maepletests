@@ -735,7 +735,7 @@ float Character::metabolic_rate_base() const
 {
     static const std::string hunger_rate_string( "PLAYER_HUNGER_RATE" );
     float hunger_rate = get_option< float >( hunger_rate_string );
-    const float final_hunger_rate = enchantment_cache->modify_value( enchant_vals::mod::METABOLISM,
+    const float final_hunger_rate = enchantment_cache->modify_value( enchant_vals::mod::BIO_METABOLISM,
                                     hunger_rate );
     return std::clamp( final_hunger_rate, 0.0f, float_max );
 }
@@ -743,6 +743,7 @@ float Character::metabolic_rate_base() const
 // TODO: Make this less chaotic to let NPC retroactive catch up work here
 // TODO: Involve body heat (cold -> higher metabolism, unless cold-blooded)
 // TODO: Involve stamina (maybe not here?)
+
 float Character::metabolic_rate() const
 {
     // First value is effective hunger, second is nutrition multiplier
@@ -761,8 +762,9 @@ float Character::metabolic_rate() const
     const float effective_hunger = ( get_hunger() + get_starvation() ) * 100.0f / std::max( 50,
                                    get_speed() );
     const float modifier = multi_lerp( thresholds, effective_hunger );
-
-    return modifier * metabolic_rate_base();
+    const float final_metabolism_rate = enchantment_cache->modify_value( enchant_vals::mod::METABOLISM,
+                                   modifier * metabolic_rate_base());
+    return std::clamp ( final_metabolism_rate, 0.0f, float_max);
 }
 
 morale_type Character::allergy_type( const item &food ) const
