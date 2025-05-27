@@ -1391,7 +1391,7 @@
         "values": [
           { "value": "HUNGER", "multiply": -0.5 },
           { "value": "THIRST", "multiply": -0.5 },
-          { "value": "METABOLISM", "multiply": -0.5 }
+          { "value": "METABOLISM", "multiply": -0.25 }
         ]
       }
     ]
