@@ -250,7 +250,7 @@ static bool within_visual_range( monster *z, int max_range )
 static bool within_target_range( const monster *const z, const Creature *const target, int range )
 {
     return target != nullptr &&
-           rl_dist( z->pos(), target->pos() ) <= range &&
+           trig_dist_z_adjust( z->pos(), target->pos() ) <= range &&
            z->sees( *target );
 }
 
