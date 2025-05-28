@@ -884,6 +884,11 @@ bool Creature::is_adjacent( const Creature *target, const bool allow_z_levels ) 
         return false;
     }
 
+    // Diagonally offset targets are not adjacent.
+    if( pos().z != target->pos().z && pos().xy() != target->pos().xy() ) {
+        return false;
+    }
+
     map &here = get_map();
     if( posz() == target->posz() ) {
         return
