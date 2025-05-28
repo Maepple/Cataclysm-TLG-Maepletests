@@ -549,10 +549,12 @@ target_handler::trajectory target_handler::mode_turrets( avatar &you, vehicle &v
         tripoint pos = veh.global_part_pos3( *t );
 
         int res = 0;
-        res = std::max( res, rl_dist( you.pos(), pos + point( range, 0 ) ) );
-        res = std::max( res, rl_dist( you.pos(), pos + point( -range, 0 ) ) );
-        res = std::max( res, rl_dist( you.pos(), pos + point( 0, range ) ) );
-        res = std::max( res, rl_dist( you.pos(), pos + point( 0, -range ) ) );
+        res = std::max( res, static_cast<int>( trig_dist_z_adjust( you.pos(), pos + point( range, 0 ) ) ) );
+        res = std::max( res, static_cast<int>( trig_dist_z_adjust( you.pos(), pos + point( -range,
+                                               0 ) ) ) );
+        res = std::max( res, static_cast<int>( trig_dist_z_adjust( you.pos(), pos + point( 0, range ) ) ) );
+        res = std::max( res, static_cast<int>( trig_dist_z_adjust( you.pos(), pos + point( 0,
+                                               -range ) ) ) );
         range_total = std::max( range_total, res );
     }
 
@@ -1270,7 +1272,7 @@ double calculate_aim_cap( const Character &you, const tripoint &target )
     // No p.sees_with_specials() here because special senses are not precise enough
     // to give creature's exact size & position, only which tile it occupies
     if( victim == nullptr || ( !you.sees( *victim ) && !you.sees_with_infrared( *victim ) ) ) {
-        const int range = rl_dist( you.pos(), target );
+        const int range = trig_dist_z_adjust( you.pos(), target );
         // Get angle of triangle that spans the target square.
         const double angle = 2 * atan2( 0.5, range );
         // Convert from radians to arcmin.
@@ -1335,16 +1337,16 @@ int Character::throwing_dispersion( const item &to_throw, Creature *critter,
     if( critter != nullptr ) {
         // It's easier to dodge at close range (thrower needs to adjust more)
         // Dodge x10 at point blank, x5 at 1 dist, then flat
-        float effective_dodge = critter->get_dodge() * std::max( 1, 10 - 5 * rl_dist( pos(),
-                                critter->pos() ) );
+        float effective_dodge = critter->get_dodge() * std::max( 1,
+                                10 - 5 * static_cast<int>( trig_dist_z_adjust( pos(),
+                                        critter->pos() ) ) );
         dispersion += throw_dispersion_per_dodge( true ) * effective_dodge;
     }
     // 1 perception per 1 eye encumbrance
     ///\EFFECT_PER decreases throwing accuracy penalty from eye encumbrance
     dispersion += std::max( 0, ( encumb( bodypart_id( "eyes" ) ) - get_per() ) * 10 );
 
-    // If throwing blind, we're assuming they mechanically can't achieve the
-    // accuracy of a normal throw.
+    // Blind throws are less accurate
     if( is_blind_throw ) {
         dispersion *= 4;
     }
@@ -1544,7 +1546,7 @@ dealt_projectile_attack Character::throw_item( const tripoint &target, const ite
     // throw from the the blind throw position instead.
     const tripoint throw_from = blind_throw_from_pos ? *blind_throw_from_pos : pos();
 
-    float range = rl_dist( throw_from, target );
+    float range = trig_dist_z_adjust( throw_from, target );
     proj.range = range;
     float skill_lvl = get_skill_level( skill_throw );
     // Avoid awarding tons of xp for lucky throws against hard to hit targets
@@ -1736,7 +1738,7 @@ Target_attributes::Target_attributes( tripoint src, tripoint target )
 {
     Creature *target_critter = get_creature_tracker().creature_at( target );
     Creature *shooter = get_creature_tracker().creature_at( src );
-    range = rl_dist( src, target );
+    range = trig_dist_z_adjust( src, target );
     size = target_critter != nullptr ?
            target_critter->ranged_target_size() :
            get_map().ranged_target_size( target );
@@ -2116,7 +2118,7 @@ static void draw_throw_aim( const target_ui &ui, const Character &you, const cat
     }
 
     const dispersion_sources dispersion( you.throwing_dispersion( weapon, target, is_blind_throw ) );
-    const double range = rl_dist( you.pos(), target_pos );
+    const double range = trig_dist_z_adjust( you.pos(), target_pos );
 
     const double target_size = target != nullptr ? target->ranged_target_size() : 1.0f;
 
@@ -2158,7 +2160,7 @@ static void draw_throwcreature_aim( const target_ui &ui, const Character &you,
     item weapon = null_item_reference();
 
     const dispersion_sources dispersion( you.throwing_dispersion( weapon, target, false ) );
-    const double range = rl_dist( you.pos(), target_pos );
+    const double range = trig_dist_z_adjust( you.pos(), target_pos );
 
     const double target_size = target != nullptr ? target->ranged_target_size() : 1.0f;
 
@@ -3097,21 +3099,26 @@ bool target_ui::set_cursor_pos( const tripoint &new_pos )
             if( square_dist( src, valid_pos ) > 1 ) {
                 valid_pos = new_traj[0];
             }
-        } else if( trigdist ) {
             if( dist_fn( valid_pos ) > range ) {
-                // Find the farthest point that is still in range
+                auto dist_fn_unrounded = [this]( const tripoint & p ) {
+                    return trig_dist_z_adjust( src, p );
+                };
+
+                bool found = false;
                 for( size_t i = new_traj.size(); i > 0; i-- ) {
-                    if( dist_fn( new_traj[i - 1] ) <= range ) {
-                        valid_pos = new_traj[i - 1];
+                    const tripoint &test_pt = new_traj[i - 1];
+                    double raw_dist = dist_fn_unrounded( test_pt );
+                    if( std::ceil( raw_dist ) <= range || raw_dist <= range + 0.001 ) {
+                        valid_pos = test_pt;
+                        found = true;
                         break;
                     }
                 }
-
                 // FIXME: due to a bug in map::find_clear_path (DDA #39693),
                 //        returned trajectory is invalid in some cases.
                 //        This bandaid stops us from exceeding range,
                 //        but does not fix the issue.
-                if( dist_fn( valid_pos ) > range ) {
+                if( !found ) {
                     debugmsg( "Exceeded allowed range!" );
                     valid_pos = src;
                 }
@@ -3222,7 +3229,7 @@ void target_ui::update_target_list()
     // Get targets in range and sort them by distance (targets[0] is the closest)
     targets = you->get_targetable_creatures( range, mode == TargetMode::Reach );
     std::sort( targets.begin(), targets.end(), [&]( const Creature * lhs, const Creature * rhs ) {
-        return rl_dist_exact( lhs->pos(), you->pos() ) < rl_dist_exact( rhs->pos(), you->pos() );
+        return trig_dist_z_adjust( lhs->pos(), you->pos() ) < trig_dist_z_adjust( rhs->pos(), you->pos() );
     } );
 }
 
@@ -3316,14 +3323,13 @@ int target_ui::dist_fn( const tripoint &p )
 {
     int z_adjust = 0;
     if( casting && casting->effect() == "dash" ) {
-        if( casting->has_flag( spell_flag::AIRBORNE ) ) {
-            z_adjust = 2 * std::abs( src.z - p.z );
-        } else {
+        if( !casting->has_flag( spell_flag::AIRBORNE ) ) {
             // Arbitrarily high number to prevent ascending or descending.
             z_adjust = 100 * std::abs( src.z - p.z );
         }
     }
-    return static_cast<int>( z_adjust + std::round( rl_dist_exact( src, p ) ) );
+    // Always round up so that the Z adjustment actually matters.
+    return static_cast<int>( z_adjust + std::ceil( trig_dist_z_adjust( src, p ) ) );
 }
 
 void target_ui::set_last_target()
