@@ -3504,7 +3504,8 @@ Weakpoints only match if they share the same id, so it's important to define the
 ],
 "milling": {                                 // Optional. If given, the item can be milled in a water/wind mill.
   "into": "flour",                           // The item id of the result of the milling.
-  "conversion_rate": 1.0                     // Conversion of number of items that are milled (e.g. with a rate of 2, 10 input items will yield 20 milled items).
+  "recipe": "paste_nut_mill_10_1"            // Reference to the recipe that performs the task. The syntax is <product name>_mill_<source amount>_<product amount>. The recipe is then defined as a normal recipe for the source with the product as its result and an id_suffix of "mill_X_Y". 
+                                             // See data/json/recipes/food/milling.json for such recipes. Can also use "milling": { "into": "null", "recipe": "" } to override milling from a copied base item.
 },
 "explode_in_fire": true,                     // Should the item explode if set on fire
 "nanofab_template_group": "nanofab_recipes", // This item is nanofabricator recipe, and point to itemgroup with items, that it could possibly contain; require nanofab_template_group
@@ -3613,6 +3614,10 @@ ammo_effects define what effect the projectile, that you shoot, would have. List
   "do_flashbang": false,     // Creates a one tile radius EMP explosion at the hit location; default false
   "do_emp_blast": false      // Creates a hardcoded flashbang explosion; default false
   "foamcrete_build": false   // Creates foamcrete fields and walls on the hit location, used in aftershock; default false
+  "eoc": [ "EOC_CAUSE_PAIN", "EOC_CAUSE_VOMIT" ], // Runs EoC when hit the target. See EFFECT_ON_CONDITION.md#typical-alpha-and-beta-talkers-by-cases for more information
+  "spell_data": { "id": "bear_trap" } // Spell, that would be casted when projectile hits an enemy
+  "spell_data": { "id": "release_the_deltas", "hit_self": true, "min_level": 10 }, //another example
+  "always_cast_spell ": false // if spell_data is used, and this is true, spell would be casted even if projectile did not deal any damage. Default false.
 }
 ```
 
@@ -3627,6 +3632,7 @@ ammo_effects define what effect the projectile, that you shoot, would have. List
 "count" : 0,                     // Default amount of ammo contained by a magazine (set this for ammo belts)
 "default_ammo": "556",           // If specified override the default ammo (optionally set this for ammo belts)
 "reload_time" : 100,             // How long it takes to load each unit of ammo into the magazine
+"mag_jam_mult": 1.25             // Multiplier for gun mechanincal malfunctioning from magazine, mostly when it's damaged; Values lesser than 1 reflect better quality of the magazine, that jam less; bigger than 1 result in gun being more prone to malfunction and jam at lesser damage level; zero mag_jam_mult (and zero gun_jam_mult in a gun) would remove any chance for a gun to malfunction. Only works if gun has any fault from gun_mechanical_simple group presented; Jam chances are described in Character::handle_gun_damage(); at this moment it is roughly: 0.027% for undamaged magazine, 5% for 1 damage (|\), 24% for 2 damage (|.), 96% for 3 damage (\.), and 250% for 4 damage (XX), then this and gun values are summed up. Rule of thumb: helical mags should have 3, drum mags should have 2, the rest can be tweaked case by case, but mostly doesn't worth emulating it
 "linkage" : "ammolink"           // If set one linkage (of given type) is dropped for each unit of ammo consumed (set for disintegrating ammo belts)
 ```
 
@@ -4169,6 +4175,7 @@ Guns can be defined like this:
 "sight_dispersion": 10,    // Inaccuracy of gun derived from the sight mechanism, measured in 100ths of Minutes Of Angle (MOA)
 "recoil": 0,               // Recoil caused when firing, measured in 100ths of Minutes Of Angle (MOA)
 "durability": 8,           // Resistance to damage/rusting, also determines misfire chance
+"gun_jam_mult": 1.25       // Multiplier for gun mechanincal malfunctioning, mostly when it's damaged; Values lesser than 1 reflect better quality of the gun, that jam less; bigger than 1 result in gun being more prone to malfunction and jam at lesser damage level; zero gun_jam_mult (and zero mag_jam_mult if magazine is presented) would remove any chance for a gun to malfunction. Only apply if gun has any fault from gun_mechanical_simple group presented; Jam chances are described in Character::handle_gun_damage(); at this moment it is roughly: 0.05% for undamaged gun, 3% for 1 damage (|\), 15% for 2 damage (|.), 45% for 3 damage (\.), and 80% for 4 damage (XX), then this and magazine values are summed up
 "blackpowder_tolerance": 8,// One in X chance to get clogged up (per shot) when firing blackpowder ammunition (higher is better). Optional, default is 8.
 "min_cycle_recoil": 0,     // Minimum ammo recoil for gun to be able to fire more than once per attack.
 "clip_size": 100,          // Maximum amount of ammo that can be loaded
@@ -4216,9 +4223,10 @@ Gun mods can be defined like this:
 "ammo_modifier": [ "57" ],     // Optional field which if specified modifies parent gun to use these ammo types
 "magazine_adaptor": [ [ "223", [ "stanag30" ] ] ], // Optional field which changes the types of magazines the parent gun accepts
 "pocket_mods": [ { "pocket_type": "MAGAZINE_WELL", "item_restriction": [ "ai_338mag", "ai_338mag_10" ] } ], // Optional field, alters the original pockets of the weapon ; share the syntax with pocket_data; pocket type MAGAZINE and MAGAZINE_WELL are always overwritten, pocket type CONTAINER is always added to existing pockets; for MAGAZINE and MAGAZINE_WELL both ammo_modifier and magazine_adaptor fields are required to correctly migrate ammo type; type: TOOLMOD can use this field also
-"damage_modifier": -1,         // Optional field increasing or decreasing base gun damage
+"damage_modifier": { "damage_type": "bullet", "amount": -1 }, // Optional field increasing or decreasing base gun damage
 "dispersion_modifier": 15,     // Optional field increasing or decreasing base gun dispersion
 "loudness_modifier": 4,        // Optional field increasing or decreasing base guns loudness
+"loudness_multiplier": 0.5     // Optional field increasing or decreasing base guns loudness as multiplier. 0.5 would halve the gun loudness, 2 would double it
 "range_modifier": 2,           // Optional field increasing or decreasing base gun range
 "range_multiplier": 1.2,       // Optional field multiplying base gun range
 "integral_longest_side": "5 cm", // Length that would be added to a gun when this mod is installed

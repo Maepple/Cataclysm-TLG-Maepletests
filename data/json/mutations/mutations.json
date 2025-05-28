@@ -67,7 +67,7 @@
     "dummy": true,
     "category": [ "HUMAN" ],
     "types": [ "EYES", "VISION" ],
-    "cancels": [ "EAGLEEYED", "EYEBULGE", "INFRARED", "MEMBRANE", "MYOPIC", "SEESLEEP" ],
+    "cancels": [ "EAGLEEYED", "EYEBULGE", "INFRARED", "MEMBRANE", "MYOPIC", "SEESLEEP", "MESOPIC" ],
     "description": "You have human eyes."
   },
   {
@@ -706,7 +706,7 @@
     "points": 2,
     "description": "Your body's demanding energy needs mean you can fall asleep just about anywhere.",
     "types": [ "SLEEPINESS" ],
-    "prereqs": [ "MET_RAT" ],
+    "prereqs": [ "MET_RAT", "EASYSLEEPER" ],
     "cancels": [ "INSOMNIA" ],
     "threshreq": [ "THRESH_MOUSE", "THRESH_RABBIT" ],
     "category": [ "MOUSE", "RABBIT" ],
@@ -754,6 +754,7 @@
     "changes_to": [ "NIGHTVISION2" ],
     "category": [
       "BIRD",
+      "BATRACHIAN",
       "CATTLE",
       "INSECT",
       "BATRACHIAN",
@@ -764,6 +765,7 @@
       "LUPINE",
       "MOUSE",
       "SPIDER",
+      "URSINE",
       "TROGLOBITE"
     ],
     "active": true,
@@ -1170,6 +1172,7 @@
     "points": 3,
     "description": "Your genome has rapidly adapted to the Cataclysm and can handle the strain of mutation better.  Taking different kinds of mutagen won't result in more defective mutations than normal.",
     "starting_trait": true,
+    "flags": [ "ROBUST_GENETIC" ],
     "cancels": [ "CHAOTIC_BAD", "RESTRICTED" ],
     "category": [ "FISH", "SLIME", "MEDICAL", "PLANT" ]
   },
@@ -1228,17 +1231,6 @@
     "social_modifiers": { "lie": 10, "persuade": 5 },
     "types": [ "HUMAN_EMPATHY" ],
     "flags": [ "PSYCHOPATH" ]
-  },
-  {
-    "type": "mutation",
-    "id": "KILLER",
-    "name": { "str": "Killer Drive" },
-    "points": 2,
-    "description": "You derive enjoyment from killing things.  Putting end to life seem to spark some dark satisfaction and thrill, and you crave it every moment.",
-    "starting_trait": true,
-    "valid": false,
-    "social_modifiers": { "intimidate": 5 },
-    "prereqs": [ "PSYCHOPATH" ]
   },
   {
     "type": "mutation",
@@ -1336,6 +1328,7 @@
     "description": "You lost an awful lot of weight before the Cataclysm.  Whatever the reason, now that food is not always close at hand, your skeletal figure presents an additional danger.  You need to gain weight or die trying.",
     "purifiable": false,
     "starting_trait": true,
+    "player_display": false,
     "valid": false,
     "cancels": [ "XXXL" ]
   },
@@ -1347,6 +1340,7 @@
     "description": "You gained an awful lot of weight before the Cataclysm.  Whatever the reason, now that mobility is key to survival, your oversized figure presents an additional danger.  You need to lose weight or die trying.",
     "purifiable": false,
     "starting_trait": true,
+    "player_display": false,
     "valid": false,
     "cancels": [ "XS" ]
   },
@@ -1402,7 +1396,7 @@
     "points": -2,
     "description": "Without glasses, your seeing radius is severely reduced!  However, you are guaranteed to start with a pair of glasses.",
     "starting_trait": true,
-    "cancels": [ "URSINE_EYE" ],
+    "cancels": [ "MESOPIC" ],
     "category": [ "BEAST" ],
     "flags": [ "MYOPIC" ]
   },
@@ -2245,26 +2239,12 @@
   },
   {
     "type": "mutation",
-    "id": "URSINE_EYE",
-    "name": { "str": "Ursine Vision" },
-    "points": 1,
-    "description": "Your visual processing has shifted: though you can see better in the dark, you're nearsighted in the light.  Maybe glasses would help.  Activate to toggle NV-visible areas on or off.",
-    "types": [ "EYES", "VISION" ],
-    "cancels": [ "MYOPIC", "MESOPIC" ],
-    "category": [ "URSINE" ],
-    "flags": [ "MYOPIC_IN_LIGHT" ],
-    "active": true,
-    "starts_active": true
-  },
-  {
-    "type": "mutation",
     "id": "MESOPIC",
     "name": { "str": "Mesopic" },
     "points": -1,
     "description": "You find it difficult to see very far in bright light.  On its own, this doesn't necessarily make you any better in the dark.",
-    "types": [ "EYES", "VISION" ],
     "cancels": [ "MYOPIC" ],
-    "category": [ "CHIROPTERAN", "TROGLOBITE" ],
+    "category": [ "CHIROPTERAN", "TROGLOBITE", "URSINE" ],
     "flags": [ "MYOPIC_IN_LIGHT" ]
   },
   {
@@ -2431,7 +2411,6 @@
   {
     "type": "mutation",
     "id": "FROG_EYES",
-    "//": "Currently without the NV from URSINE_EYE",
     "name": { "str": "Frog Eyes" },
     "points": 1,
     "visibility": 8,
@@ -2440,8 +2419,8 @@
     "prereqs": [ "EYEBULGE" ],
     "category": [ "BATRACHIAN" ],
     "flags": [ "EYE_MEMBRANE", "SEESLEEP", "MYOPIC_IN_LIGHT" ],
-    "types": [ "EYES", "VISION" ],
-    "cancels": [ "MEMBRANE", "MYOPIC", "URSINE_EYE", "MESOPIC" ],
+    "types": [ "EYES" ],
+    "cancels": [ "MEMBRANE", "MYOPIC", "MESOPIC" ],
     "threshreq": [ "THRESH_BATRACHIAN" ],
     "wet_protection": [ { "part": "eyes", "neutral": 1 } ],
     "armor": [ { "parts": "eyes", "cut": 3, "bash": 1 } ],
@@ -2559,7 +2538,17 @@
       { "part": "torso", "ignored": 60 }
     ],
     "armor": [ { "part_types": [ "ALL" ], "cut": 3, "bash": 5 } ],
-    "enchantments": [ { "condition": "ALWAYS", "values": [ { "value": "SPEED", "multiply": -0.2 } ] } ]
+    "enchantments": [ { "condition": "ALWAYS", "values": [ { "value": "SPEED", "multiply": -0.2 } ] } ],
+    "comfort": [
+      {
+        "conditions": [ { "type": "terrain", "flag": "FUNGUS" } ],
+        "comfort": "very_comfortable",
+        "msg_try": {
+          "text": "Our fibers meld with the ground beneath us.  The gills on our neck begin to seed the air with spores as our awareness fades.",
+          "rating": "good"
+        }
+      }
+    ]
   },
   {
     "type": "mutation",
@@ -5543,7 +5532,30 @@
     "description": "Your body excretes very fine amounts of a chemical which prevents you from sticking to webs.  Walking through webs does not affect you at all.",
     "leads_to": [ "WEB_WEAVER" ],
     "flags": [ "WEBWALK" ],
-    "category": [ "SPIDER" ]
+    "category": [ "SPIDER" ],
+    "comfort": [
+      {
+        "conditions": [
+          { "type": "field", "id": "fd_web", "intensity": 3 },
+          { "type": "trait", "id": "WEB_SPINNER", "invert": true },
+          { "type": "trait", "id": "WEB_WEAVER", "invert": true }
+        ],
+        "comfort": "sleep_aid",
+        "use_better_comfort": true,
+        "add_sleep_aids": true,
+        "msg_try": { "text": "These thick webs support your weight, and are strangely comfortable…", "rating": "good" }
+      },
+      {
+        "conditions": [
+          { "type": "field", "id": "fd_web" },
+          { "type": "trait", "id": "WEB_SPINNER", "invert": true },
+          { "type": "trait", "id": "WEB_WEAVER", "invert": true }
+        ],
+        "add_human_comfort": true,
+        "add_sleep_aids": true,
+        "msg_try": { "text": "You try to sleep, but the webs get in the way.  You brush them aside.", "rating": "info" }
+      }
+    ]
   },
   {
     "type": "mutation",
@@ -5555,7 +5567,20 @@
     "prereqs": [ "WEB_WALKER" ],
     "threshreq": [ "THRESH_SPIDER" ],
     "changes_to": [ "WEB_WEAVER" ],
-    "category": [ "SPIDER" ]
+    "category": [ "SPIDER" ],
+    "comfort": [
+      {
+        "conditions": [ { "type": "field", "id": "fd_web", "intensity": 3, "invert": true } ],
+        "comfort": "impossible",
+        "msg_try": { "text": "You try to sleep, but you feel exposed and your spinnerets keep twitching.", "rating": "bad" },
+        "msg_hint": { "text": "Maybe a nice thick web would help you sleep.", "rating": "info" }
+      },
+      {
+        "conditions": [ { "type": "field", "id": "fd_web", "intensity": 3 } ],
+        "comfort": "very_comfortable",
+        "msg_try": { "text": "You relax into your web.", "rating": "good" }
+      }
+    ]
   },
   {
     "type": "mutation",
@@ -5572,7 +5597,20 @@
     "cost": 69,
     "time": "100 s",
     "kcal": true,
-    "thirst": true
+    "thirst": true,
+    "comfort": [
+      {
+        "conditions": [ { "type": "field", "id": "fd_web", "intensity": 3, "invert": true } ],
+        "comfort": "impossible",
+        "msg_try": { "text": "You try to sleep, but you feel exposed and your spinnerets keep twitching.", "rating": "bad" },
+        "msg_hint": { "text": "Maybe a nice thick web would help you sleep.", "rating": "info" }
+      },
+      {
+        "conditions": [ { "type": "field", "id": "fd_web", "intensity": 3 } ],
+        "comfort": "very_comfortable",
+        "msg_try": { "text": "You relax into your web.", "rating": "good" }
+      }
+    ]
   },
   {
     "type": "mutation",
@@ -6162,6 +6200,7 @@
     "mixed_effect": true,
     "description": "You've noticeably shrunk in size.  You're able to move with increased litheness, but your smaller stature prevents you from driving a car or carrying as much.",
     "types": [ "SIZE" ],
+    "prereqs": [ "SMALL_NATURAL" ],
     "changes_to": [ "SMALL2" ],
     "category": [ "MOUSE", "RABBIT" ],
     "threshreq": [ "THRESH_MOUSE", "THRESH_RABBIT" ],
@@ -7604,9 +7643,45 @@
     "category": [ "PLANT" ],
     "scent_type": "sc_flower",
     "encumbrance_covered": [ [ "foot_l", 10 ], [ "foot_r", 10 ] ],
-    "active": true,
-    "cost": 0,
-    "flags": [ "TOUGH_FEET", "ROOTS3" ]
+    "flags": [ "TOUGH_FEET", "ROOTS3" ],
+    "comfort": [
+      {
+        "conditions": [ { "type": "vehicle" } ],
+        "comfort": "impossible",
+        "msg_try": { "text": "It's impossible to sleep in this wheeled pot!", "rating": "bad" }
+      },
+      {
+        "conditions": [ { "type": "furniture", "id": "f_null", "invert": true } ],
+        "comfort": "impossible",
+        "msg_try": { "text": "The furniture blocks your roots.  You can't get comfortable.", "rating": "bad" }
+      },
+      {
+        "conditions": [
+          { "type": "terrain", "flag": "PLOWABLE", "invert": true },
+          { "type": "terrain", "flag": "PLANTABLE", "invert": true },
+          { "type": "terrain", "id": "t_pit", "invert": true },
+          { "type": "terrain", "id": "t_pit_shallow", "invert": true }
+        ],
+        "comfort": "impossible",
+        "msg_try": { "text": "Your roots scrabble ineffectively at the unyielding surface.", "rating": "bad" }
+      },
+      {
+        "conditions": [
+          { "type": "terrain", "flag": "PLANTABLE" },
+          { "type": "terrain", "id": "t_dirt" },
+          { "type": "terrain", "id": "t_pit" },
+          { "type": "terrain", "id": "t_pit_shallow" }
+        ],
+        "conditions_any": true,
+        "comfort": "very_comfortable",
+        "msg_try": { "text": "You relax as your roots embrace the soil.", "rating": "good" }
+      },
+      {
+        "conditions": [ { "type": "terrain", "flag": "PLOWABLE" } ],
+        "comfort": "comfortable",
+        "msg_try": { "text": "You relax as your roots embrace the soil.", "rating": "good" }
+      }
+    ]
   },
   {
     "type": "mutation",
@@ -8075,7 +8150,15 @@
     "active": true,
     "integrated_armor": [ "integrated_shell2" ],
     "restricts_gear": [ "torso" ],
-    "vitamin_rates": [ [ "calcium", -250 ] ]
+    "vitamin_rates": [ [ "calcium", -250 ] ],
+    "comfort": [
+      {
+        "conditions": [ { "type": "trait", "id": "SHELL2", "active": true } ],
+        "comfort": "sleep_aid",
+        "add_sleep_aids": true,
+        "msg_try": { "text": "Your shell is the perfect place to rest.", "rating": "good" }
+      }
+    ]
   },
   {
     "type": "mutation",
@@ -8094,7 +8177,15 @@
     "active": true,
     "integrated_armor": [ "integrated_shell3" ],
     "restricts_gear": [ "torso" ],
-    "vitamin_rates": [ [ "calcium", -300 ] ]
+    "vitamin_rates": [ [ "calcium", -300 ] ],
+    "comfort": [
+      {
+        "conditions": [ { "type": "trait", "id": "SHELL3", "active": true } ],
+        "comfort": "sleep_aid",
+        "add_sleep_aids": true,
+        "msg_try": { "text": "Your shell is the perfect place to rest.", "rating": "good" }
+      }
+    ]
   },
   {
     "type": "mutation",
@@ -8496,9 +8587,21 @@
     "name": { "str": "Aqueous Repose" },
     "points": 1,
     "description": "Falling asleep underwater is easy for you, and you spend less time asleep when you rest there.  You can also eat underwater, though you can't drink.",
-    "prereqs": [ "SEESLEEP", "FROG_EYES" ],
-    "category": [ "FISH", "BATRACHIAN" ],
-    "threshreq": [ "THRESH_FISH", "THRESH_BATRACHIAN" ]
+    "prereqs": [ "SEESLEEP", "FROG_EYES", "GILLS_CEPH" ],
+    "category": [ "FISH", "BATRACHIAN", "CEPHALOPOD" ],
+    "threshreq": [ "THRESH_FISH", "THRESH_BATRACHIAN", "THRESH_CEPHALOPOD" ],
+    "comfort": [
+      {
+        "conditions": [ { "type": "terrain", "flag": "DEEP_WATER" } ],
+        "comfort": "very_comfortable",
+        "msg_try": { "text": "You settle comfortably beneath the surface.", "rating": "good" }
+      },
+      {
+        "conditions": [ { "type": "terrain", "flag": "WATER_CUBE" } ],
+        "comfort": "very_comfortable",
+        "msg_try": { "text": "You relax, embraced by the water.", "rating": "good" }
+      }
+    ]
   },
   {
     "type": "mutation",

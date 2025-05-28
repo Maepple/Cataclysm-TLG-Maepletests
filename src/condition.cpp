@@ -609,6 +609,15 @@ conditional_t::func f_has_trait( const JsonObject &jo, std::string_view member, 
     };
 }
 
+conditional_t::func f_is_trait_purifiable( const JsonObject &jo, std::string_view member,
+        bool is_npc )
+{
+    str_or_var trait_to_check = get_str_or_var( jo.get_member( member ), member, true );
+    return [trait_to_check, is_npc]( dialogue const & d ) {
+        return d.actor( is_npc )->is_trait_purifiable( trait_id( trait_to_check.evaluate( d ) ) );
+    };
+}
+
 conditional_t::func f_has_visible_trait( const JsonObject &jo, std::string_view member,
         bool is_npc )
 {
@@ -1002,7 +1011,7 @@ conditional_t::func f_at_om_location( const JsonObject &jo, std::string_view mem
             const std::optional<mapgen_arguments> *maybe_args = overmap_buffer.mapgen_args( omt_pos );
             return !recipe_group::get_recipes_by_id( "all_faction_base_types", omt_ter, maybe_args ).empty();
         } else {
-            return oter_no_dir( omt_ter ) == location_value;
+            return oter_no_dir_or_connections( omt_ter ) == location_value;
         }
     };
 }
@@ -1034,7 +1043,7 @@ conditional_t::func f_near_om_location( const JsonObject &jo, std::string_view m
                        !recipe_group::get_recipes_by_id( "all_faction_base_types", omt_ter, maybe_args ).empty() ) {
                 return true;
             } else {
-                if( oter_no_dir( omt_ter ) == location_value ) {
+                if( oter_no_dir_or_connections( omt_ter ) == location_value ) {
                     return true;
                 }
             }
@@ -1311,6 +1320,20 @@ conditional_t::func f_player_see( bool is_npc )
         } else {
             return get_player_view().sees( d.actor( is_npc )->pos() );
         }
+    };
+}
+
+conditional_t::func f_has_alpha()
+{
+    return []( dialogue const & d ) {
+        return d.has_alpha;
+    };
+}
+
+conditional_t::func f_has_beta()
+{
+    return []( dialogue const & d ) {
+        return d.has_beta;
     };
 }
 
@@ -1672,18 +1695,19 @@ conditional_t::func f_map_ter_furn_id( const JsonObject &jo, std::string_view me
 {
     str_or_var furn_type = get_str_or_var( jo.get_member( member ), member, true );
     var_info loc_var = read_var_info( jo.get_object( "loc" ) );
-    bool terrain = true;
-    if( member == "map_terrain_id" ) {
-        terrain = true;
-    } else if( member == "map_furniture_id" ) {
-        terrain = false;
-    }
-    return [terrain, furn_type, loc_var]( dialogue const & d ) {
+
+    return [member, furn_type, loc_var]( dialogue const & d ) {
         tripoint loc = get_map().getlocal( get_tripoint_from_var( loc_var, d, false ) );
-        if( terrain ) {
+        if( member == "map_terrain_id" ) {
             return get_map().ter( loc ) == ter_id( furn_type.evaluate( d ) );
-        } else {
+        } else if( member == "map_furniture_id" ) {
             return get_map().furn( loc ) == furn_id( furn_type.evaluate( d ) );
+        } else if( member == "map_field_id" ) {
+            const field &fields_here = get_map().field_at( loc );
+            return !!fields_here.find_field( field_type_id( furn_type.evaluate( d ) ) );
+        } else {
+            debugmsg( "Invalid map id: %s", member );
+            return false;
         }
     };
 }
@@ -2118,10 +2142,6 @@ std::unordered_map<std::string_view, int ( talker::* )() const> const f_get_vals
     { "mana_max", &talker::mana_max },
     { "mana", &talker::mana_cur },
     { "morale", &talker::morale_cur },
-    { "npc_anger", &talker::get_npc_anger },
-    { "npc_fear", &talker::get_npc_fear },
-    { "npc_trust", &talker::get_npc_trust },
-    { "npc_value", &talker::get_npc_value },
     { "owed", &talker::debt },
     { "perception_base", &talker::get_per_max },
     { "perception_bonus", &talker::get_per_bonus },
@@ -2223,10 +2243,6 @@ std::unordered_map<std::string_view, void ( talker::* )( int )> const f_set_vals
     { "intelligence_bonus", &talker::set_int_bonus },
     { "mana", &talker::set_mana_cur },
     { "morale", &talker::set_morale },
-    { "npc_anger", &talker::set_npc_anger },
-    { "npc_fear", &talker::set_npc_fear },
-    { "npc_trust", &talker::set_npc_trust },
-    { "npc_value", &talker::set_npc_value },
     { "perception_base", &talker::set_per_max },
     { "perception_bonus", &talker::set_per_bonus },
     { "pkill", &talker::set_pkill },
@@ -2428,6 +2444,7 @@ std::vector<condition_parser>
 parsers = {
     {"u_has_any_trait", "npc_has_any_trait", jarg::array, &conditional_fun::f_has_any_trait },
     {"u_has_trait", "npc_has_trait", jarg::member, &conditional_fun::f_has_trait },
+    { "u_is_trait_purifiable", "npc_is_trait_purifiable", jarg::member, &conditional_fun::f_is_trait_purifiable},
     {"u_has_visible_trait", "npc_has_visible_trait", jarg::member, &conditional_fun::f_has_visible_trait },
     {"u_has_martial_art", "npc_has_martial_art", jarg::member, &conditional_fun::f_has_martial_art },
     {"u_using_martial_art", "npc_using_martial_art", jarg::member, &conditional_fun::f_using_martial_art },
@@ -2495,6 +2512,7 @@ parsers = {
     {"map_furniture_with_flag", jarg::member, &conditional_fun::f_map_ter_furn_with_flag },
     {"map_terrain_id", jarg::member, &conditional_fun::f_map_ter_furn_id },
     {"map_furniture_id", jarg::member, &conditional_fun::f_map_ter_furn_id },
+    {"map_field_id", jarg::member, &conditional_fun::f_map_ter_furn_id },
     {"map_in_city", jarg::member, &conditional_fun::f_map_in_city },
     {"mod_is_loaded", jarg::member, &conditional_fun::f_mod_is_loaded },
     {"u_has_faction_trust", jarg::member | jarg::array, &conditional_fun::f_has_faction_trust },
@@ -2568,6 +2586,8 @@ parsers_simple = {
     {"u_is_furniture", "npc_is_furniture", &conditional_fun::f_is_furniture },
     {"has_ammo", &conditional_fun::f_has_ammo },
     {"player_see_u", "player_see_npc", &conditional_fun::f_player_see },
+    {"has_alpha", &conditional_fun::f_has_alpha },
+    {"has_beta", &conditional_fun::f_has_beta },
 };
 
 conditional_t::conditional_t( const JsonObject &jo )

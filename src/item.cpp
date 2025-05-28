@@ -3628,6 +3628,11 @@ void item::gunmod_info( std::vector<iteminfo> &info, const iteminfo_query *parts
                            iteminfo::lower_is_better | iteminfo::show_plus,
                            mod.loudness );
     }
+    if( mod.loudness_multiplier != 0 && parts->test( iteminfo_parts::GUNMOD_LOUDNESS_MULTIPLIER ) ) {
+        info.emplace_back( "GUNMOD", _( "Loudness multiplier: " ), "",
+                           iteminfo::lower_is_better | iteminfo::show_plus,
+                           mod.loudness );
+    }
     if( !type->mod->ammo_modifier.empty() && parts->test( iteminfo_parts::GUNMOD_AMMO ) ) {
         for( const ammotype &at : type->mod->ammo_modifier ) {
             info.emplace_back( "GUNMOD", string_format( _( "Ammo: <stat>%s</stat>" ),
@@ -5616,7 +5621,8 @@ void item::melee_combat_info( std::vector<iteminfo> &info, const iteminfo_query 
                      damage_info_order::info_type::MELEE ) ) {
                 // NOTE: Using "BASE" instead of "DESCRIPTION", so numerical formatting will work
                 // (output.cpp:format_item_info does not interpolate <num> for DESCRIPTION info)
-                info.emplace_back( "BASE", string_format( "%s: ", uppercase_first_letter( dio.verb.translated() ) ),
+                info.emplace_back( "BASE", string_format( "%s: ",
+                                   uppercase_first_letter( dio.dmg_type->name.translated() ) ),
                                    "<num>", iteminfo::no_newline, non_crit.type_damage( dio.dmg_type ) );
                 //~ Label used in the melee damage section in the item info screen (ex: "  Critical bash: ")
                 //~ %1$s = a prepended space, %2$s = the name of the damage type (bash, cut, pierce, etc.)
@@ -6598,7 +6604,7 @@ void item::on_wield( Character &you )
 {
     int wield_cost = on_wield_cost( you );
     you.mod_moves( -wield_cost );
-
+    you.release_grapple();
     std::string msg;
 
     msg = _( "You wield your %s." );
@@ -7909,25 +7915,11 @@ void item::randomize_rot()
                                     rng_float( 0.2, 1.2 );
         set_rot( loot_adjust );
     }
-    for( item_pocket *pocket : contents.get_all_contained_pockets() ) {
-        if( pocket->spoil_multiplier() > 0.0f ) {
-            time_duration pocket_loot_adjust = ( calendar::fall_of_civilization - calendar::start_of_cataclysm )
-                                               * rng_float( 0.2, 1.2 );
-            // Apply the same adjustment to all items in this pocket
-            for( item *subitem : pocket->all_items_top() ) {
-                if( subitem->is_comestible() && subitem->get_comestible()->spoils > 0_turns ) {
-                    subitem->set_rot( pocket_loot_adjust );
-                }
-            }
-        }
-    }
 
     for( item_pocket *pocket : contents.get_all_contained_pockets() ) {
         if( pocket->spoil_multiplier() > 0.0f ) {
             for( item *subitem : pocket->all_items_top() ) {
-                if( !subitem->contents.empty() ) {
-                    subitem->randomize_rot();
-                }
+                subitem->randomize_rot();
             }
         }
     }
@@ -12749,7 +12741,7 @@ bool item::detonate( const tripoint &p, std::vector<item> &drops )
         const int rounds_exploded = rng( 1, charges_remaining / 2 );
         if( type->ammo->special_cookoff ) {
             // If it has a special effect just trigger it.
-            apply_ammo_effects( nullptr, p, type->ammo->ammo_effects );
+            apply_ammo_effects( nullptr, p, type->ammo->ammo_effects, 1 );
         }
         if( type->ammo->cookoff ) {
             // If ammo type can burn, then create an explosion proportional to quantity.

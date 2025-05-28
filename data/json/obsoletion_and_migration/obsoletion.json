@@ -55,5 +55,23 @@
     "active": true,
     "valid": false,
     "transform": { "target": "WINGS_INSECT_active", "msg_transform": "You begin buzzing your wings.", "active": true, "moves": 20 }
+  },
+  {
+    "type": "mutation",
+    "id": "URSINE_EYE",
+    "name": { "str": "Ursine Vision" },
+    "description": "Obsoleted Ursine Vision mutation.  Bears now get Mesopic and Night Vision.",
+    "points": 0,
+    "valid": false,
+    "player_display": false
+  },
+  {
+    "type": "mutation",
+    "id": "KILLER",
+    "name": { "str": "Killer Drive" },
+    "description": "Obsoleted Killer Drive mutation.",
+    "points": 0,
+    "valid": false,
+    "player_display": false
   }
 ]

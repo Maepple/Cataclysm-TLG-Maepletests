@@ -197,12 +197,16 @@ bool trapfunc::beartrap( const tripoint &p, Creature *c, item * )
         const bodypart_id hit = random_entry( c->get_ground_contact_bodyparts( true ) );
 
         // Messages
-        c->add_msg_player_or_npc( m_bad,
-                                  string_format( _( "A bear trap closes on your %s" ), body_part_name_accusative( hit ) ),
-                                  string_format( _( "A bear trap closes on <npcname>'s %s" ), body_part_name( hit ) ) );
-
-        if( c->has_effect( effect_ridden ) ) {
-            add_msg( m_warning, _( "Your %s is caught by a beartrap!" ), c->get_name() );
+        if( c->is_monster() ) {
+            if( c->has_effect( effect_ridden ) ) {
+                add_msg( m_warning, _( "Your %s is caught by a beartrap!" ), c->get_name() );
+            } else {
+                add_msg_if_player_sees( c->pos(), _( "%s gets caught in a beartrap!" ), c->get_name() );
+            }
+        } else {
+            c->add_msg_player_or_npc( m_bad,
+                                      string_format( _( "A bear trap closes on your %s" ), body_part_name_accusative( hit ) ),
+                                      string_format( _( "A bear trap closes on <npcname>'s %s" ), body_part_name( hit ) ) );
         }
         // Actual effects
         c->add_effect( effect_beartrap, 1_turns, hit, true );
@@ -210,6 +214,8 @@ bool trapfunc::beartrap( const tripoint &p, Creature *c, item * )
         d.add_damage( damage_bash, 12 );
         d.add_damage( damage_cut, 18 );
         dealt_damage_instance dealt_dmg = c->deal_damage( nullptr, hit, d );
+
+        sounds::sound( p, 8, sounds::sound_t::activity, _( "Clank!" ), false, "trap", "snare" );
 
         Character *you = dynamic_cast<Character *>( c );
         if( you != nullptr && !you->has_flag( json_flag_INFECTION_IMMUNE ) &&
@@ -221,8 +227,6 @@ bool trapfunc::beartrap( const tripoint &p, Creature *c, item * )
         }
         c->check_dead_state();
     }
-
-    here.spawn_item( p, "beartrap" );
     return true;
 }
 
@@ -637,15 +641,17 @@ bool trapfunc::snare_light( const tripoint &p, Creature *c, item * )
         // The lightsnare effect multiplies speed by 0.01 so on average this is actually 10,000 turns duration.
         // Creatures can still escape earlier (possibly much earlier) based on their melee dice(for creatures) or strength/limb scores (character)
         c->add_effect( effect_lightsnare, 100_turns, true );
-        if( c->has_effect( effect_ridden ) ) {
-            add_msg( m_bad, _( "A snare closes on your %s's leg!" ), c->get_name() );
+        if( c->is_monster() ) {
+            if( c->has_effect( effect_ridden ) ) {
+                add_msg( m_warning, _( "Your %s is caught in a snare!" ), c->get_name() );
+            } else {
+                add_msg_if_player_sees( c->pos(), _( "%s gets caught in a snare!" ), c->get_name() );
+            }
+        } else {
+            c->add_msg_player_or_npc( m_bad, _( "A snare closes on your leg." ),
+                                      _( "A snare closes on <npcname>s leg." ) );
         }
-        c->add_msg_player_or_npc( m_bad, _( "A snare closes on your leg." ),
-                                  _( "A snare closes on <npcname>s leg." ) );
     }
-
-    // Always get trap components back on triggering tile
-    here.spawn_item( p, "light_snare_kit" );
     return true;
 }
 
@@ -658,12 +664,17 @@ bool trapfunc::snare_heavy( const tripoint &p, Creature *c, item * )
     }
     // Determine what got hit
     const bodypart_id hit = one_in( 2 ) ? bodypart_id( "leg_l" ) : bodypart_id( "leg_r" );
-    if( c->has_effect( effect_ridden ) ) {
-        add_msg( m_bad, _( "A snare closes on your %s's leg!" ), c->get_name() );
+    if( c->is_monster() ) {
+        if( c->has_effect( effect_ridden ) ) {
+            add_msg( m_warning, _( "Your %s is caught in a snare!" ), c->get_name() );
+        } else {
+            add_msg_if_player_sees( c->pos(), _( "%s gets caught in a snare!" ), c->get_name() );
+        }
+    } else {
+        //~ %s is bodypart name in accusative.
+        c->add_msg_player_or_npc( m_bad, _( "A snare closes on your %s." ),
+                                  _( "A snare closes on <npcname>s %s." ), body_part_name_accusative( hit ) );
     }
-    //~ %s is bodypart name in accusative.
-    c->add_msg_player_or_npc( m_bad, _( "A snare closes on your %s." ),
-                              _( "A snare closes on <npcname>s %s." ), body_part_name_accusative( hit ) );
 
     // Actual effects
     c->add_effect( effect_heavysnare, 1_turns, hit, true );

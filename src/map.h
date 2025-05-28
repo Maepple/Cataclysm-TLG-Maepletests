@@ -102,7 +102,7 @@ template<typename T>
 struct weighted_int_list;
 struct field_proc_data;
 
-enum pf_special : int;
+class PathfindingFlags;
 
 using relic_procgen_id = string_id<relic_procgen_data>;
 
@@ -700,8 +700,8 @@ class map
         bool sees( const tripoint &F, const tripoint &T, int range, int &bresenham_slope,
                    bool with_fields = true ) const;
         bool sees( const tripoint_bub_ms &F, const tripoint_bub_ms &T, int range, int &bresenham_slope,
-                   bool with_fields = true ) const;
-        point sees_cache_key( const tripoint_bub_ms &from, const tripoint_bub_ms &to ) const;
+                   bool with_fields = true, bool allow_cached = true ) const;
+        int64_t sees_cache_key( const tripoint_bub_ms &from, const tripoint_bub_ms &to ) const;
     public:
         /**
         * Returns concealment of target in relation to the observer. Target is loc2, observer is loc1.
@@ -823,17 +823,17 @@ class map
         // Includes climbing, bashing and opening doors.
         int cost_to_pass( const tripoint_bub_ms &cur, const tripoint_bub_ms &p,
                           const pathfinding_settings &settings,
-                          pf_special p_special ) const;
+                          PathfindingFlags p_special ) const;
         // Pathfinding cost helper that computes the cost of moving into |p|
         // from |cur| based on perceived danger.
         // Includes moving through traps.
         int cost_to_avoid( const tripoint_bub_ms &cur, const tripoint_bub_ms &p,
                            const pathfinding_settings &settings,
-                           pf_special p_special ) const;
+                           PathfindingFlags p_special ) const;
         // Sum of cost_to_pass and cost_to_avoid.
         int extra_cost( const tripoint_bub_ms &cur, const tripoint_bub_ms &p,
                         const pathfinding_settings &settings,
-                        pf_special p_special ) const;
+                        PathfindingFlags p_special ) const;
     public:
 
         // Vehicles: Common to 2D and 3D
@@ -974,7 +974,7 @@ class map
         }
         // TODO: fix point types (remove the first overload)
         furn_id furn( const tripoint &p ) const;
-        furn_id furn( const tripoint_bub_ms &p ) const;
+        furn_id furn( tripoint_bub_ms p ) const;
         // TODO: Get rid of untyped overload.
         furn_id furn( const point_bub_ms &p ) const {
             return furn( tripoint_bub_ms( p, abs_sub.z() ) );
@@ -1019,7 +1019,7 @@ class map
 
         // Terrain
         // TODO: fix point types (remove the first overload)
-        ter_id ter( const tripoint &p ) const;
+        ter_id ter( tripoint p ) const;
         ter_id ter( const tripoint_bub_ms &p ) const;
         // TODO: Get rid of untyped overload.
         ter_id ter( const point &p ) const {
@@ -1195,6 +1195,7 @@ class map
         bool can_put_items_ter_furn( const tripoint &p ) const;
         bool can_put_items_ter_furn( const tripoint_bub_ms &p ) const;
         // Checks terrain
+        bool has_flag_ter( const std::string &flag, const tripoint &p ) const;
         bool has_flag_ter( const std::string &flag, const tripoint_bub_ms &p ) const;
         bool has_flag_ter( const std::string &flag, const point_bub_ms &p ) const {
             return has_flag_ter( flag, tripoint_bub_ms( p, abs_sub.z() ) );
@@ -2196,9 +2197,8 @@ class map
         // Rotates the current map 90*turns degrees clockwise
         // Useful for houses, shops, etc
         // @param turns number of 90 clockwise turns to make
-        // @param setpos_safe if true, being used outside of mapgen and can use setpos to
-        // set NPC positions.  if false, cannot use setpos
-        void rotate( int turns, bool setpos_safe = false );
+        // Note that this operation actually only works on tinymap and smallmap.
+        void rotate( int turns );
 
         // Not protected/private for mapgen.cpp access
         // Mirrors the current map horizontally and/or vertically (both is technically
@@ -2257,7 +2257,7 @@ class map
          * to get regional translation code to deal with chunks instead of terrain, and then use these
          * chunks everywhere instead of tree terrain tokens. Maybe some day...
          */
-        void add_tree_tops( const tripoint_rel_sm &grid );
+        void add_roofs( const tripoint_rel_sm &grid );
         /**
          * Try to fill funnel based items here. Simulates rain from @p since till now.
          * @param p The location in this map where to fill funnels.
@@ -2400,11 +2400,9 @@ class map
             offset_p.y = p.y % SEEY;
             return unsafe_get_submap_at( p );
         }
-        submap *unsafe_get_submap_at( const tripoint_bub_ms &p, point_sm_ms &offset_p ) {
+        submap *unsafe_get_submap_at( const tripoint_bub_ms p, point_sm_ms &offset_p ) {
             tripoint_bub_sm sm;
-            point_sm_ms_ib l;
-            std::tie( sm, l ) = project_remain<coords::sm>( p );
-            offset_p = point_sm_ms( l );
+            std::tie( sm, offset_p ) = project_remain<coords::sm>( p );
             return unsafe_get_submap_at( p );
         }
         // TODO: fix point types (remove the first overload)
@@ -2414,11 +2412,9 @@ class map
             return unsafe_get_submap_at( p );
         }
         const submap *unsafe_get_submap_at(
-            const tripoint_bub_ms &p, point_sm_ms &offset_p ) const {
+            const tripoint_bub_ms p, point_sm_ms &offset_p ) const {
             tripoint_bub_sm sm;
-            point_sm_ms_ib l;
-            std::tie( sm, l ) = project_remain<coords::sm>( p );
-            offset_p = point_sm_ms( l );
+            std::tie( sm, offset_p ) = project_remain<coords::sm>( p );
             return unsafe_get_submap_at( p );
         }
         // TODO: Get rid of untyped overload
@@ -2606,7 +2602,7 @@ class map
         /**
          * Cache of coordinate pairs recently checked for visibility.
          */
-        using lru_cache_t = lru_cache<point, char>;
+        using lru_cache_t = lru_cache<int64_t, char>;
         mutable lru_cache_t skew_vision_cache;
         mutable lru_cache_t skew_vision_wo_fields_cache;
 

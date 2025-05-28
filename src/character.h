@@ -50,6 +50,7 @@
 #include "ranged.h"
 #include "ret_val.h"
 #include "safe_reference.h"
+#include "sleep.h"
 #include "stomach.h"
 #include "string_formatter.h"
 #include "subbodypart.h"
@@ -558,15 +559,6 @@ class Character : public Creature, public visitable
         /// Is currently in control of a vehicle
         bool controlling_vehicle = false;
 
-        enum class comfort_level : int {
-            impossible = -999,
-            uncomfortable = -7,
-            neutral = 0,
-            slightly_comfortable = 3,
-            comfortable = 5,
-            very_comfortable = 10
-        };
-
         /// @brief Character stats
         /// @todo Make those protected
         int str_max;
@@ -819,6 +811,8 @@ class Character : public Creature, public visitable
         /* Adjusts provided sight dispersion to account for player stats */
         int effective_dispersion( int dispersion, bool zoom = false ) const;
 
+        dispersion_sources total_gun_dispersion( const item &gun, double recoil, int spread ) const;
+
         int get_character_parallax( bool zoom = false ) const;
 
         /* Accessors for aspects of aim speed. */
@@ -855,7 +849,7 @@ class Character : public Creature, public visitable
         void set_dodges_left( int dodges );
         void mod_dodges_left( int mod );
         void consume_dodge_attempts();
-        ret_val<void> can_try_doge( bool ignore_dodges_left = false ) const;
+        ret_val<void> can_try_dodge( bool ignore_dodges_left = false ) const;
 
         float get_stamina_dodge_modifier() const;
 
@@ -893,6 +887,8 @@ class Character : public Creature, public visitable
         bool overmap_los( const tripoint_abs_omt &omt, int sight_points ) const;
         /** Returns the distance the player can see on the overmap */
         int overmap_sight_range( float light_level ) const;
+        /** Returns the distance the player can see on the overmap, modified by zoom & height */
+        int overmap_modified_sight_range( float light_level ) const;
         /** Returns the distance the player can see through walls */
         int clairvoyance() const;
         /** Returns true if the player has some form of impaired sight */
@@ -989,13 +985,6 @@ class Character : public Creature, public visitable
                                const std::map<bodypart_id, int> &warmth_per_bp );
         /** Equalizes heat between body parts */
         void temp_equalizer( const bodypart_id &bp1, const bodypart_id &bp2 );
-
-        struct comfort_response_t {
-            comfort_level level = comfort_level::neutral;
-            const item *aid = nullptr;
-        };
-        /** Rate point's ability to serve as a bed. Only takes certain mutations into account, and not fatigue nor stimulants. */
-        comfort_response_t base_comfort_value( const tripoint_bub_ms &p ) const;
 
         /** Returns focus equilibrium cap due to fatigue **/
         int focus_equilibrium_fatigue_cap( int equilibrium ) const;
@@ -1482,6 +1471,8 @@ class Character : public Creature, public visitable
         // Trigger and disable mutations that can be so toggled.
         void activate_mutation( const trait_id &mutation );
         void deactivate_mutation( const trait_id &mut );
+
+        void release_grapple();
 
         bool can_mount( const monster &critter ) const;
         void mount_creature( monster &z );
@@ -3862,8 +3853,6 @@ class Character : public Creature, public visitable
         double vomit_mod();
         /** Checked each turn during "lying_down", returns true if the player falls asleep */
         bool can_sleep();
-        /** Rate point's ability to serve as a bed. Takes all mutations, fatigue and stimulants into account. */
-        int sleep_spot( const tripoint_bub_ms &p ) const;
         /** Processes human-specific effects of effects before calling Creature::process_effects(). */
         void process_effects() override;
         /** Handles the still hard-coded effects. */
@@ -3901,6 +3890,28 @@ class Character : public Creature, public visitable
         std::pair<int, int> kcal_range(
             const itype_id &id,
             const std::function<bool( const item & )> &filter, Character &player_character ) const;
+
+        // --------------- Sleep Stuff ---------------
+        /**
+         * Searches mutations for comfort data and returns the least comfortable valid one.
+         *
+         * @details
+         * For mutations with multiple comfort data, the first data with passing conditions is
+         * selected. Out of each mutation with selected comfort data, the comfort data with the
+         * lowest `base_comfort` is selected and returned.
+         */
+        const comfort_data &get_comfort_data_for( const tripoint &p ) const;
+        const comfort_data &get_comfort_data_for( const tripoint_bub_ms &p ) const;
+        /**
+         * Calculates and caches the comfort of a location. Returns cached comfort if valid.
+         *
+         * @details
+         * Comfort is considered valid until any time has passed or a new location is evaluated.
+         * Gaining or losing mutations does not currently invalidate cached comfort.
+         */
+        const comfort_data::response &get_comfort_at( const tripoint &p );
+        const comfort_data::response &get_comfort_at( const tripoint_bub_ms &p );
+        comfort_data::response comfort_cache;
 
     protected:
         Character();
@@ -3994,6 +4005,8 @@ class Character : public Creature, public visitable
          * Contains mutation ids of the base traits.
          */
         std::unordered_set<trait_id> my_traits;
+        // Mutations that have been turned unpurifiable via EoC
+        std::unordered_set<trait_id> my_intrinsic_mutations;
         /**
          * Pointers to mutation branches in @ref my_mutations.
          */

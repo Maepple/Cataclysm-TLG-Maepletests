@@ -472,10 +472,6 @@ void Character::roll_all_damage( bool crit, damage_instance &di, bool average,
 static void melee_train( Character &you, int lo, int hi, const item &weap,
                          const attack_vector_id vector, bool reach_attacking )
 {
-    // 1/2 learning rate for reach attacks.
-    if( reach_attacking && one_in( 2 ) ) {
-        return;
-    }
     // Don't train melee if we're not in melee.
     if( !reach_attacking ) {
         you.practice( skill_melee, std::ceil( rng( lo, hi ) / 2.0 ), hi );
@@ -501,11 +497,11 @@ static void melee_train( Character &you, int lo, int hi, const item &weap,
     total = std::max( total, 1.f );
 
     // Unarmed may deal cut, stab, and bash damage depending on the weapon
-    if( !vector->weapon ) {
+    if( !vector->weapon && !reach_attacking ) {
         you.practice( skill_unarmed, std::ceil( 1 * rng( lo, hi ) ), hi );
     } else {
         for( const std::pair<const damage_type_id, int> &dmg : dmg_vals ) {
-            if( !dmg.first->skill.is_null() ) {
+            if( !dmg.first->skill.is_null() && !reach_attacking ) {
                 you.practice( dmg.first->skill, std::ceil( dmg.second / total * rng( lo, hi ) ), hi );
             }
         }
@@ -806,17 +802,13 @@ bool Character::melee_attack_abstract( Creature &t, bool allow_special,
         damage_instance d;
         roll_all_damage( critical_hit, d, false, cur_weap, vector_id, contact_area, &t, target_bp );
 
-        // polearms and pikes (but not spears) do less damage to adjacent targets
-        // In the case of a weapon like a glaive or a naginata, the wielder
-        // lacks the room to build up momentum on a slash.
-        // In the case of a pike, the mass of the pole behind the wielder
-        // should they choose to employ it up close will unbalance them.
+        // Most reach weapons are less effective in melee.
         if( cur_weap.reach_range( *this ) > 1 && !reach_attacking &&
             cur_weap.has_flag( flag_POLEARM ) ) {
             d.mult_damage( 0.7 );
         }
-        // being prone affects how much leverage you can use to deal damage
-        // quadrupeds don't mind as much, tentacles and goo-limbs even less
+        // Being prone affects how much leverage you can use to deal damage.
+        // Quadrupeds don't mind as much, tentacles and goo-limbs even less.
         if( is_on_ground() )  {
             if( has_flag( json_flag_PSEUDOPOD_GRASP ) ) {
                 d.mult_damage( 0.8 );
@@ -1045,6 +1037,7 @@ void Character::reach_attack( const tripoint &p, int forced_movecost )
     Creature *critter = creatures.creature_at( p );
     // Original target size, used when there are monsters in front of our target
     const int target_size = critter != nullptr ? static_cast<int>( critter->get_size() ) : 2;
+
     // Reset last target pos
     last_target_pos = std::nullopt;
     // Max out recoil
@@ -1227,7 +1220,7 @@ int Character::get_spell_resist() const
 
 float Character::get_dodge() const
 {
-    if( !can_try_doge().success() ) {
+    if( !can_try_dodge().success() ) {
         return 0.0f;
     }
 
@@ -2373,13 +2366,14 @@ std::string Character::melee_special_effects( Creature &t, damage_instance &d, i
         weap.spill_contents( pos() );
         // Take damage
         damage_instance di = damage_instance();
-        di.add_damage( damage_cut, std::clamp( rng( 0, vol * 2 ), 0, 7 ) );
+        di.add_damage( damage_cut, rng( 0, 5 + std::min( 5, static_cast<int>( vol * 1.5 ) ) ) );
         deal_damage( nullptr, bodypart_id( "arm_r" ), di );
         if( weap.is_two_handed( *this ) ) { // Hurt left arm too, if it was big
             //redeclare shatter_dam because deal_damage mutates it
             deal_damage( nullptr, bodypart_id( "arm_l" ), di );
         }
-        d.add_damage( damage_cut, rng( 0, 5 + static_cast<int>( vol * 1.5 ) ) ); // Hurt the monster extra
+        d.add_damage( damage_cut, rng( 0, 5 + std::min( 5,
+                                       static_cast<int>( vol * 1.5 ) ) ) ); // Hurt the monster extra
         remove_weapon();
     }
 
@@ -2391,19 +2385,6 @@ std::string Character::melee_special_effects( Creature &t, damage_instance &d, i
 
 static damage_instance hardcoded_mutation_attack( const Character &u, const trait_id &id )
 {
-    // if( id == trait_BEAK_PECK ) {
-    //     // method open to improvement, please feel free to suggest
-    //     // a better way to simulate target's anti-peck efforts
-    //     /** @EFFECT_DEX increases number of hits with BEAK_PECK */
-
-    //     /** @EFFECT_UNARMED increases number of hits with BEAK_PECK */
-    //     int num_hits = std::max( 1, std::min<int>( 6,
-    //                              u.get_dex() + u.get_skill_level( skill_unarmed ) - rng( 4, 10 ) ) );
-    //     damage_instance di = damage_instance();
-    //     di.add_damage( damage_stab, num_hits * 10 );
-    //     return di;
-    // }
-
     if( id == trait_ARM_TENTACLES || id == trait_ARM_TENTACLES_4 || id == trait_ARM_TENTACLES_8 ) {
         int num_attacks = 1;
         if( id == trait_ARM_TENTACLES_4 ) {

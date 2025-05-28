@@ -87,6 +87,7 @@ static const itype_id itype_swim_fins( "swim_fins" );
 
 static const flag_id json_flag_GRAB( "GRAB" );
 static const flag_id json_flag_GRAB_FILTER( "GRAB_FILTER" );
+static const json_character_flag json_flag_ITEM_WATERPROOFING( "ITEM_WATERPROOFING" );
 
 static const move_mode_id move_mode_prone( "prone" );
 
@@ -128,7 +129,9 @@ static bool check_water_affect_items( avatar &you )
     std::vector<item_location> wet;
 
     for( item_location &loc : you.all_items_loc() ) {
-        if( loc->has_flag( flag_WATER_DISSOLVE ) && !loc.protected_from_liquids() ) {
+        if( you.has_flag( json_flag_ITEM_WATERPROOFING ) ) {
+            break;
+        } else if( loc->has_flag( flag_WATER_DISSOLVE ) && !loc.protected_from_liquids() ) {
             dissolved.emplace_back( loc );
         } else if( loc->has_flag( flag_WATER_BREAK ) && !loc->is_broken()
                    && !loc.protected_from_liquids() ) {

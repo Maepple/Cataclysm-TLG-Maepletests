@@ -61,9 +61,9 @@ For example, `{ "npc_has_effect": "Shadow_Reveal" }`, used by shadow lieutenant,
 
 ### Typical Alpha and Beta Talkers by cases
 
-| EOC                                              | Alpha (possible types)      | Beta (possible types)       |
-| ------------------------------------------------ | ----------------------      | --------------------------- |
-| Talk with NPC                                    | player (Avatar)             | NPC (NPC)                   |
+| EOC                                              | Alpha (possible types)      | Beta (possible types)       | variables sent              |
+| ------------------------------------------------ | ----------------------      | --------------------------- | --------------------------- |
+| Talk with NPC                                    | player (Avatar)             | NPC (NPC)                   |                             |
 | Talk with monster                                | player (Avatar)             | monster (monster)           |
 | Use computer                                     | player (Avatar)             | computer (Furniture)        |
 | furniture: "examine_action"                      | player (Avatar)             | NONE                        |
@@ -76,17 +76,26 @@ For example, `{ "npc_has_effect": "Shadow_Reveal" }`, used by shadow lieutenant,
 | activity_type: "completion_eoc"                  | character (Character)       | NONE                        |
 | activity_type: "do_turn_eoc"                     | character (Character)       | NONE                        |
 | addiction_type: "effect_on_condition"            | character (Character)       | NONE                        |
-| bionics: "activated_eocs"                        | character (Character)       | NONE                        |
+| bionics: "activated_eocs"                        | character (Character)       | NONE                        | `act_cost`, int, cost of activation of item
 | bionics: "deactivated_eocs"                      | character (Character)       | NONE                        |
 | bionics: "processed_eocs"                        | character (Character)       | NONE                        |
 | mutation: "activated_eocs"                       | character (Character)       | NONE                        |
 | mutation: "deactivated_eocs"                     | character (Character)       | NONE                        |
 | mutation: "processed_eocs"                       | character (Character)       | NONE                        |
 | recipe: "result_eocs"                            | crafter (Character)         | NONE                        |
-| monster death: "death_function"                  | killed monster (monster)    | you (avatar)                |
+| monster death: "death_function"                  | victim (Creature)           | NONE                        |
+| ammo_effect: "eoc"                               | shooter (Creature)          | victim (if exist, otherwise NONE) (Creature) | `proj_damage`, int, amount of damage projectile dealt. Detonation via SPECIAL_COOKOFF ammo effect return `proj_damage` as 1. Note that if projectile miss the target, EoC would be built without beta talker, so using EoC referencing `npc_` or `n_` would result in error. Use `has_beta` condition before manipulating with npc
 
-Using `use_action: "type": "effect_on_conditions"` automatically passes the context variable `id`, that stores the id of an item that was activated
-Using `bionics: "activated_eocs"` automatically passes the context variable `act_cost` that stores the value of `act_cost` field
+Some actions sent additional context variables, that can be used in EoC, in format:
+
+```json
+{ "compare_string": [ "bio_uncanny_dodge", { "context_val": "id" } ] }
+```
+
+```json
+{ "math": [ "_act_cost", "==", "2000" ] }
+```
+
 ## Value types
 
 Effect on Condition uses a huge variety of different values for effects or for conditions to check against, so to standardize it, most of them are explained here
@@ -279,6 +288,22 @@ Checks there is portal storm **and** you have `MAKAYLA_MUTATOR` mutation **and**
 
 ## Possible conditions
 
+### `has_alpha`, `has_beta`
+- type: simple string
+- return true if alpha or beta talker exist
+
+#### Valid talkers:
+
+| Avatar | Character | NPC | Monster |  Furniture | Item |
+| ------ | --------- | --------- | ---- | ------- | --- | 
+| ✔️ | ✔️ | ✔️ | ✔️ | ✔️ | ✔️ |
+
+#### Examples
+return true if beta talker exists
+```json
+"condition": "has_beta",
+```
+
 ### `u_male`, `u_female`, `npc_male`, `npc_female`
 - type: simple string
 - return true if alpha or beta talker is male or female
@@ -301,6 +326,13 @@ return true if alpha talker is female
 - `avatar` is you, player, that control specific NPC (yes, your character is still NPC, you just can control it, as you can control another NPC using faction succession)
 - `npc` is any NPC, except Avatar
 - `character` is both NPC or Avatar
+
+```
+Creature ---> Character ---> avatar
+          \              \
+           \              \--> npc
+            \---> monster
+```
 
 #### Valid talkers:
 
@@ -383,6 +415,24 @@ Checks do alpha talker has `FEATHERS` mutation
 ```json
 { "u_has_trait": "FEATHERS" }
 ```
+
+### `u_is_trait_purifiable`, `npc_is_trait_purifiable`
+- type: string or [variable object](##variable-object)
+- return true if the checked trait is purifiable for the alpha or beta talker
+- non-purifiability is either set globally in the trait definition or per-character via `u/npc_set_trait_purifiability`
+
+#### Valid talkers:
+
+| Avatar | Character | NPC | Monster |  Furniture | Item |
+| ------ | --------- | --------- | ---- | ------- | --- | 
+| ✔️ | ✔️ | ✔️ | ❌ | ❌ | ❌ |
+
+#### Examples
+Checks if the `FEATHERS` trait is purifiable for the character (returns true as per the trait definition unless another effect set the trait non-purifiable for the target)
+```json
+{ "u_is_trait_purifiable": "FEATHERS" }
+```
+
 
 ### `u_has_martial_art`, `npc_has_martial_art`
 - type: string or [variable object](##variable-object)
@@ -1033,9 +1083,9 @@ Check the north terrain or furniture has `TRANSPARENT` flag.
 },
 ```
 
-### `map_terrain_id`, `map_furniture_id`
+### `map_terrain_id`, `map_furniture_id`, `map_field_id`
 - type: string or [variable object](##variable-object)
-- return true if the terrain or furniture has specific id
+- return true if the terrain, furniture or field has specific id
 - `loc` will specify location of terrain or furniture (**mandatory**)
 
 #### Valid talkers:
@@ -2151,6 +2201,140 @@ Teleport player to `new_map`
 }
 ```
 
+#### `reveal_map`
+Reveal the overmap area around specific location variable
+
+| Syntax | Optionality | Value  | Info |
+| --- | --- | --- | --- | 
+| "reveal_map" | **mandatory** | [variable object](#variable-object) | location variable, around which the map would be revealed |
+| "radius" | **mandatory** | int or [variable object](#variable-object) | default 0; the size of revealed zone |
+
+##### Examples
+
+Reveal the zone three tiles around the character
+```json
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TEST",
+    "effect": [
+      { "set_string_var": { "mutator": "u_loc_relative", "target": "(0,0,0)" }, "target_var": { "context_val": "loc" } },
+      { "reveal_map": { "context_val": "loc" }, "radius": 3 }
+    ]
+  }
+```
+
+Same, but using different syntax
+```json
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TEST",
+    "effect": [
+      { "u_location_variable": { "context_val": "loc" } },
+      { "reveal_map": { "context_val": "loc" }, "radius": 3 }
+    ]
+  }
+```
+
+Find overmap tile using `target_params`, store coordinates in `loc`, and reveal the area 20 tiles around `loc`
+```json
+{
+  "type": "effect_on_condition",
+  "id": "EOC_HOUSE_REVEAL",
+  "effect": [
+    {
+      "u_location_variable": { "context_val": "loc" },
+      "target_params": { "om_terrain": "house_02", "search_range": 100, "z": 0 }
+    },
+    { "reveal_map": { "context_val": "loc" }, "radius": 20 }
+  ]
+}
+```
+
+#### `reveal_route`
+Reveal the route between two location variables, using closest roads
+
+| Syntax | Optionality | Value  | Info |
+| --- | --- | --- | --- | 
+| "reveal_route" | **mandatory** | [variable object](#variable-object) | location variable, starting point in the route |
+| "target_var" | **mandatory** | [variable object](#variable-object) | location variable, ending point in the route |
+| "radius" |  | int or [variable object](#variable-object) | the size of revealed path |
+| "road_only" | optional | boolean | default false; if true, reveal only road tiles |
+
+##### Examples
+
+Reveal the path between you and 50 overmap tiles west of you
+```json
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_TEST",
+    "effect": [
+      { "set_string_var": { "mutator": "u_loc_relative", "target": "(0,0,0)" }, "target_var": { "context_val": "loc_a" } },
+      { "set_string_var": { "mutator": "u_loc_relative", "target": "(-1200,0,0)" }, "target_var": { "context_val": "loc_b" } },
+      { "reveal_route": { "context_val": "loc_a" }, "target_var": { "context_val": "loc_b" }, "radius": 3 }
+    ]
+  },
+```
+
+Reveal the route between you and `house_02`
+```json
+{
+  "type": "effect_on_condition",
+  "id": "EOC_HOUSE_route",
+  "effect": [
+    {
+      "u_location_variable": { "context_val": "loc" },
+      "target_params": { "om_terrain": "house_02", "search_range": 100, "z": 0 }
+    },
+    {
+        "reveal_route": { "mutator": "u_loc_relative", "target": "(0,0,0)" },
+        "target_var": { "context_val": "loc" },
+        "radius": 3,
+        "road_only": true
+      }
+  ]
+}
+```
+
+#### `closest_city`
+Store coordinates of the closest city nearby in a variable
+
+| Syntax | Optionality | Value  | Info |
+| --- | --- | --- | --- | 
+| "closest_city" | **mandatory** | [variable object](#variable-object) | location variable, center of the found city |
+| "known" | optional | boolean | default true; if true, picks the closest city you know (has yellow text of the city name on your map), otherwise picks the closest city even if you didn't visit it yet |
+
+Additionaly sends context variables `city_name` (string) and `city_size` (int)
+
+##### Examples
+
+Stores coordinates of closest known city, and print variables
+```json
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_DEBUG_CITY_NEARBY",
+    "effect": [
+      { "closest_city": { "context_val": "city" } },
+      { "u_message": "Known city: <context_val:city>" },
+      { "u_message": "city_name: <context_val:city_name>" },
+      { "u_message": "city_size: <context_val:city_size>" }
+    ]
+  },
+```
+
+Same, but return any city nearby
+```json
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_DEBUG_CITY_NEARBY_UNKNOWN",
+    "effect": [
+      { "closest_city": { "context_val": "city" }, "known": false },
+      { "u_message": "Unknown city: <context_val:city>" },
+      { "u_message": "city_name: <context_val:city_name>" },
+      { "u_message": "city_size: <context_val:city_size>" }
+    ]
+  },
+```
+
 #### `weighted_list_eocs`
 Will choose one of a list of eocs to activate based on it's weight
 
@@ -2324,6 +2508,23 @@ Mutate towards Tail Stub (removing any incompatibilities) using the category set
         "category": { "u_val": "upcoming_mutation_category", },
         "use_vitamins": true
       },
+```
+
+#### `u_set_trait_purifiability`, `npc_set_trait_purifiability`
+
+If you have the given trait it will be added to /removed from your list of non-purifiable traits, overriding `purifiable: true` in the given trait's definition.
+
+| Syntax | Optionality | Value  | Info |
+| --- | --- | --- | --- | 
+| "u/npc_set_trait_purifiablility" | **mandatory** | string or [variable object](##variable-object) | id of the trait to change
+| "purifiable" | **mandatory** | bool | `true` adds the trait to the unpurifiable trait list, `false` removes it |
+
+```json
+{
+  "u_set_trait_purifiability": "BEAK",   // Trait ID to change
+  "purifiable": false   // Turns the trait unpurifiable for the talker
+}
+
 ```
 
 #### `u_add_effect`, `npc_add_effect`
@@ -2837,7 +3038,7 @@ Search a specific coordinates of map around `u_`, `npc_` or `target_params` and 
 | "target_params" | optional | assign_mission_target | if used, the search would be performed not from `u_` or `npc_` location, but from `mission_target`. it uses an [assign_mission_target](MISSIONS_JSON.md) syntax | 
 | "x_adjust", "y_adjust", "z_adjust" | optional | int, float or [variable object](##variable-object) | add this amount to `x`, `y` or `z` coordinate in the end; `"x_adjust": 2` would save the coordinate with 2 tile shift to the right from targeted | 
 | "z_override" | optional | boolean | default is false; if true, instead of adding up to `z` level, override it with absolute value; `"z_adjust": 3` with `"z_override": true` turn the value of `z` to `3` | 
-| "terrain" / "furniture" / "trap" / "monster" / "zone" / "npc" | optional | string or [variable object](##variable-object) | if used, search the entity with corresponding id between `target_min_radius` and `target_max_radius`; if empty string is used (e.g. `"monster": ""`), return any entity from the same radius  | 
+| "terrain" / "furniture" / "field" / "trap" / "monster" / "zone" / "npc" | optional | string or [variable object](##variable-object) | if used, search the entity with corresponding id between `target_min_radius` and `target_max_radius`; if empty string is used (e.g. `"monster": ""`), return any entity from the same radius  | 
 | "target_min_radius", "target_max_radius" | optional | int, float or [variable object](##variable-object) | default 0, min and max radius for search, if previous field was used | 
 | "true_eocs", "false_eocs" | optional | string, [variable object](##variable-object), inline EoC, or range of all of them | if the location was found, all EoCs from `true_eocs` are run, otherwise all EoCs from `false_eocs` are run | 
 
@@ -2879,6 +3080,26 @@ Search the map, that contain `house` in it's id on a range 200-1200 overmap tile
 }
 ```
 
+Check the map 26 tiles around to find `fd_fire`; if fire is presented, prints it's coordinates, otherwise prints "no fire".
+```json
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_FIRE_IS_NEARBY",
+    "effect": [
+      { "u_location_variable": { "context_val": "test" }, "field": "fd_fire", "target_max_radius": 26 },
+      {
+        "if": { "map_field_id": "fd_fire", "loc": { "context_val": "test" } },
+        "then": { "u_message": "Fire is in <context_val:test>" },
+        "else": { "u_message": "No fire nearby" }
+      },
+      {
+        "if": { "math": [ "has_var(_test)" ] },
+        "then": { "u_message": "Fire is in <context_val:test>" },
+        "else": { "u_message": "No fire nearby" }
+      }
+    ]
+  },
+```
 
 #### `location_variable_adjust`
 Allow adjust location value, obtained by `u_location_variable`, and share the same syntax and rules

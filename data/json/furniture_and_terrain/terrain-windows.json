@@ -1269,7 +1269,7 @@
     "symbol": "#",
     "color": "light_gray",
     "move_cost": 0,
-    "coverage": 100,
+    "coverage": 15,
     "concealment": 38,
     "roof": "t_flat_roof",
     "hacksaw": {

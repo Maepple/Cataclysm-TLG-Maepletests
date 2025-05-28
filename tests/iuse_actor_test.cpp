@@ -150,8 +150,8 @@ static void cut_up_yields( const std::string &target )
     REQUIRE( smallest_yield_mass != units::mass_max );
 
     units::mass cut_up_target_mass = cut_up_target.weight();
-    item &spawned_item = here.add_item_or_charges( guy.pos(), cut_up_target );
-    item_location item_loc( map_cursor( guy.pos_bub() ), &spawned_item );
+    item &spawned_item = here.add_item_or_charges( guy.pos_bub(), cut_up_target );
+    item_location item_loc( map_cursor( guy.get_location() ), &spawned_item );
 
     REQUIRE( smallest_yield_mass <= cut_up_target_mass );
 

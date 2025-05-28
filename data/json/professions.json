@@ -1078,7 +1078,7 @@
       { "level": 4, "name": "throw" },
       { "level": 4, "name": "swimming" }
     ],
-    "proficiencies": [ "prof_athlete_basic", "prof_maces_familiar", "prof_maces_pro" ],
+    "proficiencies": [ "prof_athlete_basic", "prof_bludgeons_familiar", "prof_bludgeons_pro" ],
     "items": {
       "both": {
         "entries": [
@@ -1474,8 +1474,7 @@
           { "item": "ear_plugs", "custom-flags": [ "no_auto_equip" ] },
           { "item": "knife_combat", "container-item": "sheath" },
           {
-            "item": "modular_m4_carbine",
-            "variant": "modular_m4a1",
+            "group": "modular_m4a1",
             "ammo-item": "556",
             "charges": 30,
             "contents-item": [ "shoulder_strap", "holo_sight" ]
@@ -1688,8 +1687,7 @@
           { "item": "ear_plugs", "custom-flags": [ "no_auto_equip" ] },
           { "item": "knife_combat_army", "variant": "m9bayonet", "container-item": "sheath" },
           {
-            "item": "modular_m4_carbine",
-            "variant": "modular_m4a1",
+            "group": "modular_m4a1",
             "ammo-item": "556_mk318",
             "charges": 30,
             "contents-item": [ "shoulder_strap", "holo_sight" ]
@@ -1951,13 +1949,7 @@
           { "item": "wristwatch" },
           { "item": "bracelet_friendship" },
           { "item": "knife_combat", "container-item": "sheath" },
-          {
-            "item": "modular_m4_carbine",
-            "variant": "modular_m4a1",
-            "ammo-item": "556",
-            "charges": 30,
-            "contents-item": "shoulder_strap"
-          },
+          { "group": "modular_m4a1", "ammo-item": "556", "charges": 30, "contents-item": "shoulder_strap" },
           { "item": "stanag30", "ammo-item": "556", "charges": 30 },
           { "item": "stanag30", "ammo-item": "556", "charges": 30 },
           { "item": "stanag30", "ammo-item": "556", "charges": 30 },
@@ -3984,29 +3976,6 @@
   },
   {
     "type": "profession",
-    "id": "death_row_convict",
-    "name": "Death Row Convict",
-    "description": "You were a serial killer, ready to walk the green mile, but in a twist of fate you're one of the few still alive.  True death comes only from your hands, so you're in for a job.",
-    "points": 1,
-    "proficiencies": [ "prof_knives_familiar", "prof_unarmed_familiar", "prof_shivs_familiar" ],
-    "skills": [ { "level": 3, "name": "melee" }, { "level": 3, "name": "stabbing" }, { "level": 2, "name": "unarmed" } ],
-    "traits": [ "KILLER" ],
-    "items": {
-      "both": {
-        "entries": [
-          { "item": "longshirt_costume", "variant": "shirt_striped" },
-          { "item": "pants_costume", "variant": "pants_striped" },
-          { "item": "sneakers" },
-          { "item": "socks" },
-          { "item": "glass_shiv" }
-        ]
-      },
-      "male": { "entries": [ { "item": "briefs" } ] },
-      "female": { "entries": [ { "item": "bra" }, { "item": "panties" } ] }
-    }
-  },
-  {
-    "type": "profession",
     "id": "convict_assassin",
     "name": "Undercover Assassin Convict",
     "description": "You were given a target, a mission, but killing your mark seems to have become much more difficult now.  Your employer cut contact with you and now you have to make do with what you have.",
@@ -4134,7 +4103,7 @@
     "name": "Burglar",
     "description": "This could be your lucky break.  Plenty of loot to be pilfered, and no cops to be seen.  Does it count as breaking and entering if everyone in town is undead?",
     "points": 2,
-    "proficiencies": [ "prof_lockpicking" ],
+    "proficiencies": [ "prof_lockpicking", "prof_safecracking" ],
     "skills": [ { "level": 6, "name": "traps" }, { "level": 2, "name": "dodge" } ],
     "items": {
       "both": {
@@ -4743,12 +4712,7 @@
           { "item": "water_clean", "container-item": "canteen" },
           { "item": "ear_plugs", "custom-flags": [ "no_auto_equip" ] },
           { "item": "knife_combat_army", "variant": "m9bayonet", "container-item": "sheath" },
-          {
-            "item": "modular_m4_carbine",
-            "variant": "modular_m4a1",
-            "ammo-item": "556",
-            "contents-item": "shoulder_strap"
-          },
+          { "group": "modular_m4a1", "ammo-item": "556", "contents-item": "shoulder_strap" },
           { "group": "charged_two_way_radio" },
           { "item": "chestrig", "contents-group": "army_mags_m4" }
         ]
@@ -5311,7 +5275,7 @@
           { "item": "ear_plugs", "custom-flags": [ "no_auto_equip" ] },
           { "item": "jackhammer", "charges": 0 },
           { "item": "light_minus_disposable_cell", "charges": 100 },
-          { "item": "light_minus_disposable_cell", "charges": 100, "container-item": "miner_hat" }
+          { "group": "hat_hard_flashlight" }
         ]
       },
       "male": { "entries": [ { "item": "boxer_shorts" } ] },
@@ -5409,6 +5373,7 @@
     "id": "naked",
     "name": "Naked and Afraid",
     "description": "The apocalypse has caught you completely naked!  Maybe you were robbed, maybe you were at a nudist beach, or maybe you just enjoy the feeling of liberation brought by the wind touching your skin.  Whatever the reason, you lack clothes in a time when everyone wants a piece of you.",
+    "flags": [ "NO_BONUS_ITEMS" ],
     "points": -1
   },
   {
@@ -5898,6 +5863,12 @@
             "charges": 1,
             "contents-item": [ "shoulder_strap_simple", "holo_sight" ]
           },
+          {
+            "group": "modular_m4a1",
+            "ammo-item": "556_mk318",
+            "charges": 30,
+            "contents-item": [ "shoulder_strap", "holo_sight" ]
+          },
           { "item": "ear_plugs", "custom-flags": [ "no_auto_equip" ] },
           { "item": "grenade_pouch", "contents-group": [ "army_grenades_40x46" ] },
           { "item": "m17", "ammo-item": "9mm", "charges": 17, "container-item": "holster" }
@@ -6305,8 +6276,7 @@
           { "item": "stethoscope", "custom-flags": [ "no_auto_equip" ] },
           { "item": "knife_combat_army", "variant": "m9bayonet", "container-item": "sheath" },
           {
-            "item": "modular_m4_carbine",
-            "variant": "modular_m4a1",
+            "group": "modular_m4a1",
             "ammo-item": "556_mk262",
             "charges": 30,
             "contents-item": [ "shoulder_strap", "holo_sight" ]

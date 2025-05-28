@@ -161,7 +161,6 @@ static const skill_id skill_unarmed( "unarmed" );
 static const trait_id trait_BEE( "BEE" );
 static const trait_id trait_DEBUG_MIND_CONTROL( "DEBUG_MIND_CONTROL" );
 static const trait_id trait_HALLUCINATION( "HALLUCINATION" );
-static const trait_id trait_KILLER( "KILLER" );
 static const trait_id trait_NO_BASH( "NO_BASH" );
 static const trait_id trait_PACIFIST( "PACIFIST" );
 static const trait_id trait_PROF_DICEMASTER( "PROF_DICEMASTER" );
@@ -561,16 +560,18 @@ void npc::randomize( const npc_class_id &type, const npc_template_id &tem_id )
 
     set_wielded_item( item( "null", calendar::turn_zero ) );
     inv->clear();
-    personality.aggression = rng( -10, 10 );
-    personality.bravery    = rng( -3, 10 );
-    personality.collector  = rng( -1, 10 );
-    // Normal distribution. Mean = 0, stddev = 3, clamp at -10 and 10. Rounded to return integer value.
-    personality.altruism   = std::round( std::max( -10.0, std::min( normal_roll( 0, 3 ), 10.0 ) ) );
+    personality.aggression = rng( NPC_PERSONALITY_MIN, NPC_PERSONALITY_MAX );
+    personality.bravery    = rng( -3, NPC_PERSONALITY_MAX );
+    personality.collector  = rng( -1, NPC_PERSONALITY_MAX );
+    // Normal distribution. Mean = 0, stddev = 3, clamp at NPC_PERSONALITY_MIN and NPC_PERSONALITY_MAX. Rounded to return integer value.
+    personality.altruism   = std::round( std::clamp( normal_roll( 0, 3 ),
+                                         static_cast<double>( NPC_PERSONALITY_MIN ), static_cast<double>( NPC_PERSONALITY_MAX ) ) );
     moves = 100;
     mission = NPC_MISSION_NULL;
     male = one_in( 2 );
     pick_name();
     randomize_height();
+    // Normally 16-55, but potential violence towards *underage* NPCs is a more problematic than towards adults.
     set_base_age( rng( 18, 55 ) );
     str_max = dice( 4, 3 );
     dex_max = dice( 4, 3 );
@@ -625,12 +626,14 @@ void npc::randomize( const npc_class_id &type, const npc_template_id &tem_id )
     personality.collector += the_class.roll_collector();
     personality.altruism += the_class.roll_altruism();
 
-    personality.aggression = std::clamp( personality.aggression, NPC_PERSONALITY_MIN,
-                                         NPC_PERSONALITY_MAX );
-    personality.bravery = std::clamp( personality.bravery, NPC_PERSONALITY_MIN, NPC_PERSONALITY_MAX );
-    personality.collector = std::clamp( personality.collector, NPC_PERSONALITY_MIN,
-                                        NPC_PERSONALITY_MAX );
-    personality.altruism = std::clamp( personality.altruism, NPC_PERSONALITY_MIN, NPC_PERSONALITY_MAX );
+    personality.aggression = std::clamp<int8_t>( personality.aggression,
+                             NPC_PERSONALITY_MIN, NPC_PERSONALITY_MAX );
+    personality.bravery = std::clamp<int8_t>( personality.bravery,
+                          NPC_PERSONALITY_MIN, NPC_PERSONALITY_MAX );
+    personality.collector = std::clamp<int8_t>( personality.collector,
+                            NPC_PERSONALITY_MIN, NPC_PERSONALITY_MAX );
+    personality.altruism = std::clamp<int8_t>( personality.altruism,
+                           NPC_PERSONALITY_MIN, NPC_PERSONALITY_MAX );
 
     for( Skill &skill : Skill::skills ) {
         int level = myclass->roll_skill( skill.ident() );
@@ -1577,6 +1580,7 @@ void npc::mutiny()
     my_fac->trusts_u -= 5;
     g->remove_npc_follower( getID() );
     set_fac( faction_amf );
+    rules = npc_follower_rules(); // Mutinous NPCs no longer follower your rules
     job.clear_all_priorities();
     if( assigned_camp ) {
         assigned_camp = std::nullopt;
@@ -1952,16 +1956,16 @@ int npc::max_willing_to_owe() const
 void npc::shop_restock()
 {
     // Shops restock once every restock_interval
-    time_duration const elapsed =
-        restock != calendar::turn_zero ? calendar::turn - restock : 0_days;
-    if( ( restock != calendar::turn_zero ) && ( elapsed < 0_days ) ) {
+    time_duration elapsed = calendar::turn - restock;
+    if( restock != calendar::turn_zero &&
+        elapsed < myclass->get_shop_restock_interval() ) {
         return;
     }
 
     if( is_player_ally() || !is_shopkeeper() ) {
         return;
     }
-    restock = calendar::turn + myclass->get_shop_restock_interval();
+    restock = calendar::turn;
 
     std::vector<item_group_id> rigid_groups;
     std::vector<item_group_id> value_groups;
@@ -2038,7 +2042,7 @@ void npc::shop_restock()
 std::string npc::get_restock_interval() const
 {
     time_duration const restock_remaining =
-        restock - calendar::turn;
+        restock + myclass->get_shop_restock_interval() - calendar::turn;
     std::string restock_rem = to_string( restock_remaining );
     return restock_rem;
 }
@@ -2894,14 +2898,10 @@ void npc::die( Creature *nkiller )
             if( player_character.has_flag( json_flag_PSYCHOPATH ) ||
                 player_character.has_flag( json_flag_SAPIOVORE ) ) {
                 morale_effect = 0;
-            } // Killer has the psychopath flag, so we're at +5 total. Whee!
-            if( player_character.has_trait( trait_KILLER ) ) {
-                morale_effect += 5;
-            } // only god can juge me
+            }
             if( player_character.has_flag( json_flag_SPIRITUAL ) &&
                 ( !player_character.has_flag( json_flag_PSYCHOPATH ) ||
-                  ( player_character.has_flag( json_flag_PSYCHOPATH ) &&
-                    player_character.has_trait( trait_KILLER ) ) ) &&
+                  player_character.has_flag( json_flag_PSYCHOPATH ) ) &&
                 !player_character.has_flag( json_flag_SAPIOVORE ) ) {
                 if( morale_effect < 0 ) {
                     add_msg( _( "You feel ashamed of your actions." ) );

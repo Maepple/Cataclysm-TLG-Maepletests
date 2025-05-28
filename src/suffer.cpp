@@ -131,8 +131,6 @@ static const json_character_flag json_flag_SUNBURN( "SUNBURN" );
 static const limb_score_id limb_score_breathing( "breathing" );
 static const morale_type morale_feeling_bad( "morale_feeling_bad" );
 static const morale_type morale_feeling_good( "morale_feeling_good" );
-static const morale_type morale_killer_has_killed( "morale_killer_has_killed" );
-static const morale_type morale_killer_need_to_kill( "morale_killer_need_to_kill" );
 static const morale_type morale_moodswing( "morale_moodswing" );
 static const morale_type morale_pyromania_nearfire( "morale_pyromania_nearfire" );
 static const morale_type morale_pyromania_nofire( "morale_pyromania_nofire" );
@@ -150,7 +148,6 @@ static const trait_id trait_FRESHWATEROSMOSIS( "FRESHWATEROSMOSIS" );
 static const trait_id trait_HAS_NEMESIS( "HAS_NEMESIS" );
 static const trait_id trait_JAUNDICE( "JAUNDICE" );
 static const trait_id trait_JITTERY( "JITTERY" );
-static const trait_id trait_KILLER( "KILLER" );
 static const trait_id trait_LEAVES( "LEAVES" );
 static const trait_id trait_LEAVES2( "LEAVES2" );
 static const trait_id trait_LEAVES2_FALL( "LEAVES2_FALL" );
@@ -441,6 +438,10 @@ void suffer::from_addictions( Character &you )
     for( addiction &cur_addiction : you.addictions ) {
         if( cur_addiction.sated <= 0_turns &&
             cur_addiction.intensity >= MIN_ADDICTION_LEVEL ) {
+            if( uistate.distraction_withdrawal && !you.is_npc() ) {
+                g->cancel_activity_or_ignore_query( distraction_type::withdrawal,
+                                                    _( "You start having withdrawals!" ) );
+            }
             cur_addiction.run_effect( you );
         }
         cur_addiction.sated -= 1_turns;
@@ -1245,15 +1246,6 @@ void suffer::from_other_mutations( Character &you )
             const translation smokin_hot_fiyah =
                 SNIPPET.random_from_category( "pyromania_withdrawal" ).value_or( translation() );
             you.add_msg_if_player( m_bad, "%s", smokin_hot_fiyah );
-        }
-    }
-    if( you.has_trait( trait_KILLER ) && !you.has_morale( morale_killer_has_killed ) &&
-        calendar::once_every( 2_hours ) ) {
-        you.add_morale( morale_killer_need_to_kill, -1, -30, 24_hours, 24_hours );
-        if( calendar::once_every( 4_hours ) ) {
-            const translation snip = SNIPPET.random_from_category( "killer_withdrawal" ).value_or(
-                                         translation() );
-            you.add_msg_if_player( m_bad, "%s", snip );
         }
     }
 }
@@ -2114,8 +2106,9 @@ void Character::drench( int saturation, const body_part_set &flags, bool ignore_
 
     if( enchantment_cache->modify_value( enchant_vals::mod::WEAKNESS_TO_WATER, 0 ) > 0 ) {
         add_msg_if_player( m_bad, _( "You feel the water burning your skin." ) );
-    } else if( enchantment_cache->modify_value( enchant_vals::mod::WEAKNESS_TO_WATER, 0 ) < 0 ) {
-        add_msg_if_player( m_bad, _( "The water is making you feel better." ) );
+    } else if( enchantment_cache->modify_value( enchant_vals::mod::WEAKNESS_TO_WATER, 0 ) < 0 &&
+               one_in( 300 ) ) {
+        add_msg_if_player( m_good, _( "The water is making you feel better." ) );
     }
 
     // Remove onfire effect

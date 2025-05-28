@@ -149,6 +149,26 @@
     "flags": [ "COLLAPSE_CONTENTS" ]
   },
   {
+    "id": "bag_durasack_cement",
+    "type": "GENERIC",
+    "name": { "str": "durable plastic sack, cement" },
+    "looks_like": "bag_plastic",
+    "description": "A large and sturdy sack, made out plastic material.  Stores cement and has instructions on how to use it to make mortar.",
+    "//": "durasack woven polypropylene bags",
+    "copy-from": "bag_durasack",
+    "use_action": {
+      "type": "effect_on_conditions",
+      "description": "Instructions on what to do with the contents of the bag.",
+      "effect_on_conditions": [ "EOC_CEMENT_INSTRUCTIONS" ]
+    }
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "EOC_CEMENT_INSTRUCTIONS",
+    "condition": { "and": [ { "u_has_trait": "ILLITERATE" }, { "not": "u_driving" } ] },
+    "effect": [ { "u_learn_recipe": "mortar_build" } ]
+  },
+  {
     "id": "bag_canvas",
     "type": "GENERIC",
     "category": "container",
@@ -2231,6 +2251,35 @@
     "qualities": [ [ "BOIL", 1 ], [ "CONTAIN", 1 ] ],
     "use_action": [ "HEAT_LIQUID_ITEMS" ],
     "flags": [ "COLLAPSE_CONTENTS" ]
+  },
+  {
+    "id": "petri_dish",
+    "type": "GENERIC",
+    "category": "container",
+    "name": { "str": "Petri dish", "str_pl": "Petri dishes" },
+    "description": "A 90 mm Petri dish, commonly used in labs dealing with microorganisms or tissue samples.",
+    "weight": "25 g",
+    "volume": "145 ml",
+    "longest_side": "96 mm",
+    "price": "4 USD",
+    "price_postapoc": "2 cent",
+    "material": [ "glass" ],
+    "symbol": "u",
+    "color": "light_cyan",
+    "pocket_data": [
+      {
+        "pocket_type": "CONTAINER",
+        "rigid": true,
+        "watertight": true,
+        "open_container": true,
+        "max_contains_volume": "93 ml",
+        "max_contains_weight": "450 g"
+      }
+    ],
+    "qualities": [ [ "BOIL", 1 ], [ "CONTAIN", 1 ] ],
+    "use_action": [ "HEAT_LIQUID_ITEMS" ],
+    "flags": [ "COLLAPSE_CONTENTS" ],
+    "//": "Based on https://www.amazon.com/dp/B074Y6GD2R"
   },
   {
     "id": "flask_hip",

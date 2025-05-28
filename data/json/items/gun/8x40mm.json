@@ -15,6 +15,8 @@
     "price_postapoc": "60 USD",
     "to_hit": -2,
     "material": [ "steel", "carbonfiber" ],
+    "flags": [ "ALLOWS_BODY_BLOCK" ],
+    "weapon_category": [ "AUTOMATIC_PISTOLS" ],
     "symbol": "(",
     "color": "dark_gray",
     "ammo": [ "8x40mm" ],

@@ -165,6 +165,18 @@ inline float trig_dist( const point &loc1, const point &loc2 )
     return trig_dist( tripoint( loc1, 0 ), tripoint( loc2, 0 ) );
 }
 
+inline float trig_dist_z_adjust( const tripoint &loc1, const tripoint &loc2 )
+{
+    return std::sqrt( static_cast<double>( ( loc1.x - loc2.x ) * ( loc1.x - loc2.x ) ) +
+                      ( ( loc1.y - loc2.y ) * ( loc1.y - loc2.y ) ) +
+                      ( ( 2 * ( loc1.z - loc2.z ) ) * ( 2 * ( loc1.z - loc2.z ) ) ) );
+}
+inline float trig_dist_z_adjust( const point &loc1, const point &loc2 )
+{
+    return trig_dist_z_adjust( tripoint( loc1, 0 ), tripoint( loc2, 0 ) );
+}
+
+
 // Roguelike distance; maximum of dX and dY
 inline int square_dist( const tripoint &loc1, const tripoint &loc2 )
 {

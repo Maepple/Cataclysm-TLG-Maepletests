@@ -1591,6 +1591,10 @@ void basecamp::player_eats_meal()
     smenu.addentry( i++, true, '2', _( "Meal" ) );
     smenu.addentry( i++, true, '3', _( "Just stuff your face.  You're hungry!" ) );
     smenu.query();
+    if( smenu.ret_act != "CONFIRM" ) {
+        popup( _( "You decide not to have anything after all." ) );
+        return;
+    }
     int kcal_to_eat = smenu.ret * 750 - 250; // 500, 1250, 2000 kcal
     Character &you = get_player_character();
     const int &food_available = fac()->food_supply.kcal();
@@ -4870,7 +4874,7 @@ tripoint_abs_omt om_target_tile( const tripoint_abs_omt &omt_pos, int min_range,
 
     const oter_id &omt_ref = overmap_buffer.ter( omt_tgt );
 
-    if( must_see && !overmap_buffer.seen( omt_tgt ) ) {
+    if( must_see && overmap_buffer.seen( omt_tgt ) == om_vision_level::unseen ) {
         errors = true;
         popup( _( "You must be able to see the target that you select." ) );
     }

@@ -279,7 +279,7 @@
     "type": "ARMOR",
     "category": "armor",
     "name": { "str": "full plate armor" },
-    "description": "A suit of medieval plate armor.  The metal shows signs of rust and corrosion, and the leather straps are tattered.",
+    "description": "A suit of medieval plate armor, covering everything but the head and neck.  It's made of low-quality steel that doesn't look like it'll hold together long.  This would likely be uncomfortable without something soft underneath.",
     "weight": "11 kg",
     "volume": "17500 ml",
     "price": "600 USD",
@@ -292,7 +292,7 @@
     "warmth": 25,
     "longest_side": "60 cm",
     "material_thickness": 1.6,
-    "flags": [ "VARSIZE", "OUTER", "STURDY", "ALLOWS_TAIL" ],
+    "flags": [ "VARSIZE", "OUTER", "ALLOWS_TAIL" ],
     "armor": [
       {
         "encumbrance": 34,
@@ -308,7 +308,7 @@
     "type": "ARMOR",
     "category": "armor",
     "name": { "str": "full plate armor" },
-    "description": "A suit of medieval full plate armor, covering everything but the head and neck.  This would likely be uncomfortable without something soft underneath.",
+    "description": "A suit of medieval plate armor, covering everything but the head and neck.  This would likely be uncomfortable without something soft underneath.",
     "weight": "15 kg",
     "volume": "17500 ml",
     "price": "600 USD",
@@ -773,7 +773,7 @@
     "looks_like": "boiled_leather_armor_suit",
     "color": "light_red",
     "warmth": 0,
-    "flags": [ "STURDY", "ALLOWS_TAIL" ],
+    "flags": [ "STURDY", "ALLOWS_TAIL", "NORMAL" ],
     "use_action": {
       "type": "transform",
       "msg": "You adjust your mail for a looser fit.",
@@ -859,6 +859,7 @@
     "description": "A knee-length long-sleeved tunic made of interlocking steel rings.  It can be adjusted to fit closer to the body.",
     "copy-from": "chainmail_hauberk",
     "extend": { "flags": [ "OUTER" ] },
+    "delete": { "flags": [ "NORMAL" ] },
     "use_action": {
       "type": "transform",
       "msg": "You adjust your mail for a closer fit.",
@@ -906,11 +907,13 @@
       "msg": "You adjust your mail for a looser fit.",
       "target": "chainmail_junk_hauberk_loose",
       "menu_text": "Loosen"
-    }
+    },
+    "delete": { "flags": [ "STURDY" ] }
   },
   {
     "id": "chainmail_junk_hauberk_loose",
-    "copy-from": "chainmail_junk_hauberk",
+    "copy-from": "chainmail_hauberk",
+    "replace_materials": { "steel_chain": "budget_steel_chain" },
     "type": "ARMOR",
     "name": { "str": "chainmail hauberk (loose)" },
     "description": "A knee-length long-sleeved tunic made of interlocking low-quality steel rings.  It can be adjusted to fit closer to the body.",
@@ -919,7 +922,9 @@
       "msg": "You adjust your mail for a closer fit.",
       "target": "chainmail_junk_hauberk",
       "menu_text": "Tighten"
-    }
+    },
+    "extend": { "flags": [ "OUTER" ] },
+    "delete": { "flags": [ "STURDY", "NORMAL" ] }
   },
   {
     "id": "chainmail_suit",
@@ -1950,7 +1955,7 @@
     "id": "touring_suit",
     "type": "ARMOR",
     "name": { "str": "track touring suit" },
-    "description": "A leather bodysuit with padding in high-impact areas, meant for motorcyclists out on the track.  The leather is stiff but makes the armor much sturdier and more protective than lighter counterparts.",
+    "description": "A lightweight leather bodysuit with padding in high-impact areas, meant for motorcyclists out on the track.  Though weaker than more modern Kevlar motorcycle gear, it is lightweight and can be worn under other gear.",
     "weight": "4700 g",
     "volume": "6500 ml",
     "price": "580 USD",
@@ -1963,30 +1968,30 @@
     "armor": [
       {
         "material": [
-          { "type": "plastic_pad", "covered_by_mat": 90, "thickness": 14.0 },
-          { "type": "leather", "covered_by_mat": 100, "thickness": 1.5 }
+          { "type": "plastic_pad", "covered_by_mat": 50, "thickness": 5.0 },
+          { "type": "leather", "covered_by_mat": 100, "thickness": 1.3 }
         ],
         "covers": [ "torso" ],
         "coverage": 98,
-        "encumbrance": [ 24, 24 ]
+        "encumbrance": [ 28, 28 ]
       },
       {
         "material": [
-          { "type": "plastic_pad", "covered_by_mat": 80, "thickness": 14.0 },
-          { "type": "leather", "covered_by_mat": 100, "thickness": 1.5 }
+          { "type": "plastic_pad", "covered_by_mat": 40, "thickness": 5.0 },
+          { "type": "leather", "covered_by_mat": 100, "thickness": 1.3 }
         ],
         "covers": [ "arm_l", "arm_r" ],
         "coverage": 98,
-        "encumbrance": [ 24, 24 ]
+        "encumbrance": [ 28, 28 ]
       },
       {
         "material": [
-          { "type": "plastic_pad", "covered_by_mat": 80, "thickness": 14.0 },
-          { "type": "leather", "covered_by_mat": 100, "thickness": 1.5 }
+          { "type": "plastic_pad", "covered_by_mat": 40, "thickness": 5.0 },
+          { "type": "leather", "covered_by_mat": 100, "thickness": 1.3 }
         ],
         "covers": [ "leg_l", "leg_r" ],
         "coverage": 98,
-        "encumbrance": [ 24, 24 ]
+        "encumbrance": [ 28, 28 ]
       }
     ],
     "pocket_data": [
@@ -2008,7 +2013,7 @@
     "warmth": 30,
     "material_thickness": 4.3,
     "environmental_protection": 3,
-    "flags": [ "VARSIZE", "RAINPROOF", "OUTER", "POCKETS", "STURDY", "BLOCK_WHILE_WORN" ],
+    "flags": [ "VARSIZE", "RAINPROOF", "STURDY", "POCKETS" ],
     "melee_damage": { "bash": 2 }
   },
   {

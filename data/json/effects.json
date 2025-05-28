@@ -2852,7 +2852,42 @@
     "type": "effect_type",
     "id": "dermatik",
     "immune_bp_flags": [ "BIONIC_LIMB" ],
-    "blood_analysis_description": "Insect Parasite"
+    "blood_analysis_description": "Insect Parasite",
+    "vitamins": [
+      { "vitamin": "dermatik_larva_size", "rate": [ [ 1, 1 ] ], "tick": [ "1 m" ] },
+      { "vitamin": "vitC", "rate": [ [ -1, -1 ] ], "tick": [ "5 m" ] },
+      { "vitamin": "iron", "rate": [ [ -1, -1 ] ], "tick": [ "5 m" ] },
+      { "vitamin": "calcium", "rate": [ [ -1, -1 ] ], "tick": [ "5 m" ] },
+      { "vitamin": "mutant_toxin", "rate": [ [ 1, 1 ] ], "tick": [ "5 m" ] }
+    ],
+    "base_mods": {
+      "hunger_min": [ 1 ],
+      "hunger_tick": [ 20 ],
+      "thirst_min": [ 1 ],
+      "thirst_tick": [ 300 ],
+      "fatigue_min": [ 1 ],
+      "fatigue_tick": [ 300 ],
+      "h_mod_min": [ 1 ],
+      "h_mod_tick": [ 300 ],
+      "healing_rate": [ 0.05 ]
+    },
+    "enchantments": [ { "values": [ { "value": "METABOLISM", "multiply": 3.0 } ] } ],
+    "immune_flags": [ "ACIDBLOOD", "PARAIMMUNE" ]
+  },
+  {
+    "type": "effect_type",
+    "id": "dermatik_visible",
+    "name": [ "Wriggling Skin", "Crawling Lump", "Distended Flesh" ],
+    "desc": [
+      "You can feel something wriggling beneath the skin…",
+      "There's a small lump under your skin, it shifts and writhes with a life of its own…",
+      "An area of your flesh bulges unnaturally, stretched by the presence of something inside.  It feels like it's desperately trying to push its way out…"
+    ],
+    "rating": "bad",
+    "max_intensity": 3,
+    "show_in_info": true,
+    "base_mods": { "vomit_chance": [ 25200 ], "pain_amount": [ 3 ] },
+    "scaling_mods": { "vomit_chance": [ -7200 ], "pain_amount": [ 6 ] }
   },
   {
     "type": "effect_type",
@@ -2863,6 +2898,7 @@
     "rating": "bad",
     "resist_effects": [ "took_flumed", "took_antihistamine" ],
     "main_parts_only": true,
+    "show_in_info": true,
     "immune_bp_flags": [ "BIONIC_LIMB" ],
     "max_intensity": 3,
     "base_mods": { "str_mod": [ -0.34 ], "int_mod": [ -1 ] },
@@ -3589,7 +3625,7 @@
     "show_in_info": true,
     "show_intensity": true,
     "//mods": "No swimmin' or manipulatin' with a held limb, other scores start severly debilitated and reach useless at about 50 grab strength",
-    "base_mods": { "dodge_mod": [ -10 ] },
+    "enchantments": [ { "values": [ { "value": "DODGE_CHANCE", "multiply": 0.0 } ] } ],
     "limb_score_mods": [
       { "limb_score": "manip", "modifier": 0.0 },
       { "limb_score": "grip", "modifier": 0.0 },
@@ -3611,7 +3647,7 @@
     "max_intensity": 1,
     "show_in_info": true,
     "//": "-dodge (can't really miss something holding you)",
-    "base_mods": { "dodge_mod": [ -8 ] },
+    "enchantments": [ { "values": [ { "value": "DODGE_CHANCE", "add": -8.0 } ] } ],
     "flags": [ "GRAB_FILTER" ]
   },
   {
@@ -3622,7 +3658,7 @@
     "max_intensity": 1,
     "show_in_info": true,
     "//": "-dodge (can't really miss something holding you)",
-    "base_mods": { "dodge_mod": [ -8 ] },
+    "enchantments": [ { "values": [ { "value": "DODGE_CHANCE", "add": -8.0 } ] } ],
     "flags": [ "GRAB_FILTER" ]
   },
   {
@@ -3633,7 +3669,7 @@
     "max_intensity": 1,
     "show_in_info": true,
     "//": "-dodge (can't really miss something holding you)",
-    "base_mods": { "dodge_mod": [ -8 ] },
+    "enchantments": [ { "values": [ { "value": "DODGE_CHANCE", "add": -8.0 } ] } ],
     "flags": [ "GRAB_FILTER" ]
   },
   {
@@ -4677,7 +4713,8 @@
     "rating": "bad",
     "show_intensity": false,
     "//": "Don't multiply speed by 0 or else the effect will never be removed for creatures with 0 damage(e.g. rabbits)",
-    "enchantments": [ { "values": [ { "value": "SPEED", "multiply": 0.01 } ] } ]
+    "enchantments": [ { "values": [ { "value": "SPEED", "multiply": 0.01 } ] } ],
+    "show_in_info": true
   },
   {
     "id": "Shadow_Reveal",

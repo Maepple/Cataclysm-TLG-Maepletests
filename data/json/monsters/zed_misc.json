@@ -109,7 +109,7 @@
         "monster_message": "Some of the pustules pop, and the frog mother opens her mouth and vomits tadpoles!"
       }
     ],
-    "regenerates": 40,
+    "regenerates": 12,
     "armor": { "bash": 12, "cut": 2, "bullet": 1, "electric": 2 }
   },
   {

@@ -478,15 +478,16 @@ class spell
 
         // Temporary adjustments caused by EoC's
         int temp_level_adjustment = 0; // NOLINT(cata-serialize)
-        float temp_cast_time_multiplyer = 1; // NOLINT(cata-serialize)
-        float temp_spell_cost_multiplyer = 1; // NOLINT(cata-serialize)
-        float temp_aoe_multiplyer = 1; // NOLINT(cata-serialize)
-        float temp_range_multiplyer = 1; // NOLINT(cata-serialize)
-        float temp_duration_multiplyer = 1; // NOLINT(cata-serialize)
+        float temp_damage_multiplier = 1; // NOLINT(cata-serialize)
+        float temp_cast_time_multiplier = 1; // NOLINT(cata-serialize)
+        float temp_spell_cost_multiplier = 1; // NOLINT(cata-serialize)
+        float temp_aoe_multiplier = 1; // NOLINT(cata-serialize)
+        float temp_range_multiplier = 1; // NOLINT(cata-serialize)
+        float temp_duration_multiplier = 1; // NOLINT(cata-serialize)
         int temp_difficulty_adjustment = 0; // NOLINT(cata-serialize)
-        float temp_somatic_difficulty_multiplyer = 1; // NOLINT(cata-serialize)
-        float temp_sound_multiplyer = 1; // NOLINT(cata-serialize)
-        float temp_concentration_difficulty_multiplyer = 1; // NOLINT(cata-serialize)
+        float temp_somatic_difficulty_multiplier = 1; // NOLINT(cata-serialize)
+        float temp_sound_multiplier = 1; // NOLINT(cata-serialize)
+        float temp_concentration_difficulty_multiplier = 1; // NOLINT(cata-serialize)
 
 
         // alternative cast message

@@ -301,6 +301,7 @@ static const json_character_flag json_flag_GRAB( "GRAB" );
 static const json_character_flag json_flag_GRAB_FILTER( "GRAB_FILTER" );
 static const json_character_flag json_flag_HYPEROPIC( "HYPEROPIC" );
 static const json_character_flag json_flag_INFECTION_IMMUNE( "INFECTION_IMMUNE" );
+static const json_character_flag json_flag_ITEM_WATERPROOFING( "ITEM_WATERPROOFING" );
 static const json_character_flag json_flag_NYCTOPHOBIA( "NYCTOPHOBIA" );
 static const json_character_flag json_flag_WALL_CLING( "WALL_CLING" );
 static const json_character_flag json_flag_WEB_RAPPEL( "WEB_RAPPEL" );
@@ -1475,7 +1476,7 @@ bool game::cancel_activity_or_ignore_query( const distraction_type type, const s
     const bool force_uc = get_option<bool>( "FORCE_CAPITAL_YN" );
     const auto &allow_key = force_uc ? input_context::disallow_lower_case_or_non_modified_letters
                             : input_context::allow_all_keys;
-
+  
     while (true) {
         query_popup qp;
         qp.preferred_keyboard_mode(keyboard_mode::keycode)
@@ -1502,19 +1503,19 @@ bool game::cancel_activity_or_ignore_query( const distraction_type type, const s
             u.cancel_activity();
             return true;
         }
-        if (action == "IGNORE") {
-            u.activity.ignore_distraction(type);
-            for (player_activity& activity : u.backlog) {
-                activity.ignore_distraction(type);
+        if( action == "IGNORE" ) {
+            u.activity.ignore_distraction( type );
+            for( player_activity &activity : u.backlog ) {
+                activity.ignore_distraction( type );
             }
             return false;
         }
-        if (action == "MANAGER") {
+        if( action == "MANAGER" ) {
             u.cancel_activity();
             get_distraction_manager().show();
             return true;
         }
-        if (action == "VIEW") {
+        if( action == "VIEW" ) {
             temp_exit_fullscreen();
             list_items_monsters();
             reenter_fullscreen();
@@ -2751,8 +2752,27 @@ bool game::try_get_right_click_action( action_id &act, const tripoint_bub_ms &mo
     return true;
 }
 
+bool game::query_exit_to_OS()
+{
+    const int old_timeout = inp_mngr.get_timeout();
+    inp_mngr.reset_timeout();
+    uquit = QUIT_EXIT_PENDING; // change it before query so input_context doesn't get confused
+    if( query_yn( _( "Really Quit?  All unsaved changes will be lost." ) ) ) {
+        uquit = QUIT_EXIT;
+        throw exit_exception();
+    }
+    uquit = QUIT_NO;
+    inp_mngr.set_timeout( old_timeout );
+    ui_manager::redraw_invalidated();
+    catacurses::doupdate();
+    return false;
+}
+
 bool game::is_game_over()
 {
+    if( uquit == QUIT_EXIT ) {
+        return query_exit_to_OS();
+    }
     if( uquit == QUIT_DIED || uquit == QUIT_WATCH ) {
         events().send<event_type::avatar_dies>();
     }
@@ -4592,7 +4612,8 @@ void game::mon_info_update( )
                                       p->attitude_to( u ),
                                       npc_dist,
                                       u.controlling_vehicle ) == rule_state::BLACKLISTED ;
-            } else {
+            }
+            if( !need_processing ) {
                 need_processing = npc_dist <= iProxyDist &&
                                   p->get_attitude() == NPCATT_KILL;
             }
@@ -5293,14 +5314,24 @@ bool game::swap_critters( Creature &a, Creature &b )
         return true;
     }
     creature_tracker &creatures = get_creature_tracker();
-    if( creatures.creature_at( a.pos() ) != &a ) {
-        debugmsg( "Tried to swap when it would cause a collision between %s and %s.",
-                  b.disp_name(), creatures.creature_at( a.pos() )->disp_name() );
+    if( creatures.creature_at( a.pos_bub() ) != &a ) {
+        if( creatures.creature_at( a.pos_bub() ) == nullptr ) {
+            debugmsg( "Tried to swap %s and %s when the latter isn't present at its own location (%d,%d,%d).",
+                      b.disp_name(), a.disp_name(), a.pos_bub().x(), a.pos_bub().y(), a.pos_bub().z() );
+        } else {
+            debugmsg( "Tried to swap when it would cause a collision between %s and %s.",
+                      b.disp_name(), creatures.creature_at( a.pos_bub() )->disp_name() );
+        }
         return false;
     }
-    if( creatures.creature_at( b.pos() ) != &b ) {
-        debugmsg( "Tried to swap when it would cause a collision between %s and %s.",
-                  a.disp_name(), creatures.creature_at( b.pos() )->disp_name() );
+    if( creatures.creature_at( b.pos_bub() ) != &b ) {
+        if( creatures.creature_at( b.pos_bub() ) == nullptr ) {
+            debugmsg( "Tried to swap %s and %s when the latter isn't present at its own location (%d,%d,%d).",
+                      a.disp_name(), b.disp_name(), b.pos_bub().x(), b.pos_bub().y(), b.pos_bub().z() );
+        } else {
+            debugmsg( "Tried to swap when it would cause a collision between %s and %s.",
+                      a.disp_name(), creatures.creature_at( b.pos_bub() )->disp_name() );
+        }
         return false;
     }
     // Simplify by "sorting" the arguments
@@ -5605,7 +5636,7 @@ void game::control_vehicle()
                 u.controlling_vehicle = true;
                 add_msg( _( "You take control of the %s." ), veh->name );
             } else {
-                veh->start_engines( true );
+                veh->start_engines( &u, true );
             }
         }
     }
@@ -5690,7 +5721,8 @@ bool game::npc_menu( npc &who )
     amenu.addentry( talk, true, 't', _( "Talk" ) );
     amenu.addentry( swap_pos, obeys && !who.is_mounted() &&
                     !u.is_mounted(), 's', _( "Swap positions" ) );
-    amenu.addentry( push, obeys && !who.is_mounted(), 'p', _( "Push away" ) );
+    amenu.addentry( push, ( debug_mode || ( !who.is_enemy() && !who.in_sleep_state() ) ) &&
+                    !who.is_mounted(), 'p', _( "Push away" ) );
     amenu.addentry( examine_wounds, true, 'w', _( "Examine wounds" ) );
     amenu.addentry( examine_status, true, 'e', _( "Examine status" ) );
     amenu.addentry( use_item, true, 'i', _( "Use item on" ) );
@@ -5722,6 +5754,17 @@ bool game::npc_menu( npc &who )
             add_msg( _( "You cannot swap places while grabbing something." ) );
         }
     } else if( choice == push ) {
+        if( !obeys ) {
+            if( !query_yn( _( "%s may be upset by this.  Continue?" ), who.name ) ) {
+                return true;
+            }
+            npc_opinion &attitude = who.op_of_u;
+            attitude.anger += 3;
+            attitude.trust -= 3;
+            attitude.value -= 1;
+            who.form_opinion( u );
+
+        }
         // TODO: Make NPCs protest when displaced onto dangerous crap
         tripoint oldpos = who.pos();
         who.move_away_from( u.pos(), true );
@@ -7329,10 +7372,11 @@ void game::pre_print_all_tile_info( const tripoint &lp, const catacurses::window
 {
     // get global area info according to look_around caret position
     // TODO: fix point types
-    const oter_id &cur_ter_m = overmap_buffer.ter( tripoint_abs_omt( ms_to_omt_copy( m.getabs(
-                                   lp ) ) ) );
+    tripoint_abs_omt omp( ms_to_omt_copy( m.getabs( lp ) ) );
+    const oter_id &cur_ter_m = overmap_buffer.ter( omp );
+    om_vision_level vision = overmap_buffer.seen( omp );
     // we only need the area name and then pass it to print_all_tile_info() function below
-    const std::string area_name = cur_ter_m->get_name();
+    const std::string area_name = cur_ter_m->get_name( vision );
     print_all_tile_info( lp, w_info, area_name, 1, first_line, last_line, cache );
 }
 
@@ -9649,7 +9693,7 @@ void game::butcher()
                 case MULTIBUTCHER:
                     butcher_submenu( corpses );
                     for( map_stack::iterator &it : corpses ) {
-                        u.activity.targets.emplace_back( map_cursor( u.pos_bub() ), &*it );
+                        u.activity.targets.emplace_back( map_cursor( u.get_location() ), &*it );
                     }
                     break;
                 case MULTIDISASSEMBLE_ONE:
@@ -9665,13 +9709,13 @@ void game::butcher()
             break;
         case BUTCHER_CORPSE: {
             butcher_submenu( corpses, indexer_index );
-            u.activity.targets.emplace_back( map_cursor( u.pos_bub() ), &*corpses[indexer_index] );
+            u.activity.targets.emplace_back( map_cursor( u.get_location() ), &*corpses[indexer_index] );
         }
         break;
         case BUTCHER_DISASSEMBLE: {
             // Pick index of first item in the disassembly stack
             item *const target = &*disassembly_stacks[indexer_index].first;
-            u.disassemble( item_location( map_cursor( u.pos_bub() ), target ), true );
+            u.disassemble( item_location( map_cursor( u.get_location() ), target ), true );
         }
         break;
         case BUTCHER_SALVAGE: {
@@ -9680,7 +9724,7 @@ void game::butcher()
             } else {
                 // Pick index of first item in the salvage stack
                 item *const target = &*salvage_stacks[indexer_index].first;
-                item_location item_loc( map_cursor( u.pos_bub() ), target );
+                item_location item_loc( map_cursor( u.get_location() ), target );
                 salvage_iuse->try_to_cut_up( u, *salvage_tool, item_loc );
             }
         }
@@ -10896,7 +10940,7 @@ point game::place_player( const tripoint &dest_loc, bool quick )
             if( !corpses.empty() ) {
                 u.assign_activity( ACT_BUTCHER, 0, true );
                 for( item *it : corpses ) {
-                    u.activity.targets.emplace_back( map_cursor( u.pos_bub() ), it );
+                    u.activity.targets.emplace_back( map_cursor( u.get_location() ), it );
                 }
             }
         } else if( pulp_butcher == "pulp" || pulp_butcher == "pulp_adjacent" ||
@@ -11514,7 +11558,12 @@ void game::on_options_changed()
 
 void game::water_affect_items( Character &ch ) const
 {
+    bool gear_waterproofed = ch.has_flag( json_flag_ITEM_WATERPROOFING );
+
     for( item_location &loc : ch.all_items_loc() ) {
+        if( gear_waterproofed ) {
+            break;
+        }
         // check flag first because its cheaper
         if( loc->has_flag( flag_WATER_DISSOLVE ) && !loc.protected_from_liquids() ) {
             add_msg_if_player_sees( ch.pos(), m_bad, _( "%1$s %2$s dissolved in the water!" ),
@@ -12410,7 +12459,7 @@ void game::vertical_notes( int z_before, int z_after )
         const tripoint_abs_omt cursp_before( p.xy(), z_before );
         const tripoint_abs_omt cursp_after( p.xy(), z_after );
 
-        if( !overmap_buffer.seen( cursp_before ) ) {
+        if( overmap_buffer.seen( cursp_before ) == om_vision_level::unseen ) {
             continue;
         }
         if( overmap_buffer.has_note( cursp_after ) ) {
@@ -12421,11 +12470,11 @@ void game::vertical_notes( int z_before, int z_after )
         const oter_id &ter2 = overmap_buffer.ter( cursp_after );
         if( z_after > z_before && ter->has_flag( oter_flags::known_up ) &&
             !ter2->has_flag( oter_flags::known_down ) ) {
-            overmap_buffer.set_seen( cursp_after, true );
+            overmap_buffer.set_seen( cursp_after, om_vision_level::full );
             overmap_buffer.add_note( cursp_after, string_format( ">:W;%s", _( "AUTO: goes down" ) ) );
         } else if( z_after < z_before && ter->has_flag( oter_flags::known_down ) &&
                    !ter2->has_flag( oter_flags::known_up ) ) {
-            overmap_buffer.set_seen( cursp_after, true );
+            overmap_buffer.set_seen( cursp_after, om_vision_level::full );
             overmap_buffer.add_note( cursp_after, string_format( "<:W;%s", _( "AUTO: goes up" ) ) );
         }
     }
@@ -12530,10 +12579,11 @@ point game::update_map( int &x, int &y, bool z_level_changed )
 void game::update_overmap_seen()
 {
     const tripoint_abs_omt ompos = u.global_omt_location();
-    const int dist = u.overmap_sight_range( light_level( u.posz() ) );
+    const int dist = u.overmap_modified_sight_range( light_level( u.posz() ) );
+    const int base_sight = u.overmap_sight_range( light_level( u.posz() ) );
     const int dist_squared = dist * dist;
     // We can always see where we're standing
-    overmap_buffer.set_seen( ompos, true );
+    overmap_buffer.set_seen( ompos, om_vision_level::full );
     for( const tripoint_abs_omt &p : points_in_radius( ompos, dist ) ) {
         const point_rel_omt delta = p.xy() - ompos.xy();
         const int h_squared = delta.x() * delta.x() + delta.y() * delta.y();
@@ -12569,12 +12619,27 @@ void game::update_overmap_seen()
                 break;
             }
         }
+        if( sight_points < 0 ) {
+            continue;
+        }
         if( can_see ) {
-            tripoint_abs_omt seen( p );
-            do {
-                overmap_buffer.set_seen( seen, true );
-                --seen.z();
-            } while( seen.z() >= 0 );
+            const auto set_seen = []( const tripoint_abs_omt & p, om_vision_level level ) {
+                tripoint_abs_omt seen( p );
+                do {
+                    overmap_buffer.set_seen( seen, level );
+                    --seen.z();
+                } while( seen.z() >= 0 );
+            };
+            int tiles_from = rl_dist( p, ompos );
+            if( tiles_from < std::floor( base_sight / 2 ) ) {
+                set_seen( p, om_vision_level::full );
+            } else if( tiles_from < base_sight ) {
+                set_seen( p, om_vision_level::details );
+            } else if( tiles_from < base_sight * 2 ) {
+                set_seen( p, om_vision_level::outlines );
+            } else {
+                set_seen( p, om_vision_level::vague );
+            }
         }
     }
 }

@@ -195,7 +195,6 @@ static const trait_id trait_ANIMALEMPATH2( "ANIMALEMPATH2" );
 static const trait_id trait_BEE( "BEE" );
 static const trait_id trait_FLOWERS( "FLOWERS" );
 static const trait_id trait_INATTENTIVE( "INATTENTIVE" );
-static const trait_id trait_KILLER( "KILLER" );
 static const trait_id trait_MYCUS_FRIEND( "MYCUS_FRIEND" );
 static const trait_id trait_PHEROMONE_AMPHIBIAN( "PHEROMONE_AMPHIBIAN" );
 static const trait_id trait_PHEROMONE_INSECT( "PHEROMONE_INSECT" );
@@ -1300,12 +1299,14 @@ int monster::sight_range( const float light_level ) const
     }
     static const float default_daylight = default_daylight_level();
     if( light_level == 0 ) {
-        return type->vision_night;
+        return calculate_by_enchantment( type->vision_night, enchant_vals::mod::VISION_RANGE, true );
     } else if( light_level >= default_daylight ) {
-        return type->vision_day;
+        return calculate_by_enchantment( type->vision_day, enchant_vals::mod::VISION_RANGE, true );
     }
     int range = ( light_level * type->vision_day + ( default_daylight - light_level ) *
                   type->vision_night ) / default_daylight;
+
+    range = calculate_by_enchantment( range, enchant_vals::mod::VISION_RANGE, true );
 
     return range;
 }
@@ -2337,6 +2338,7 @@ bool monster::move_effects( bool )
             if( u_see_me && get_option<bool>( "LOG_MONSTER_MOVE_EFFECTS" ) ) {
                 add_msg( _( "The %s escapes the light snare!" ), name() );
             }
+            here.spawn_item( pos(), "light_snare_kit" );
         }
         return false;
     }
@@ -2360,6 +2362,7 @@ bool monster::move_effects( bool )
                 if( u_see_me && get_option<bool>( "LOG_MONSTER_MOVE_EFFECTS" ) ) {
                     add_msg( _( "The %s escapes the bear trap!" ), name() );
                 }
+                here.spawn_item( pos(), "beartrap" );
             }
         }
         return false;
@@ -2565,6 +2568,14 @@ float monster::get_dodge() const
     if( has_effect( effect_lightsnare ) || has_effect( effect_heavysnare ) ||
         has_effect( effect_beartrap ) || has_effect( effect_tied ) ) {
         ret /= 2;
+    }
+
+    if( has_effect_with_flag( json_flag_GRAB ) ) {
+        ret *= 0;
+    }
+
+    if( has_effect_with_flag( json_flag_GRAB_FILTER ) ) {
+        ret -= 5;
     }
 
     if( has_effect( effect_bouldering ) ) {
@@ -2859,14 +2870,6 @@ void monster::die( Creature *nkiller )
             cata::event e = cata::event::make<event_type::character_kills_monster>( ch->getID(), type->id,
                             compute_kill_xp( type->id ) );
             get_event_bus().send_with_talker( ch, this, e );
-            if( ch->is_avatar() && ch->has_trait( trait_KILLER ) ) {
-                if( one_in( 4 ) ) {
-                    const translation snip = SNIPPET.random_from_category( "killer_on_kill" ).value_or( translation() );
-                    ch->add_msg_if_player( m_good, "%s", snip );
-                }
-                ch->add_morale( morale_killer_has_killed, 5, 10, 6_hours, 4_hours );
-                ch->rem_morale( morale_killer_need_to_kill );
-            }
         }
     }
     map &here = get_map();
@@ -3013,7 +3016,12 @@ void monster::die( Creature *nkiller )
         move_special_item_to_inv( armor_item );
         move_special_item_to_inv( storage_item );
         move_special_item_to_inv( tied_item );
-
+        if( has_effect( effect_beartrap ) ) {
+            add_item( item( "beartrap", calendar::turn_zero ) );
+        }
+        if( has_effect( effect_lightsnare ) ) {
+            add_item( item( "light_snare_kit", calendar::turn_zero ) );
+        }
         if( has_effect( effect_heavysnare ) ) {
             add_item( item( "rope_6", calendar::turn_zero ) );
             add_item( item( "snare_trigger", calendar::turn_zero ) );
