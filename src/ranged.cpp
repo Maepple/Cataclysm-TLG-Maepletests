@@ -1346,8 +1346,7 @@ int Character::throwing_dispersion( const item &to_throw, Creature *critter,
     ///\EFFECT_PER decreases throwing accuracy penalty from eye encumbrance
     dispersion += std::max( 0, ( encumb( bodypart_id( "eyes" ) ) - get_per() ) * 10 );
 
-    // If throwing blind, we're assuming they mechanically can't achieve the
-    // accuracy of a normal throw.
+    // Blind throws are less accurate
     if( is_blind_throw ) {
         dispersion *= 4;
     }
