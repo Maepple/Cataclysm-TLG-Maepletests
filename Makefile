@@ -147,9 +147,9 @@ export CCACHE_COMMENTS=1
 # Explicitly let 'char' to be 'signed char' to fix #18776
 OTHERS += -fsigned-char
 
-VERSION = 1.0
+VERSION = 0.I
 
-TARGET_NAME = cataclysm-tlg
+TARGET_NAME = cataclysm
 TILES_TARGET_NAME = $(TARGET_NAME)-tiles
 ifeq ($(NATIVE), emscripten)
   TILES_TARGET_NAME = $(TARGET_NAME)-tiles.js
@@ -585,7 +585,6 @@ ifeq ($(NATIVE), osx)
   DEFINES += -DMACOSX
   CXXFLAGS += -mmacosx-version-min=10.15
   LDFLAGS += -mmacosx-version-min=10.15 -framework CoreFoundation -Wl,-headerpad_max_install_names
-  LDFLAGS += -liconv 
   ifeq ($(UNIVERSAL_BINARY), 1)
     CXXFLAGS += -arch x86_64 -arch arm64
     LDFLAGS += -arch x86_64 -arch arm64
