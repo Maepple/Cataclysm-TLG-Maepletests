@@ -172,6 +172,7 @@ static const skill_id skill_dodge( "dodge" );
 static const skill_id skill_driving( "driving" );
 static const skill_id skill_gun( "gun" );
 static const skill_id skill_launcher( "launcher" );
+static const skill_id skill_pistol( "pistol" );
 static const skill_id skill_swimming( "swimming" );
 static const skill_id skill_throw( "throw" );
 
@@ -759,11 +760,20 @@ bool Character::handle_gun_damage( item &it )
         }
     }
 
-    const double jam_chance = gun_jam_chance + mag_jam_chance;
+    // Model in limp wristing and reduce the chance of limp wristing pistols up until you hit level 4. Dramatically increases the chances of malfunctions
+    // 20x more likey at 0 skill, with a linear decrease
+    double skill_jam_multiplier = 1.0;
+    double current_gun_skill = get_skill_level( it.gun_skill() );
+    if( it.gun_skill() == skill_pistol ) {
+        if ( current_gun_skill <= 4.0) {
+            skill_jam_multiplier = (1.0 - (std::max(0.1, current_gun_skill) / 4.0)) * 20.0;
+        }
+    }
 
+    const double jam_chance = skill_jam_multiplier * (gun_jam_chance + mag_jam_chance);
     add_msg_debug( debugmode::DF_RANGED,
-                   "Gun jam chance: %s\nMagazine jam chance: %s\nGun damage level: %d\nMagazine damage level: %d\nFail to feed chance: %s",
-                   gun_jam_chance, mag_jam_chance, gun_damage, mag_damage, jam_chance );
+                   "Gun jam chance: %s\nMagazine jam chance: %s\nSkill jam multiplier: %sx\nGun damage level: %d\nMagazine damage level: %d\nMalfunction chance: %s",
+                   gun_jam_chance, mag_jam_chance, skill_jam_multiplier, gun_damage, mag_damage, jam_chance );
 
     // Here we check if we're underwater and whether we should misfire.
     // As a result this causes no damage to the firearm, note that some guns are waterproof
